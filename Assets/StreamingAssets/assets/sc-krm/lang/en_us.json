@@ -1,0 +1,24 @@
+{
+	"language.name": "English",
+	"language.region": "US",
+	
+	"done": "Done",
+	"cancel": "Cancel",
+	"confirm": "Confirm",
+	"retry": "Retry",
+	"yes": "Yes",
+	"no": "No",
+	"create": "Create",
+	"delete": "Delete",
+	"add": "Add",
+	"remove": "Remove",
+	
+	"resourcePack": "Resource Packs...",
+	"resourcePack.select": "Select Resource Packs",
+	"language": "Language...",
+	"language.ps": "(Language translations may not be 100% accurate)",
+	
+	"resourcePackList.available": "Available\n━━━━━━━━━",
+	"resourcePackList.selected": "Selected\n━━━━━━",
+	"resourcePackList.folderOpen": "Open Pack Folder"
+}
