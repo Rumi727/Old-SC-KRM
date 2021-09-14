@@ -45,6 +45,16 @@ namespace SCKRM
             FPSDeltaTime = DeltaTime * 60;
             UnscaledDeltaTime = Time.unscaledDeltaTime;
             FPSUnscaledDeltaTime = UnscaledDeltaTime * 60;
+
+#if !UNITY_EDITOR
+            if (InputManager.GetKeyDown("Full Screen"))
+            {
+                if (Screen.fullScreen)
+                    Screen.SetResolution((int)(Screen.currentResolution.width / 1.5f), (int)(Screen.currentResolution.height / 1.5f), false);
+                else
+                    Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
+            }
+#endif
         }
 
         public static void ListMove<T>(List<T> ts, int index, int moveIndex)

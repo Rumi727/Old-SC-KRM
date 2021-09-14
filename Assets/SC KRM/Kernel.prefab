@@ -218,6 +218,8 @@ MonoBehaviour:
     value: 43
   - key: Exit
     value: 27
+  - key: Full Screen
+    value: 292
 --- !u!1 &6782082784694514584
 GameObject:
   m_ObjectHideFlags: 0
