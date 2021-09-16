@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SCKRM.Object
 {
     [System.Serializable]
     public class ObjectList
     {
-        public List<string> ObjectName = new List<string>();
+        public List<string> ObjectKey = new List<string>();
         public List<GameObject> Object = new List<GameObject>();
     }
 
@@ -40,40 +41,51 @@ namespace SCKRM.Object
             thisTransform = transform;
             PrefabObject = _PrefabObject;
 
-            PrefabObject.ObjectName = PrefabObject.ObjectName.Distinct().ToList();
-            while (PrefabObject.Object.Count > PrefabObject.ObjectName.Count)
-                PrefabObject.Object.RemoveAt(PrefabObject.ObjectName.Count);
+            PrefabObject.ObjectKey = PrefabObject.ObjectKey.Distinct().ToList();
+            while (PrefabObject.Object.Count > PrefabObject.ObjectKey.Count)
+                PrefabObject.Object.RemoveAt(PrefabObject.ObjectKey.Count);
         }
 
         void Update()
         {
-            while (PrefabObject.Object.Count > PrefabObject.ObjectName.Count)
-                PrefabObject.Object.RemoveAt(PrefabObject.ObjectName.Count);
+            while (PrefabObject.Object.Count > PrefabObject.ObjectKey.Count)
+                PrefabObject.Object.RemoveAt(PrefabObject.ObjectKey.Count);
 
-            while (PrefabObject.Object.Count < PrefabObject.ObjectName.Count)
+            while (PrefabObject.Object.Count < PrefabObject.ObjectKey.Count)
                 PrefabObject.Object.Add(null);
         }
 
-        public static GameObject ObjectCreate(string ObjectName) => ObjectCreate(ObjectName, null);
+        /// <summary>
+        /// 오브젝트를 생성합니다
+        /// </summary>
+        /// <param name="ObjectKey">생성할 오브젝트 키</param>
+        /// <returns></returns>
+        public static GameObject ObjectCreate(string ObjectKey) => ObjectCreate(ObjectKey, null);
 
-        public static GameObject ObjectCreate(string ObjectName, Transform Parent)
+        /// <summary>
+        /// 오브젝트를 생성합니다
+        /// </summary>
+        /// <param name="ObjectKey">생성할 오브젝트 키</param>
+        /// <param name="Parent">생성할 오브젝트가 자식으로갈 오브젝트</param>
+        /// <returns></returns>
+        public static GameObject ObjectCreate(string ObjectKey, Transform Parent)
         {
-            if (ObjectList.ObjectName.Contains(ObjectName))
+            if (ObjectList.ObjectKey.Contains(ObjectKey))
             {
-                GameObject gameObject = ObjectList.Object[ObjectList.ObjectName.IndexOf(ObjectName)];
+                GameObject gameObject = ObjectList.Object[ObjectList.ObjectKey.IndexOf(ObjectKey)];
                 gameObject.transform.SetParent(Parent);
                 gameObject.SetActive(true);
 
-                int i = ObjectList.ObjectName.IndexOf(ObjectName);
-                ObjectList.ObjectName.RemoveAt(i);
+                int i = ObjectList.ObjectKey.IndexOf(ObjectKey);
+                ObjectList.ObjectKey.RemoveAt(i);
                 ObjectList.Object.RemoveAt(i);
 
                 return gameObject;
             }
-            else if (PrefabObject.ObjectName.Contains(ObjectName))
+            else if (PrefabObject.ObjectKey.Contains(ObjectKey))
             {
-                GameObject gameObject = Instantiate(PrefabObject.Object[PrefabObject.ObjectName.IndexOf(ObjectName)], Parent);
-                gameObject.name = ObjectName;
+                GameObject gameObject = Instantiate(PrefabObject.Object[PrefabObject.ObjectKey.IndexOf(ObjectKey)], Parent);
+                gameObject.name = ObjectKey;
 
                 return gameObject;
             }
@@ -81,12 +93,18 @@ namespace SCKRM.Object
             return null;
         }
 
-        public static void ObjectRemove(string ObjectName, GameObject gameObject, Action onDestroy)
+        /// <summary>
+        /// 오브젝트를 삭제합니다
+        /// </summary>
+        /// <param name="ObjectKey">지울 오브젝트 키</param>
+        /// <param name="gameObject">지울 오브젝트</param>
+        /// <param name="onDestroy"></param>
+        public static void ObjectRemove(string ObjectKey, GameObject gameObject, Action onDestroy)
         {
             onDestroy.Invoke();
             gameObject.SetActive(false);
             gameObject.transform.SetParent(thisTransform);
-            ObjectList.ObjectName.Add(ObjectName);
+            ObjectList.ObjectKey.Add(ObjectKey);
             ObjectList.Object.Add(gameObject.gameObject);
         }
     }

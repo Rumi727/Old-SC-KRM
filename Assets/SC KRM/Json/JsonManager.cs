@@ -10,6 +10,14 @@ namespace SCKRM.Json
 {
     public class JsonManager
     {
+        /// <summary>
+        /// JSON을 불러옵니다 (이걸 사용할려면, JSON 파일의 모든 키와 값의 타입이 문자열이여야합니다)
+        /// </summary>
+        /// <param name="key">키</param>
+        /// <param name="path">JSON 파일 경로</param>
+        /// <param name="value">값</param>
+        /// <param name="resourcePackPath">리소스팩에서 파일 불러오기</param>
+        /// <returns></returns>
         public static bool JsonRead(string key, string path, out string value, bool resourcePackPath = true)
         {
             if (resourcePackPath)
@@ -75,7 +83,7 @@ namespace SCKRM.Json
         }
     }
 
-    public class JVector2
+    public struct JVector2
     {
         public float x;
         public float y;
@@ -96,7 +104,7 @@ namespace SCKRM.Json
         public static Vector2 JVector3ToVector3(JVector2 jVector2) => new Vector2() { x = jVector2.x, y = jVector2.y };
     }
 
-    public class JVector3
+    public struct JVector3
     {
         public float x;
         public float y;
@@ -119,7 +127,7 @@ namespace SCKRM.Json
 
         public static Vector3 JVector3ToVector3(JVector3 jVector3) => new Vector3() { x = jVector3.x, y = jVector3.y, z = jVector3.z };
     }
-    public class JVector4
+    public struct JVector4
     {
         public float x;
         public float y;
@@ -146,7 +154,7 @@ namespace SCKRM.Json
         public static Vector4 JVector4ToVector4(JVector4 jVector4) => new Vector4() { x = jVector4.x, y = jVector4.y, z = jVector4.z, w = jVector4.w };
     }
 
-    public class JRect
+    public struct JRect
     {
         public float x;
         public float y;

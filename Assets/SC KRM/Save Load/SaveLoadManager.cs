@@ -33,11 +33,11 @@ namespace SCKRM.SaveData
 
         public static void SaveData()
         {
-            if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "Save Data")))
-                Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "Save Data"));
+            if (!Directory.Exists(Path.Combine(Kernel.persistentDataPath, "Save Data")))
+                Directory.CreateDirectory(Path.Combine(Kernel.persistentDataPath, "Save Data"));
 
             KernelSetting kernelSetting = new KernelSetting();
-            string path = Path.Combine(Application.persistentDataPath, "Save Data", "Kernel Setting.json");
+            string path = Path.Combine(Kernel.persistentDataPath, "Save Data", "Kernel Setting.json");
 
 
 
@@ -51,11 +51,11 @@ namespace SCKRM.SaveData
 
         public static void LoadData()
         {
-            if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "Save Data")))
+            if (!Directory.Exists(Path.Combine(Kernel.persistentDataPath, "Save Data")))
                 return;
 
             KernelSetting kernelSetting = new KernelSetting();
-            string path = Path.Combine(Application.persistentDataPath, "Save Data", "Kernel Setting.json");
+            string path = Path.Combine(Kernel.persistentDataPath, "Save Data", "Kernel Setting.json");
             if (File.Exists(path))
                 kernelSetting = JsonConvert.DeserializeObject<KernelSetting>(File.ReadAllText(path));
 
@@ -72,7 +72,7 @@ namespace SCKRM.SaveData
         }
     }
 
-    public class KernelSetting
+    class KernelSetting
     {
         [JsonProperty("Main Volume")] public float MainVolume = 1;
         public string Language = "en_us";

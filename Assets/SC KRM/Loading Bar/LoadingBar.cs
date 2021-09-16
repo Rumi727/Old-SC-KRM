@@ -19,7 +19,7 @@ namespace SCKRM.Loading
         {
             if (lerpT != 0 && lerpT != 1)
             {
-                image.fillAmount = Mathf.Lerp(image.fillAmount, value, lerpT * Kernel.FPSDeltaTime);
+                image.fillAmount = Mathf.Lerp(image.fillAmount, value, lerpT * Kernel.fpsDeltaTime);
                 if (image.fillAmount > 0.999f)
                     ObjectPoolingSystem.ObjectRemove("Loading Bar", gameObject, OnDestroy);
             }

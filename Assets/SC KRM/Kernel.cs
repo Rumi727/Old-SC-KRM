@@ -18,14 +18,27 @@ namespace SCKRM
         static LoadingBar loadingBar;
 
         public static Kernel instance;
-        public static float FPS { get; private set; } = 60;
+        public static float fps { get; private set; } = 60;
 
-        public static float DeltaTime { get; private set; } = FPS60second;
-        public static float FPSDeltaTime { get; private set; } = 1;
-        public static float UnscaledDeltaTime { get; private set; } = FPS60second;
-        public static float FPSUnscaledDeltaTime { get; private set; } = 1;
+        public static float deltaTime { get; private set; } = fps60second;
+        public static float fpsDeltaTime { get; private set; } = 1;
+        public static float unscaledDeltaTime { get; private set; } = fps60second;
+        public static float fpsUnscaledDeltaTime { get; private set; } = 1;
 
-        public const float FPS60second = 1f / 60f;
+        public const float fps60second = 1f / 60f;
+
+
+        public static string dataPath { get; private set; }
+        public static string streamingAssetsPath { get; } = Application.streamingAssetsPath;
+        public static string persistentDataPath { get; private set; }
+
+        public static string companyName { get; private set; }
+        public static string productName { get; private set; }
+        public static string version { get; private set; }
+
+        public static string platform { get; } = Application.platform.ToString();
+
+
 
         void Awake()
         {
@@ -36,15 +49,22 @@ namespace SCKRM
             }
             else
                 Destroy(gameObject);
+
+            dataPath = Application.dataPath;
+            persistentDataPath = Application.persistentDataPath;
+
+            companyName = Application.companyName;
+            productName = Application.productName;
+            version = Application.version;
         }
 
         void Update()
         {
-            FPS = 1f / DeltaTime;
-            DeltaTime = Time.deltaTime;
-            FPSDeltaTime = DeltaTime * 60;
-            UnscaledDeltaTime = Time.unscaledDeltaTime;
-            FPSUnscaledDeltaTime = UnscaledDeltaTime * 60;
+            fps = 1f / deltaTime;
+            deltaTime = Time.deltaTime;
+            fpsDeltaTime = deltaTime * 60;
+            unscaledDeltaTime = Time.unscaledDeltaTime;
+            fpsUnscaledDeltaTime = unscaledDeltaTime * 60;
 
 #if !UNITY_EDITOR
             if (InputManager.GetKeyDown("Full Screen"))
@@ -154,8 +174,15 @@ namespace SCKRM
     {
         public static string EnvironmentVariable(this string value)
         {
-            value = value.Replace("%ProductName%", Application.productName);
-            value = value.Replace("%Version%", Application.version);
+            value = value.Replace("%DataPath%", Kernel.dataPath);
+            value = value.Replace("%StreamingAssetsPath%", Kernel.streamingAssetsPath);
+            value = value.Replace("%PersistentDataPath%", Kernel.persistentDataPath);
+
+            value = value.Replace("%CompanyName%", Kernel.companyName);
+            value = value.Replace("%ProductName%", Kernel.productName);
+            value = value.Replace("%Version%", Kernel.version);
+
+            value = value.Replace("%Platform%", Kernel.platform);
 
             return value;
         }

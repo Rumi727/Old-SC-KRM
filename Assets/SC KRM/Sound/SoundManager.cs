@@ -43,6 +43,16 @@ namespace SCKRM.Sound
 
         void Awake() => instance = this;
 
+        /// <summary>
+        /// BGM을 재생합니다
+        /// </summary>
+        /// <param name="soundType">타입</param>
+        /// <param name="path">경로</param>
+        /// <param name="volume">볼륨</param>
+        /// <param name="loop">루프</param>
+        /// <param name="pitch">피치</param>
+        /// <param name="rhythmPitchUse">리듬 매니저에서 사용하는 피치와 연동</param>
+        /// <returns></returns>
         public static SoundObject PlayBGM(SoundType soundType, string path, float volume = 1, bool loop = false, float pitch = 1, bool rhythmPitchUse = false)
         {
             if (BGMList.Count >= MaxBGMCount)
@@ -67,8 +77,24 @@ namespace SCKRM.Sound
             return soundObject;
         }
 
+        /// <summary>
+        /// 효과음을 재생합니다
+        /// </summary>
+        /// <param name="soundType">타입</param>
+        /// <param name="path">경로</param>
+        /// <param name="volume">볼륨</param>
+        /// <param name="pitch">피치</param>
+        /// <returns></returns>
         public static SoundObject PlaySound(SoundType soundType, string path, float volume = 1, float pitch = 1) => PlaySound(soundType, new string[] { path }, volume, pitch);
 
+        /// <summary>
+        /// 효과음을 재생합니다
+        /// </summary>
+        /// <param name="soundType">타입</param>
+        /// <param name="path">경로 (랜덤 선택)</param>
+        /// <param name="volume">볼륨</param>
+        /// <param name="pitch">피치</param>
+        /// <returns></returns>
         static SoundObject PlaySound(SoundType soundType, string[] path, float volume = 1, float pitch = 1)
         {
             if (BGMList.Count >= MaxBGMCount)
@@ -93,6 +119,11 @@ namespace SCKRM.Sound
             return soundObject;
         }
         
+        /// <summary>
+        /// BGM을 중지합니다
+        /// </summary>
+        /// <param name="path">경로</param>
+        /// <param name="all">모두 중지</param>
         public static void StopBGM(string path, bool all = false)
         {
             for (int i = 0; i < BGMList.Count; i++)
@@ -108,8 +139,17 @@ namespace SCKRM.Sound
             }
         }
 
+        /// <summary>
+        /// 효과음을 중지합니다
+        /// </summary>
+        /// <param name="soundObject">중지할 오브젝트</param>
         public static void StopSound(SoundObject soundObject) => ObjectPoolingSystem.ObjectRemove("Sound Object", soundObject.gameObject, soundObject.OnDestroy);
 
+        /// <summary>
+        /// 효과음을 중지합니다
+        /// </summary>
+        /// <param name="path">경로</param>
+        /// <param name="all">모두 중지</param>
         public static void StopSound(string path, bool all = false)
         {
             for (int i = 0; i < SoundList.Count; i++)
@@ -125,6 +165,11 @@ namespace SCKRM.Sound
             }
         }
 
+
+        /// <summary>
+        /// 모든 효과음을 중지합니다
+        /// </summary>
+        /// <param name="soundType">타입</param>
         public static void StopAll(SoundType soundType)
         {
             if ((soundType & SoundType.BGM) != 0)

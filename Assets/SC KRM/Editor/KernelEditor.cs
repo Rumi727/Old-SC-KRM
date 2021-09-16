@@ -34,14 +34,38 @@ namespace SCKRM.InspectorEditor
 
         public override void OnInspectorGUI()
         {
-            EditorGUILayout.LabelField("델타 타임 - " + Kernel.DeltaTime);
-            EditorGUILayout.LabelField("FPS 델타 타임 - " + Kernel.FPSDeltaTime);
-            EditorGUILayout.LabelField("스케일 되지 않은 델타 타임 - " + Kernel.UnscaledDeltaTime);
-            EditorGUILayout.LabelField("스케일 되지 않은 FPS 델타 타임 - " + Kernel.FPSUnscaledDeltaTime);
+            if (Application.isPlaying)
+            {
+                EditorGUILayout.LabelField("델타 타임 - " + Kernel.deltaTime);
+                EditorGUILayout.LabelField("FPS 델타 타임 - " + Kernel.fpsDeltaTime);
+                EditorGUILayout.LabelField("스케일 되지 않은 델타 타임 - " + Kernel.unscaledDeltaTime);
+                EditorGUILayout.LabelField("스케일 되지 않은 FPS 델타 타임 - " + Kernel.fpsUnscaledDeltaTime);
 
-            EditorGUILayout.Space();
+                EditorGUILayout.Space();
 
-            EditorGUILayout.LabelField("FPS - " + Kernel.FPS);
+                EditorGUILayout.LabelField("FPS - " + Kernel.fps);
+
+                EditorGUILayout.Space();
+
+                EditorGUILayout.LabelField("데이터 경로 - " + Kernel.dataPath);
+                EditorGUILayout.LabelField("스트리밍 에셋 경로 - " + Kernel.streamingAssetsPath);
+                EditorGUILayout.LabelField("영구 데이터 경로 - " + Kernel.persistentDataPath);
+
+                EditorGUILayout.Space();
+
+                EditorGUILayout.LabelField("회사 이름 - " + Kernel.companyName);
+                EditorGUILayout.LabelField("제품 이름 - " + Kernel.productName);
+                EditorGUILayout.LabelField("버전 - " + Kernel.version);
+
+                EditorGUILayout.Space();
+
+                EditorGUILayout.LabelField("실행 중인 플랫폼 - " + Kernel.platform);
+            }
+            else
+            {
+                EditorGUILayout.LabelField("스트리밍 에셋 경로 - " + Kernel.streamingAssetsPath);
+                EditorGUILayout.LabelField("실행 중인 플랫폼 - " + Kernel.platform);
+            }
         }
     }
 }

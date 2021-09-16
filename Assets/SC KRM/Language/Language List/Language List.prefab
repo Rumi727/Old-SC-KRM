@@ -177,7 +177,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 52540320248571595}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7af2b7a759ec9b439601efc0b4a5c49, type: 3}
   m_Name: 
@@ -196,7 +196,7 @@ MonoBehaviour:
         y: 8
         width: 8
         height: 8
-      _border: {x: 2.1, y: 2.1, z: 2.1, w: 2.1}
+      _border: {x: 3, y: 3, z: 3, w: 3}
       _pivot: {x: 0.5, y: 0.5}
       _pixelsPerUnit: 100
     _highlightedSprite:
@@ -206,7 +206,7 @@ MonoBehaviour:
         y: 0
         width: 8
         height: 8
-      _border: {x: 2.1, y: 2.1, z: 2.1, w: 2.1}
+      _border: {x: 3, y: 3, z: 3, w: 3}
       _pivot: {x: 0.5, y: 0.5}
       _pixelsPerUnit: 100
     _pressedSprite:
@@ -216,7 +216,7 @@ MonoBehaviour:
         y: 0
         width: 8
         height: 8
-      _border: {x: 2.1, y: 2.1, z: 2.1, w: 2.1}
+      _border: {x: 3, y: 3, z: 3, w: 3}
       _pivot: {x: 0.5, y: 0.5}
       _pixelsPerUnit: 100
     _selectedSprite:
@@ -226,7 +226,7 @@ MonoBehaviour:
         y: 0
         width: 8
         height: 8
-      _border: {x: 2.1, y: 2.1, z: 2.1, w: 2.1}
+      _border: {x: 3, y: 3, z: 3, w: 3}
       _pivot: {x: 0.5, y: 0.5}
       _pixelsPerUnit: 100
     _disabledSprite:
@@ -236,7 +236,7 @@ MonoBehaviour:
         y: 8
         width: 8
         height: 8
-      _border: {x: 2.1, y: 2.1, z: 2.1, w: 2.1}
+      _border: {x: 3, y: 3, z: 3, w: 3}
       _pivot: {x: 0.5, y: 0.5}
       _pixelsPerUnit: 100
 --- !u!1 &52540320435683344
@@ -501,7 +501,7 @@ MonoBehaviour:
         y: 8
         width: 8
         height: 8
-      _border: {x: 2.1, y: 2.1, z: 2.1, w: 2.1}
+      _border: {x: 3, y: 3, z: 3, w: 3}
       _pivot: {x: 0.5, y: 0.5}
       _pixelsPerUnit: 100
     _highlightedSprite:
@@ -511,7 +511,7 @@ MonoBehaviour:
         y: 0
         width: 8
         height: 8
-      _border: {x: 2.1, y: 2.1, z: 2.1, w: 2.1}
+      _border: {x: 3, y: 3, z: 3, w: 3}
       _pivot: {x: 0.5, y: 0.5}
       _pixelsPerUnit: 100
     _pressedSprite:
@@ -521,7 +521,7 @@ MonoBehaviour:
         y: 0
         width: 8
         height: 8
-      _border: {x: 2.1, y: 2.1, z: 2.1, w: 2.1}
+      _border: {x: 3, y: 3, z: 3, w: 3}
       _pivot: {x: 0.5, y: 0.5}
       _pixelsPerUnit: 100
     _selectedSprite:
@@ -531,7 +531,7 @@ MonoBehaviour:
         y: 0
         width: 8
         height: 8
-      _border: {x: 2.1, y: 2.1, z: 2.1, w: 2.1}
+      _border: {x: 3, y: 3, z: 3, w: 3}
       _pivot: {x: 0.5, y: 0.5}
       _pixelsPerUnit: 100
     _disabledSprite:

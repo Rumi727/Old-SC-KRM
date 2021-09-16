@@ -22,8 +22,8 @@ namespace SCKRM.Resources
 
             instance = this;
 
-            if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "Resource Pack")))
-                Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "Resource Pack"));
+            if (!Directory.Exists(Path.Combine(Kernel.persistentDataPath, "Resource Pack")))
+                Directory.CreateDirectory(Path.Combine(Kernel.persistentDataPath, "Resource Pack"));
         }
 
         /// <summary>
@@ -33,7 +33,15 @@ namespace SCKRM.Resources
 
         //public static Dictionary<string, AudioClip> AudioList { get; } = new Dictionary<string, AudioClip>();
 
-        public static T Search<T>(string path, string nameSpace = "", bool resourcePackPath = true)
+        /// <summary>
+        /// 리소스팩에서 리소스를 검색하고 반환합니다
+        /// </summary>
+        /// <typeparam name="ResourceType">리소스 타입</typeparam>
+        /// <param name="path">경로</param>
+        /// <param name="nameSpace"></param>
+        /// <param name="resourcePackPath"></param>
+        /// <returns></returns>
+        public static ResourceType Search<ResourceType>(string path, string nameSpace = "", bool resourcePackPath = true)
         {
             if (resourcePackPath)
             {
@@ -55,7 +63,7 @@ namespace SCKRM.Resources
                     {
                         allPath = Path.Combine(resourcePack.Path, path).Replace("\\", "/").Replace("%NameSpace%", selectedNameSpace);
 
-                        if (typeof(T) == typeof(Texture2D) || typeof(T) == typeof(Sprite))
+                        if (typeof(ResourceType) == typeof(Texture2D) || typeof(ResourceType) == typeof(Sprite))
                         {
                             allPath += ".png";
 
@@ -81,9 +89,9 @@ namespace SCKRM.Resources
 
                                     texture.filterMode = spriteJsonSetting.filterMode;
 
-                                    if (typeof(T) == typeof(Texture2D))
-                                        return (T)Convert.ChangeType(texture, typeof(T));
-                                    else if (typeof(T) == typeof(Sprite))
+                                    if (typeof(ResourceType) == typeof(Texture2D))
+                                        return (ResourceType)Convert.ChangeType(texture, typeof(ResourceType));
+                                    else if (typeof(ResourceType) == typeof(Sprite))
                                     {
                                         if (rect.x == -1)
                                             rect = new Rect(0, 0, texture.width, texture.height);
@@ -118,12 +126,12 @@ namespace SCKRM.Resources
                                             spriteJsonSetting.pivot.y = 1;
 
                                         Sprite sprite = Sprite.Create(texture, rect, pivot, spriteJsonSetting.pixelsPerUnit, 1, SpriteMeshType.Tight, border);
-                                        return (T)Convert.ChangeType(sprite, typeof(T));
+                                        return (ResourceType)Convert.ChangeType(sprite, typeof(ResourceType));
                                     }
                                 }
                             }
                         }
-                        else if (typeof(T) == typeof(AudioClip))
+                        else if (typeof(ResourceType) == typeof(AudioClip))
                         {
                             AudioClip audioClip = null;
 
@@ -174,9 +182,9 @@ namespace SCKRM.Resources
 #pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
 
                             if (audioClip != null)
-                                return (T)Convert.ChangeType(audioClip, typeof(T));
+                                return (ResourceType)Convert.ChangeType(audioClip, typeof(ResourceType));
                         }
-                        else if (typeof(T) == typeof(string))
+                        else if (typeof(ResourceType) == typeof(string))
                         {
                             allPath += ".json";
                             if (File.Exists(allPath))
@@ -185,7 +193,7 @@ namespace SCKRM.Resources
                                 string text = sr.ReadToEnd();
                                 sr.Close();
 
-                                return (T)Convert.ChangeType(text, typeof(string));
+                                return (ResourceType)Convert.ChangeType(text, typeof(string));
                             }
                         }
                     }
@@ -193,7 +201,7 @@ namespace SCKRM.Resources
             }
             else
             {
-                if (typeof(T) == typeof(Texture2D) || typeof(T) == typeof(Sprite))
+                if (typeof(ResourceType) == typeof(Texture2D) || typeof(ResourceType) == typeof(Sprite))
                 {
                     path = path.Replace("\\", "/");
                     path += ".png";
@@ -220,9 +228,9 @@ namespace SCKRM.Resources
 
                             texture.filterMode = spriteJsonSetting.filterMode;
 
-                            if (typeof(T) == typeof(Texture2D))
-                                return (T)Convert.ChangeType(texture, typeof(T));
-                            else if (typeof(T) == typeof(Sprite))
+                            if (typeof(ResourceType) == typeof(Texture2D))
+                                return (ResourceType)Convert.ChangeType(texture, typeof(ResourceType));
+                            else if (typeof(ResourceType) == typeof(Sprite))
                             {
                                 if (rect.x == -1)
                                     rect = new Rect(0, 0, texture.width, texture.height);
@@ -257,12 +265,12 @@ namespace SCKRM.Resources
                                     spriteJsonSetting.pivot.y = 1;
 
                                 Sprite sprite = Sprite.Create(texture, rect, pivot, spriteJsonSetting.pixelsPerUnit, 1, SpriteMeshType.Tight, border);
-                                return (T)Convert.ChangeType(sprite, typeof(T));
+                                return (ResourceType)Convert.ChangeType(sprite, typeof(ResourceType));
                             }
                         }
                     }
                 }
-                else if (typeof(T) == typeof(AudioClip))
+                else if (typeof(ResourceType) == typeof(AudioClip))
                 {
                     AudioClip audioClip = null;
 
@@ -313,9 +321,9 @@ namespace SCKRM.Resources
 #pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
 
                     if (audioClip != null)
-                        return (T)Convert.ChangeType(audioClip, typeof(T));
+                        return (ResourceType)Convert.ChangeType(audioClip, typeof(ResourceType));
                 }
-                else if (typeof(T) == typeof(string))
+                else if (typeof(ResourceType) == typeof(string))
                 {
                     path += ".json";
                     if (File.Exists(path))
@@ -324,12 +332,12 @@ namespace SCKRM.Resources
                         string text = sr.ReadToEnd();
                         sr.Close();
 
-                        return (T)Convert.ChangeType(text, typeof(string));
+                        return (ResourceType)Convert.ChangeType(text, typeof(string));
                     }
                 }
             }
 
-            return default(T);
+            return default(ResourceType);
         }
 
         public static NameSpaceAndPath GetNameSpaceAndPath(string value)
@@ -340,12 +348,12 @@ namespace SCKRM.Resources
                 return new NameSpaceAndPath() { NameSpace = ResourcePack.DefaultNameSpace, Path = value };
         }
 
-        public static void OpenResourcePackFolder() => Process.Start("explorer.exe", Path.Combine(Application.persistentDataPath, "Resource Pack").Replace("/", "\\"));
+        public static void OpenResourcePackFolder() => Process.Start("explorer.exe", Path.Combine(Kernel.persistentDataPath, "Resource Pack").Replace("/", "\\"));
     }
 
     public class SpriteJsonSetting
     {
-        [JsonProperty("Filter Mode")] public FilterMode filterMode = FilterMode.Point;
+        [JsonProperty("Filter Mode")] public FilterMode filterMode = FilterMode.Bilinear;
         [JsonProperty("Rect")] public JRect rect = new JRect(-1);
         [JsonProperty("Pivot")] public JVector2 pivot = new JVector2(-1);
         [JsonProperty("Pixels Per Unit")] public int pixelsPerUnit = 100;
@@ -369,7 +377,7 @@ namespace SCKRM.Resources
         public const string LanguagePath = "assets/%NameSpace%/lang/";
 
         public string[] NameSpace = { "sc-krm" };
-        public string Path = Application.streamingAssetsPath;
+        public string Path = Kernel.streamingAssetsPath;
         
         public string Name = "";
         public string Description = "";

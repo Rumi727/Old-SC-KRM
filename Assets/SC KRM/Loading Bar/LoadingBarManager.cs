@@ -22,6 +22,7 @@ namespace SCKRM.Loading
             instance = this;
         }
 
+        //로딩 바를 생성합니다
         public static LoadingBar Create() => ObjectPoolingSystem.ObjectCreate("Loading Bar", instance.parentTransform).GetComponent<LoadingBar>();
     }
 }

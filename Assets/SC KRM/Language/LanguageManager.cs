@@ -23,6 +23,12 @@ namespace SCKRM.Language
             instance = this;
         }
 
+        /// <summary>
+        /// 리소스팩에 있는 언어 파일을 불러옵니다
+        /// </summary>
+        /// <param name="key">불러올 키</param>
+        /// <param name="language">불러올 언어 (비어있을경우엔, 현재 선택된 언어로 불러옴)</param>
+        /// <returns></returns>
         public static string LangLoad(string key, string language = "")
         {
             if (!LangList.ContainsKey(key))

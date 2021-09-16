@@ -44,16 +44,16 @@ namespace SCKRM.UI
             else if (AudioListener.volume < 0)
                 AudioListener.volume = 0;
 
-            image.fillAmount = Mathf.Lerp(image.fillAmount, AudioListener.volume, lerpT * Kernel.FPSDeltaTime);
+            image.fillAmount = Mathf.Lerp(image.fillAmount, AudioListener.volume, lerpT * Kernel.fpsDeltaTime);
             text.text = Mathf.Round(AudioListener.volume * 100) + "%";
 
             if (timer < hideTimer)
             {
-                timer += Kernel.DeltaTime;
-                rectTransform.anchoredPosition = Vector2.Lerp(rectTransform.anchoredPosition, Vector2.zero, lerpT * Kernel.FPSDeltaTime);
+                timer += Kernel.deltaTime;
+                rectTransform.anchoredPosition = Vector2.Lerp(rectTransform.anchoredPosition, Vector2.zero, lerpT * Kernel.fpsDeltaTime);
             }
             else
-                rectTransform.anchoredPosition = Vector2.Lerp(rectTransform.anchoredPosition, new Vector2(rectTransform.sizeDelta.x, 0), lerpT * Kernel.FPSDeltaTime);
+                rectTransform.anchoredPosition = Vector2.Lerp(rectTransform.anchoredPosition, new Vector2(rectTransform.sizeDelta.x, 0), lerpT * Kernel.fpsDeltaTime);
         }
     }
 }

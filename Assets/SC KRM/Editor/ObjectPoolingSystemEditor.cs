@@ -52,16 +52,16 @@ namespace SCKRM.InspectorEditor
 
             if (GUILayout.Button("추가", GUILayout.Width(40)))
             {
-                _editor._PrefabObject.ObjectName.Add("");
+                _editor._PrefabObject.ObjectKey.Add("");
                 _editor._PrefabObject.Object.Add(null);
             }
 
-            if (_editor._PrefabObject.ObjectName.Count <= 0)
+            if (_editor._PrefabObject.ObjectKey.Count <= 0)
                 GUI.enabled = false;
 
-            if (GUILayout.Button("삭제", GUILayout.Width(40)) && _editor._PrefabObject.ObjectName.Count > 0)
+            if (GUILayout.Button("삭제", GUILayout.Width(40)) && _editor._PrefabObject.ObjectKey.Count > 0)
             {
-                _editor._PrefabObject.ObjectName.RemoveAt(_editor._PrefabObject.ObjectName.Count - 1);
+                _editor._PrefabObject.ObjectKey.RemoveAt(_editor._PrefabObject.ObjectKey.Count - 1);
                 _editor._PrefabObject.Object.RemoveAt(_editor._PrefabObject.Object.Count - 1);
             }
 
@@ -69,7 +69,7 @@ namespace SCKRM.InspectorEditor
 
             EditorGUILayout.Space();
 
-            int count = EditorGUILayout.IntField("리스트 길이", _editor._PrefabObject.ObjectName.Count, GUILayout.Height(21));
+            int count = EditorGUILayout.IntField("리스트 길이", _editor._PrefabObject.ObjectKey.Count, GUILayout.Height(21));
 
             EditorGUILayout.Space();
 
@@ -81,10 +81,10 @@ namespace SCKRM.InspectorEditor
 
             GUI.enabled = true;
 
-            if (showPos >= _editor._PrefabObject.ObjectName.Count - showLength)
+            if (showPos >= _editor._PrefabObject.ObjectKey.Count - showLength)
                 GUI.enabled = false;
 
-            if (GUILayout.Button("아래로", GUILayout.Width(50)) && showPos < _editor._PrefabObject.ObjectName.Count - showLength)
+            if (GUILayout.Button("아래로", GUILayout.Width(50)) && showPos < _editor._PrefabObject.ObjectKey.Count - showLength)
                 showPos++;
 
             GUI.enabled = true;
@@ -96,51 +96,51 @@ namespace SCKRM.InspectorEditor
 
 
             //변수 설정
-            while (_editor._PrefabObject.Object.Count > _editor._PrefabObject.ObjectName.Count)
-                _editor._PrefabObject.Object.RemoveAt(_editor._PrefabObject.ObjectName.Count);
+            while (_editor._PrefabObject.Object.Count > _editor._PrefabObject.ObjectKey.Count)
+                _editor._PrefabObject.Object.RemoveAt(_editor._PrefabObject.ObjectKey.Count);
 
-            while (_editor._PrefabObject.Object.Count < _editor._PrefabObject.ObjectName.Count)
+            while (_editor._PrefabObject.Object.Count < _editor._PrefabObject.ObjectKey.Count)
                 _editor._PrefabObject.Object.Add(null);
 
             if (count < 0)
                 count = 0;
 
-            if (count > _editor._PrefabObject.ObjectName.Count)
+            if (count > _editor._PrefabObject.ObjectKey.Count)
             {
-                for (int i = _editor._PrefabObject.ObjectName.Count; i < count; i++)
+                for (int i = _editor._PrefabObject.ObjectKey.Count; i < count; i++)
                 {
-                    _editor._PrefabObject.ObjectName.Add("");
+                    _editor._PrefabObject.ObjectKey.Add("");
                     _editor._PrefabObject.Object.Add(null);
                 }
             }
-            else if (count < _editor._PrefabObject.ObjectName.Count)
+            else if (count < _editor._PrefabObject.ObjectKey.Count)
             {
-                for (int i = _editor._PrefabObject.ObjectName.Count - 1; i >= count; i--)
+                for (int i = _editor._PrefabObject.ObjectKey.Count - 1; i >= count; i--)
                 {
-                    _editor._PrefabObject.ObjectName.RemoveAt(i);
+                    _editor._PrefabObject.ObjectKey.RemoveAt(i);
                     _editor._PrefabObject.Object.RemoveAt(i);
                 }
             }
 
-            if (showLength <= _editor._PrefabObject.ObjectName.Count && showPos > _editor._PrefabObject.ObjectName.Count - showLength)
-                showPos = _editor._PrefabObject.ObjectName.Count - showLength;
+            if (showLength <= _editor._PrefabObject.ObjectKey.Count && showPos > _editor._PrefabObject.ObjectKey.Count - showLength)
+                showPos = _editor._PrefabObject.ObjectKey.Count - showLength;
 
             if (showLength < 33)
                 showLength = 33;
-            if (showLength + showPos > _editor._PrefabObject.ObjectName.Count)
-                showLength = _editor._PrefabObject.ObjectName.Count - showPos;
+            if (showLength + showPos > _editor._PrefabObject.ObjectKey.Count)
+                showLength = _editor._PrefabObject.ObjectKey.Count - showPos;
 
             for (int i = showPos; i < showPos + showLength; i++)
             {
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("프리팹 이름", GUILayout.Width(66));
-                _editor._PrefabObject.ObjectName[i] = EditorGUILayout.TextField(_editor._PrefabObject.ObjectName[i]);
+                EditorGUILayout.LabelField("프리팹 키", GUILayout.Width(53));
+                _editor._PrefabObject.ObjectKey[i] = EditorGUILayout.TextField(_editor._PrefabObject.ObjectKey[i]);
                 EditorGUILayout.LabelField("프리팹", GUILayout.Width(38));
                 _editor._PrefabObject.Object[i] = (GameObject)EditorGUILayout.ObjectField("", _editor._PrefabObject.Object[i], typeof(GameObject), true);
                 EditorGUILayout.EndHorizontal();
             }
 
-            bool overlap = _editor._PrefabObject.ObjectName.Count != _editor._PrefabObject.ObjectName.Distinct().Count();
+            bool overlap = _editor._PrefabObject.ObjectKey.Count != _editor._PrefabObject.ObjectKey.Distinct().Count();
 
             if (GUI.changed && Application.isPlaying && !overlap)
                 ObjectPoolingSystem.PrefabObject = _editor._PrefabObject;

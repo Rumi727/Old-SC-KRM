@@ -46,8 +46,8 @@ namespace SCKRM.Resources.UI
             if (!selected)
             {
                 instance = this;
-
-                string[] directory = Directory.GetDirectories(Path.Combine(Application.persistentDataPath, "Resource Pack"));
+                
+                string[] directory = Directory.GetDirectories(Path.Combine(Kernel.persistentDataPath, "Resource Pack"));
                 for (int i = 0; i < directory.Length; i++)
                 {
                     string item = directory[i].Replace("\\", "/");
