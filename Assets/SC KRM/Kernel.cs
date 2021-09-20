@@ -4,6 +4,7 @@ using SCKRM.Loading;
 using SCKRM.Object;
 using SCKRM.Renderer;
 using SCKRM.Sound;
+using SCKRM.Window;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -104,19 +105,31 @@ namespace SCKRM
                 isAFK = false;
                 afkTimer += deltaTime;
             }
-
-
+        }
 
 #if !UNITY_EDITOR
-            if (InputManager.GetKeyDown("Full Screen"))
+        IEnumerator Start()
+        {
+            while (true)
             {
-                if (Screen.fullScreen)
-                    Screen.SetResolution((int)(Screen.currentResolution.width / 1.5f), (int)(Screen.currentResolution.height / 1.5f), false);
-                else
-                    Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
+                if (InputManager.GetKeyDown("Full Screen"))
+                {
+                    if (Screen.fullScreen)
+                        Screen.SetResolution((int)(Screen.currentResolution.width / 1.5f), (int)(Screen.currentResolution.height / 1.5f), false);
+                    else
+                    {
+                        Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, false);
+                        yield return new WaitForEndOfFrame();
+                        yield return new WaitForEndOfFrame();
+                        yield return new WaitForEndOfFrame();
+                        yield return new WaitForEndOfFrame();
+                        Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
+                    }
+                }
+                yield return null;
             }
-#endif
         }
+#endif
 
         public static void ListMove<T>(List<T> ts, int index, int moveIndex)
         {
