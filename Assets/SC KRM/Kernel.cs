@@ -28,6 +28,7 @@ namespace SCKRM
         public const float fps60second = 1f / 60f;
 
 
+
         public static string dataPath { get; private set; }
         public static string streamingAssetsPath { get; } = Application.streamingAssetsPath;
         public static string persistentDataPath { get; private set; }
@@ -36,7 +37,22 @@ namespace SCKRM
         public static string productName { get; private set; }
         public static string version { get; private set; }
 
-        public static string platform { get; } = Application.platform.ToString();
+        public static RuntimePlatform platform { get; } = Application.platform;
+
+
+
+        public static bool isAFK { get; private set; } = false;
+
+
+
+        public const int fpsLimit = 300;
+        public const int notFocusFpsLimit = 30;
+        public const int afkFpsLimit = 15;
+
+
+
+        public static float afkTimer { get; private set; } = 0;
+        public const float afkTimerLimit = 60;
 
 
 
@@ -65,6 +81,30 @@ namespace SCKRM
             fpsDeltaTime = deltaTime * 60;
             unscaledDeltaTime = Time.unscaledDeltaTime;
             fpsUnscaledDeltaTime = unscaledDeltaTime * 60;
+
+            //FPS Limit
+            if (!isAFK && Application.isFocused)
+                Application.targetFrameRate = fpsLimit;
+            else if (!isAFK && !Application.isFocused)
+                Application.targetFrameRate = notFocusFpsLimit;
+            else
+                Application.targetFrameRate = afkFpsLimit;
+
+
+
+            //AFK
+            if (InputManager.anyKeyDown)
+                afkTimer = 0;
+
+            if (afkTimer >= afkTimerLimit)
+                isAFK = true;
+            else
+            {
+                isAFK = false;
+                afkTimer += deltaTime;
+            }
+
+
 
 #if !UNITY_EDITOR
             if (InputManager.GetKeyDown("Full Screen"))
@@ -182,7 +222,7 @@ namespace SCKRM
             value = value.Replace("%ProductName%", Kernel.productName);
             value = value.Replace("%Version%", Kernel.version);
 
-            value = value.Replace("%Platform%", Kernel.platform);
+            value = value.Replace("%Platform%", Kernel.platform.ToString());
 
             return value;
         }

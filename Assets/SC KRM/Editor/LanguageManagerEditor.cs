@@ -43,7 +43,13 @@ namespace SCKRM.InspectorEditor
         public override void OnInspectorGUI()
         {
             //GUI
+            if (!Application.isPlaying)
+                GUI.enabled = false;
+
             LanguageManager.currentLanguage = EditorGUILayout.TextField("현재 언어", LanguageManager.currentLanguage);
+
+            GUI.enabled = true;
+
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("로드된 모든 언어의 정보");
 

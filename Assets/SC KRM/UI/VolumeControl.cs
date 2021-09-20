@@ -8,6 +8,7 @@ using UnityEngine.UI;
 namespace SCKRM.UI
 {
     [RequireComponent(typeof(RectTransform))]
+    [AddComponentMenu("커널/UI/볼륨 컨트롤 바 설정", 0)]
     public class VolumeControl : MonoBehaviour
     {
         [SerializeField, HideInInspector] RectTransform rectTransform;

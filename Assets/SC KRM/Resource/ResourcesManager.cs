@@ -353,7 +353,7 @@ namespace SCKRM.Resources
 
     public class SpriteJsonSetting
     {
-        [JsonProperty("Filter Mode")] public FilterMode filterMode = FilterMode.Bilinear;
+        [JsonProperty("Filter Mode")] public FilterMode filterMode = FilterMode.Point;
         [JsonProperty("Rect")] public JRect rect = new JRect(-1);
         [JsonProperty("Pivot")] public JVector2 pivot = new JVector2(-1);
         [JsonProperty("Pixels Per Unit")] public int pixelsPerUnit = 100;
@@ -376,9 +376,9 @@ namespace SCKRM.Resources
 
         public const string LanguagePath = "assets/%NameSpace%/lang/";
 
-        public string[] NameSpace = { "sc-krm" };
+        [JsonProperty("Name Space")] public string[] NameSpace = { "sc-krm" };
         public string Path = Kernel.streamingAssetsPath;
-        
+
         public string Name = "";
         public string Description = "";
     }

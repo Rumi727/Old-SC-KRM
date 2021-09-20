@@ -20,19 +20,30 @@ namespace SCKRM.Input
     {
         public static InputManager instance { get; private set; }
 
+
+
         [Obsolete("If you don't know exactly what you're doing, don't touch this variable")] public List<StringKeyCode> _keyList = new List<StringKeyCode>();
         [Obsolete("If you don't know exactly what you're doing, don't touch this variable")] public static Dictionary<string, KeyCode> keyList { get; set; }
 
-        public static bool GetKeyDown(KeyCode keyCode) => UnityEngine.Input.GetKeyDown(keyCode);
+
+
+        [Obsolete("Use UnityEngine.Input.GetKeyDown to optimize")] public static bool GetKeyDown(KeyCode keyCode) => UnityEngine.Input.GetKeyDown(keyCode);
         public static bool GetKeyDown(string keyCode) => keyList.ContainsKey(keyCode) && UnityEngine.Input.GetKeyDown(keyList[keyCode]);
-        public static bool GetKey(KeyCode keyCode) => UnityEngine.Input.GetKey(keyCode);
+        [Obsolete("Use UnityEngine.Input.GetKey to optimize")] public static bool GetKey(KeyCode keyCode) => UnityEngine.Input.GetKey(keyCode);
         public static bool GetKey(string keyCode) => keyList.ContainsKey(keyCode) && UnityEngine.Input.GetKey(keyList[keyCode]);
-        public static bool GetKeyUp(KeyCode keyCode) => UnityEngine.Input.GetKeyUp(keyCode);
+        [Obsolete("Use UnityEngine.Input.GetKeyUp to optimize")] public static bool GetKeyUp(KeyCode keyCode) => UnityEngine.Input.GetKeyUp(keyCode);
         public static bool GetKeyUp(string keyCode) => keyList.ContainsKey(keyCode) && UnityEngine.Input.GetKeyUp(keyList[keyCode]);
+
+
 
         public static Vector2 mousePosition { get; private set; }
         public static bool mousePresent { get; private set; }
         public static Vector2 mouseScrollDelta { get; private set; }
+
+        public static bool anyKeyDown { get; private set; }
+        public static bool anyKey { get; private set; }
+
+
 
         void Awake()
         {
@@ -60,6 +71,9 @@ namespace SCKRM.Input
             mousePosition = UnityEngine.Input.mousePosition;
             mousePresent = UnityEngine.Input.mousePresent;
             mouseScrollDelta = UnityEngine.Input.mouseScrollDelta;
+
+            anyKeyDown = UnityEngine.Input.anyKeyDown;
+            anyKey = UnityEngine.Input.anyKey;
         }
     }
 #pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.

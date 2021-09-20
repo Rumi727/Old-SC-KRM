@@ -60,11 +60,29 @@ namespace SCKRM.InspectorEditor
                 EditorGUILayout.Space();
 
                 EditorGUILayout.LabelField("실행 중인 플랫폼 - " + Kernel.platform);
+
+                EditorGUILayout.Space();
+
+                EditorGUILayout.LabelField("FPS 제한 - " + Kernel.fpsLimit);
+                EditorGUILayout.LabelField("포커스가 아닐 때 FPS 제한 - " + Kernel.notFocusFpsLimit);
+                EditorGUILayout.LabelField("AFK 상태일 때 FPS 제한 - " + Kernel.afkFpsLimit);
+
+                if (Kernel.isAFK)
+                {
+                    EditorGUILayout.Space();
+                    EditorGUILayout.LabelField("AFK 상태");
+                }
             }
             else
             {
                 EditorGUILayout.LabelField("스트리밍 에셋 경로 - " + Kernel.streamingAssetsPath);
                 EditorGUILayout.LabelField("실행 중인 플랫폼 - " + Kernel.platform);
+
+                EditorGUILayout.Space();
+
+                EditorGUILayout.LabelField("FPS 제한 - " + Kernel.fpsLimit);
+                EditorGUILayout.LabelField("포커스가 아닐 때 FPS 제한 - " + Kernel.notFocusFpsLimit);
+                EditorGUILayout.LabelField("AFK 상태일 때 FPS 제한 - " + Kernel.afkFpsLimit);
             }
         }
     }

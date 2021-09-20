@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace SCKRM.SaveData
 {
+    [AddComponentMenu("커널/세이브 로드/세이브 로드 매니저", 0)]
     public class SaveLoadManager : MonoBehaviour
     {
         public static SaveLoadManager instance;
@@ -59,14 +60,17 @@ namespace SCKRM.SaveData
             if (File.Exists(path))
                 kernelSetting = JsonConvert.DeserializeObject<KernelSetting>(File.ReadAllText(path));
 
-            AudioListener.volume = kernelSetting.MainVolume;
-            LanguageManager.currentLanguage = kernelSetting.Language;
+            if (kernelSetting != null)
+            {
+                AudioListener.volume = kernelSetting.MainVolume;
+                LanguageManager.currentLanguage = kernelSetting.Language;
 
-            List<ResourcePack> resourcePacks = kernelSetting.ResourcePack;
-            ResourcesManager.ResourcePacks.Clear();
-            for (int i = 0; i < resourcePacks.Count; i++)
-                ResourcesManager.ResourcePacks.Add(resourcePacks[i]);
-            ResourcesManager.ResourcePacks.Add(ResourcePack.Default);
+                List<ResourcePack> resourcePacks = kernelSetting.ResourcePack;
+                ResourcesManager.ResourcePacks.Clear();
+                for (int i = 0; i < resourcePacks.Count; i++)
+                    ResourcesManager.ResourcePacks.Add(resourcePacks[i]);
+                ResourcesManager.ResourcePacks.Add(ResourcePack.Default);
+            }
 
             instance.StartCoroutine(AllRefresh());
         }
@@ -77,6 +81,5 @@ namespace SCKRM.SaveData
         [JsonProperty("Main Volume")] public float MainVolume = 1;
         public string Language = "en_us";
         [JsonProperty("Resource Pack")] public List<ResourcePack> ResourcePack = new List<ResourcePack>();
-        public Json.JRect jRect = new Json.JRect(0);
     }
 }
