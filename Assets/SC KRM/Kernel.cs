@@ -3,7 +3,6 @@ using SCKRM.Language;
 using SCKRM.Loading;
 using SCKRM.Object;
 using SCKRM.Renderer;
-using SCKRM.Resources;
 using SCKRM.Sound;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,6 +35,7 @@ namespace SCKRM
         public static string companyName { get; private set; }
         public static string productName { get; private set; }
         public static string version { get; private set; }
+        public static string unityVersion { get; private set; }
 
         public static RuntimePlatform platform { get; } = Application.platform;
 
@@ -72,6 +72,7 @@ namespace SCKRM
             companyName = Application.companyName;
             productName = Application.productName;
             version = Application.version;
+            unityVersion = Application.unityVersion;
         }
 
         void Update()
