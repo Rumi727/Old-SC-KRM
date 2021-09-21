@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.Language.UI
 {
-    [AddComponentMenu("Ä¿³Î/Language/¾ğ¾î ¼³Á¤ ¹öÆ°", 2)]
+    [AddComponentMenu("ì»¤ë„/Language/ì–¸ì–´ ì„¤ì • ë²„íŠ¼", 2)]
     public class LanguageButton : MonoBehaviour
     {
         [SerializeField] Image image;

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.Loading
 {
-    [AddComponentMenu("Ä¿³Î/·Îµù/·Îµù ¹Ù", 1)]
+    [AddComponentMenu("ì»¤ë„/ë¡œë”©/ë¡œë”© ë°”", 1)]
     public class LoadingBar : MonoBehaviour
     {
         [SerializeField] Image image;
@@ -21,15 +21,17 @@ namespace SCKRM.Loading
             {
                 image.fillAmount = Mathf.Lerp(image.fillAmount, value, lerpT * Kernel.fpsDeltaTime);
                 if (image.fillAmount > 0.999f)
-                    ObjectPoolingSystem.ObjectRemove("Loading Bar", gameObject, OnDestroy);
+                    ObjectPoolingSystem.ObjectRemove("loading_manager.loading_bar", gameObject, OnDestroy);
             }
             else
             {
                 image.fillAmount = value;
                 if (image.fillAmount >= 1)
-                    ObjectPoolingSystem.ObjectRemove("Loading Bar", gameObject, OnDestroy);
+                    ObjectPoolingSystem.ObjectRemove("loading_manager.loading_bar", gameObject, OnDestroy);
             }
         }
+
+        public void Remove() => ObjectPoolingSystem.ObjectRemove("loading_manager.loading_bar", gameObject, OnDestroy);
 
         public void OnDestroy()
         {

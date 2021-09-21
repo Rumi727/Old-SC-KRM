@@ -35,16 +35,16 @@ namespace SCKRM.InspectorEditor
 
         public override void OnInspectorGUI()
         {
-            EditorGUILayout.LabelField("À©µµ¿ì ÇÚµé - " + WindowManager.GetWindowHandle());
+            EditorGUILayout.LabelField("ìœˆë„ìš° í•¸ë“¤ - " + WindowManager.GetWindowHandle());
 
             EditorGUILayout.Space();
 
             Vector2 pos = WindowManager.GetWindowPos(Vector2.zero, Vector2.zero);
             Vector2 size = WindowManager.GetWindowSize();
             Vector2 size2 = WindowManager.GetClientSize();
-            EditorGUILayout.LabelField("À©µµ¿ì À§Ä¡ - " + pos.x + ", " + pos.y);
-            EditorGUILayout.LabelField("À©µµ¿ì Å©±â - " + size.x + ", " + size.y);
-            EditorGUILayout.LabelField("Å¬¶óÀÌ¾ğÆ® Å©±â - " + size2.x + ", " + size2.y);
+            EditorGUILayout.LabelField("ìœˆë„ìš° ìœ„ì¹˜ - " + pos.x + ", " + pos.y);
+            EditorGUILayout.LabelField("ìœˆë„ìš° í¬ê¸° - " + size.x + ", " + size.y);
+            EditorGUILayout.LabelField("í´ë¼ì´ì–¸íŠ¸ í¬ê¸° - " + size2.x + ", " + size2.y);
         }
     }
 }

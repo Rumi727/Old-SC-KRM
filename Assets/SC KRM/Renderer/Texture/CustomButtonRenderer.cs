@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace SCKRM.Renderer
 {
     [RequireComponent(typeof(Button))]
-    [AddComponentMenu("ƒø≥Œ/Renderer/UI/Button", 2)]
+    [AddComponentMenu("Ïª§ÎÑê/Renderer/UI/Button", 2)]
     public class CustomButtonRenderer : CustomRenderer
     {
         Button button;

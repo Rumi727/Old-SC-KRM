@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SCKRM.Resources.UI
 {
-    [AddComponentMenu("Ä¿³Î/Resources/¸®¼Ò½ºÆÑ ¸®½ºÆ®/ÆÑ Æú´õ ¿­±â ÇÔ¼ö", 3)]
+    [AddComponentMenu("ì»¤ë„/Resources/ë¦¬ì†ŒìŠ¤íŒ© ë¦¬ìŠ¤íŠ¸/íŒ© í´ë” ì—´ê¸° í•¨ìˆ˜", 3)]
     public class OpenPackFolder : MonoBehaviour
     {
         public void Open() => ResourcesManager.OpenResourcePackFolder();

@@ -36,10 +36,10 @@ namespace SCKRM.InspectorEditor
         {
             if (Application.isPlaying)
             {
-                EditorGUILayout.LabelField("µ¨Å¸ Å¸ÀÓ - " + Kernel.deltaTime);
-                EditorGUILayout.LabelField("FPS µ¨Å¸ Å¸ÀÓ - " + Kernel.fpsDeltaTime);
-                EditorGUILayout.LabelField("½ºÄÉÀÏ µÇÁö ¾ÊÀº µ¨Å¸ Å¸ÀÓ - " + Kernel.unscaledDeltaTime);
-                EditorGUILayout.LabelField("½ºÄÉÀÏ µÇÁö ¾ÊÀº FPS µ¨Å¸ Å¸ÀÓ - " + Kernel.fpsUnscaledDeltaTime);
+                EditorGUILayout.LabelField("ë¸íƒ€ íƒ€ì„ - " + Kernel.deltaTime);
+                EditorGUILayout.LabelField("FPS ë¸íƒ€ íƒ€ì„ - " + Kernel.fpsDeltaTime);
+                EditorGUILayout.LabelField("ìŠ¤ì¼€ì¼ ë˜ì§€ ì•Šì€ ë¸íƒ€ íƒ€ì„ - " + Kernel.unscaledDeltaTime);
+                EditorGUILayout.LabelField("ìŠ¤ì¼€ì¼ ë˜ì§€ ì•Šì€ FPS ë¸íƒ€ íƒ€ì„ - " + Kernel.fpsUnscaledDeltaTime);
 
                 EditorGUILayout.Space();
 
@@ -47,42 +47,42 @@ namespace SCKRM.InspectorEditor
 
                 EditorGUILayout.Space();
 
-                EditorGUILayout.LabelField("µ¥ÀÌÅÍ °æ·Î - " + Kernel.dataPath);
-                EditorGUILayout.LabelField("½ºÆ®¸®¹Ö ¿¡¼Â °æ·Î - " + Kernel.streamingAssetsPath);
-                EditorGUILayout.LabelField("¿µ±¸ µ¥ÀÌÅÍ °æ·Î - " + Kernel.persistentDataPath);
+                EditorGUILayout.LabelField("ë°ì´í„° ê²½ë¡œ - " + Kernel.dataPath);
+                EditorGUILayout.LabelField("ìŠ¤íŠ¸ë¦¬ë° ì—ì…‹ ê²½ë¡œ - " + Kernel.streamingAssetsPath);
+                EditorGUILayout.LabelField("ì˜êµ¬ ë°ì´í„° ê²½ë¡œ - " + Kernel.persistentDataPath);
 
                 EditorGUILayout.Space();
 
-                EditorGUILayout.LabelField("È¸»ç ÀÌ¸§ - " + Kernel.companyName);
-                EditorGUILayout.LabelField("Á¦Ç° ÀÌ¸§ - " + Kernel.productName);
-                EditorGUILayout.LabelField("¹öÀü - " + Kernel.version);
+                EditorGUILayout.LabelField("íšŒì‚¬ ì´ë¦„ - " + Kernel.companyName);
+                EditorGUILayout.LabelField("ì œí’ˆ ì´ë¦„ - " + Kernel.productName);
+                EditorGUILayout.LabelField("ë²„ì „ - " + Kernel.version);
 
                 EditorGUILayout.Space();
 
-                EditorGUILayout.LabelField("½ÇÇà ÁßÀÎ ÇÃ·§Æû - " + Kernel.platform);
+                EditorGUILayout.LabelField("ì‹¤í–‰ ì¤‘ì¸ í”Œë«í¼ - " + Kernel.platform);
 
                 EditorGUILayout.Space();
 
-                EditorGUILayout.LabelField("FPS Á¦ÇÑ - " + Kernel.fpsLimit);
-                EditorGUILayout.LabelField("Æ÷Ä¿½º°¡ ¾Æ´Ò ¶§ FPS Á¦ÇÑ - " + Kernel.notFocusFpsLimit);
-                EditorGUILayout.LabelField("AFK »óÅÂÀÏ ¶§ FPS Á¦ÇÑ - " + Kernel.afkFpsLimit);
+                EditorGUILayout.LabelField("FPS ì œí•œ - " + Kernel.fpsLimit);
+                EditorGUILayout.LabelField("í¬ì»¤ìŠ¤ê°€ ì•„ë‹ ë•Œ FPS ì œí•œ - " + Kernel.notFocusFpsLimit);
+                EditorGUILayout.LabelField("AFK ìƒíƒœì¼ ë•Œ FPS ì œí•œ - " + Kernel.afkFpsLimit);
 
                 if (Kernel.isAFK)
                 {
                     EditorGUILayout.Space();
-                    EditorGUILayout.LabelField("AFK »óÅÂ");
+                    EditorGUILayout.LabelField("AFK ìƒíƒœ");
                 }
             }
             else
             {
-                EditorGUILayout.LabelField("½ºÆ®¸®¹Ö ¿¡¼Â °æ·Î - " + Kernel.streamingAssetsPath);
-                EditorGUILayout.LabelField("½ÇÇà ÁßÀÎ ÇÃ·§Æû - " + Kernel.platform);
+                EditorGUILayout.LabelField("ìŠ¤íŠ¸ë¦¬ë° ì—ì…‹ ê²½ë¡œ - " + Kernel.streamingAssetsPath);
+                EditorGUILayout.LabelField("ì‹¤í–‰ ì¤‘ì¸ í”Œë«í¼ - " + Kernel.platform);
 
                 EditorGUILayout.Space();
 
-                EditorGUILayout.LabelField("FPS Á¦ÇÑ - " + Kernel.fpsLimit);
-                EditorGUILayout.LabelField("Æ÷Ä¿½º°¡ ¾Æ´Ò ¶§ FPS Á¦ÇÑ - " + Kernel.notFocusFpsLimit);
-                EditorGUILayout.LabelField("AFK »óÅÂÀÏ ¶§ FPS Á¦ÇÑ - " + Kernel.afkFpsLimit);
+                EditorGUILayout.LabelField("FPS ì œí•œ - " + Kernel.fpsLimit);
+                EditorGUILayout.LabelField("í¬ì»¤ìŠ¤ê°€ ì•„ë‹ ë•Œ FPS ì œí•œ - " + Kernel.notFocusFpsLimit);
+                EditorGUILayout.LabelField("AFK ìƒíƒœì¼ ë•Œ FPS ì œí•œ - " + Kernel.afkFpsLimit);
             }
         }
     }

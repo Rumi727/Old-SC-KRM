@@ -39,17 +39,17 @@ namespace SCKRM.InspectorEditor
 
         public override void OnInspectorGUI()
         {
-            UseProperty("_normalPath", "ÀÏ¹İ ½ºÇÁ¶óÀÌÆ® °æ·Î");
-            UseProperty("_highlightedPath", "ÇÏÀÌ¶óÀÌÆ®µÈ ½ºÇÁ¶óÀÌÆ® °æ·Î");
-            UseProperty("_pressedPath", "´­¸° ½ºÇÁ¶óÀÌÆ® °æ·Î");
-            UseProperty("_selectedPath", "¼±ÅÃµÈ ½ºÇÁ¶óÀÌÆ® °æ·Î");
-            UseProperty("_disabledPath", "ºñÈ°¼ºÈ­µÈ ½ºÇÁ¶óÀÌÆ® °æ·Î");
+            UseProperty("_normalPath", "ì¼ë°˜ ìŠ¤í”„ë¼ì´íŠ¸ ê²½ë¡œ");
+            UseProperty("_highlightedPath", "í•˜ì´ë¼ì´íŠ¸ëœ ìŠ¤í”„ë¼ì´íŠ¸ ê²½ë¡œ");
+            UseProperty("_pressedPath", "ëˆŒë¦° ìŠ¤í”„ë¼ì´íŠ¸ ê²½ë¡œ");
+            UseProperty("_selectedPath", "ì„ íƒëœ ìŠ¤í”„ë¼ì´íŠ¸ ê²½ë¡œ");
+            UseProperty("_disabledPath", "ë¹„í™œì„±í™”ëœ ìŠ¤í”„ë¼ì´íŠ¸ ê²½ë¡œ");
 
             EditorGUILayout.Space();
 
-            UseProperty("buttonSprite", "¹öÆ° ½ºÇÁ¶óÀÌÆ® ¼³Á¤");
+            UseProperty("buttonSprite", "ë²„íŠ¼ ìŠ¤í”„ë¼ì´íŠ¸ ì„¤ì •");
 
-            if (GUILayout.Button("»õ·Î°íÄ§"))
+            if (GUILayout.Button("ìƒˆë¡œê³ ì¹¨"))
                 _editor.Rerender();
 
             if (GUI.changed)

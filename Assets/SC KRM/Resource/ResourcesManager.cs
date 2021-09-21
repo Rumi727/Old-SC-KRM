@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace SCKRM.Resources
 {
-    [AddComponentMenu("Ä¿³Î/Resources/¸®¼Ò½º ¸Å´ÏÀú", 0)]
+    [AddComponentMenu("ì»¤ë„/Resources/ë¦¬ì†ŒìŠ¤ ë§¤ë‹ˆì €", 0)]
     public class ResourcesManager : MonoBehaviour
     {
         public static ResourcesManager instance { get; private set; }
@@ -34,10 +34,10 @@ namespace SCKRM.Resources
         //public static Dictionary<string, AudioClip> AudioList { get; } = new Dictionary<string, AudioClip>();
 
         /// <summary>
-        /// ¸®¼Ò½ºÆÑ¿¡¼­ ¸®¼Ò½º¸¦ °Ë»öÇÏ°í ¹İÈ¯ÇÕ´Ï´Ù
+        /// ë¦¬ì†ŒìŠ¤íŒ©ì—ì„œ ë¦¬ì†ŒìŠ¤ë¥¼ ê²€ìƒ‰í•˜ê³  ë°˜í™˜í•©ë‹ˆë‹¤
         /// </summary>
-        /// <typeparam name="ResourceType">¸®¼Ò½º Å¸ÀÔ</typeparam>
-        /// <param name="path">°æ·Î</param>
+        /// <typeparam name="ResourceType">ë¦¬ì†ŒìŠ¤ íƒ€ì…</typeparam>
+        /// <param name="path">ê²½ë¡œ</param>
         /// <param name="nameSpace"></param>
         /// <param name="resourcePackPath"></param>
         /// <returns></returns>
@@ -139,7 +139,7 @@ namespace SCKRM.Resources
                                 audioClip = AudioList[path.Replace("%NameSpace%", selectedNameSpace)];
                             else
                             {
-#pragma warning disable CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+#pragma warning disable CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
                                 if (File.Exists(allPath + ".ogg"))
                                     audioClip = new WWW(allPath + ".ogg").GetAudioClip(false, true, AudioType.OGGVORBIS);
                                 else if (File.Exists(allPath + ".mp3"))
@@ -159,10 +159,10 @@ namespace SCKRM.Resources
 
                                 if (audioClip != null)
                                     AudioList.Add(path.Replace("%NameSpace%", selectedNameSpace), audioClip);
-#pragma warning restore CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+#pragma warning restore CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
                             }*/
 
-#pragma warning disable CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+#pragma warning disable CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
                             if (File.Exists(allPath + ".ogg"))
                                 audioClip = new WWW(allPath + ".ogg").GetAudioClip(false, true, AudioType.OGGVORBIS);
                             else if (File.Exists(allPath + ".mp3"))
@@ -179,7 +179,7 @@ namespace SCKRM.Resources
                                 audioClip = new WWW(allPath + ".it").GetAudioClip(false, true, AudioType.IT);
                             else if (File.Exists(allPath + ".s3m"))
                                 audioClip = new WWW(allPath + ".s3m").GetAudioClip(false, true, AudioType.S3M);
-#pragma warning restore CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+#pragma warning restore CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
 
                             if (audioClip != null)
                                 return (ResourceType)Convert.ChangeType(audioClip, typeof(ResourceType));
@@ -278,7 +278,7 @@ namespace SCKRM.Resources
                         audioClip = AudioList[path.Replace("%NameSpace%", nameSpace)];
                     else
                     {
-#pragma warning disable CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+#pragma warning disable CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
                         if (File.Exists(path + ".ogg"))
                             audioClip = new WWW(path + ".ogg").GetAudioClip(false, true, AudioType.OGGVORBIS);
                         else if (File.Exists(path + ".mp3"))
@@ -298,10 +298,10 @@ namespace SCKRM.Resources
 
                         if (audioClip != null)
                             AudioList.Add(path.Replace("%NameSpace%", nameSpace), audioClip);
-#pragma warning restore CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+#pragma warning restore CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
                     }*/
 
-#pragma warning disable CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+#pragma warning disable CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
                     if (File.Exists(path + ".ogg"))
                         audioClip = new WWW(path + ".ogg").GetAudioClip(false, true, AudioType.OGGVORBIS);
                     else if (File.Exists(path + ".mp3"))
@@ -318,7 +318,7 @@ namespace SCKRM.Resources
                         audioClip = new WWW(path + ".it").GetAudioClip(false, true, AudioType.IT);
                     else if (File.Exists(path + ".s3m"))
                         audioClip = new WWW(path + ".s3m").GetAudioClip(false, true, AudioType.S3M);
-#pragma warning restore CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+#pragma warning restore CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
 
                     if (audioClip != null)
                         return (ResourceType)Convert.ChangeType(audioClip, typeof(ResourceType));

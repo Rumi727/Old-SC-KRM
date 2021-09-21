@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace SCKRM.InspectorEditor
 {
-#pragma warning disable CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+#pragma warning disable CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
     [CanEditMultipleObjects]
     [CustomEditor(typeof(InputManager), true)]
     public class InputManagerEditor : Editor
@@ -45,30 +45,30 @@ namespace SCKRM.InspectorEditor
         public override void OnInspectorGUI()
         {
             //GUI
-            EditorGUILayout.LabelField("»ç¿ëÀÚ ÁöÁ¤ Å°");
+            EditorGUILayout.LabelField("ì‚¬ìš©ì ì§€ì • í‚¤");
             EditorGUILayout.BeginHorizontal();
 
-            if (GUILayout.Button("Ãß°¡", GUILayout.Width(40)))
+            if (GUILayout.Button("ì¶”ê°€", GUILayout.Width(40)))
                 _editor._keyList.Add(new StringKeyCode());
 
             if (_editor._keyList.Count <= 0)
                 GUI.enabled = false;
 
-            if (GUILayout.Button("»èÁ¦", GUILayout.Width(40)) && _editor._keyList.Count > 0)
+            if (GUILayout.Button("ì‚­ì œ", GUILayout.Width(40)) && _editor._keyList.Count > 0)
                 _editor._keyList.RemoveAt(_editor._keyList.Count - 1);
 
             GUI.enabled = true;
 
             EditorGUILayout.Space();
 
-            int count = EditorGUILayout.IntField("¸®½ºÆ® ±æÀÌ", _editor._keyList.Count, GUILayout.Height(21));
+            int count = EditorGUILayout.IntField("ë¦¬ìŠ¤íŠ¸ ê¸¸ì´", _editor._keyList.Count, GUILayout.Height(21));
 
             EditorGUILayout.Space();
 
             if (showPos <= 0)
                 GUI.enabled = false;
 
-            if (GUILayout.Button("À§·Î", GUILayout.Width(40)) && showPos > 0)
+            if (GUILayout.Button("ìœ„ë¡œ", GUILayout.Width(40)) && showPos > 0)
                 showPos--;
 
             GUI.enabled = true;
@@ -76,7 +76,7 @@ namespace SCKRM.InspectorEditor
             if (showPos >= _editor._keyList.Count - showLength)
                 GUI.enabled = false;
 
-            if (GUILayout.Button("¾Æ·¡·Î", GUILayout.Width(50)) && showPos < _editor._keyList.Count - showLength)
+            if (GUILayout.Button("ì•„ë˜ë¡œ", GUILayout.Width(50)) && showPos < _editor._keyList.Count - showLength)
                 showPos++;
 
             GUI.enabled = true;
@@ -87,7 +87,7 @@ namespace SCKRM.InspectorEditor
 
             
 
-            //º¯¼ö ¼³Á¤
+            //ë³€ìˆ˜ ì„¤ì •
             if (count < 0)
                 count = 0;
 
@@ -113,9 +113,9 @@ namespace SCKRM.InspectorEditor
             for (int i = showPos; i < showPos + showLength; i++)
             {
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Å° ÀÌ¸§", GUILayout.Width(41));
+                EditorGUILayout.LabelField("í‚¤ ì´ë¦„", GUILayout.Width(41));
                 _editor._keyList[i].key = EditorGUILayout.TextField(_editor._keyList[i].key);
-                EditorGUILayout.LabelField("Å° ÄÚµå", GUILayout.Width(41));
+                EditorGUILayout.LabelField("í‚¤ ì½”ë“œ", GUILayout.Width(41));
                 _editor._keyList[i].value = (KeyCode)EditorGUILayout.EnumPopup("", _editor._keyList[i].value);
                 EditorGUILayout.EndHorizontal();
             }
@@ -123,16 +123,16 @@ namespace SCKRM.InspectorEditor
             bool overlap = _editor._keyList.GroupBy(x => x.key).Where(x => x.Skip(1).Any()).Any();
 
             if (GUI.changed && Application.isPlaying && !overlap)
-                InputManager.keyList = _editor._keyList.ToDictionary(t => t.key, t => t.value);
+                InputManager._KeyListSaveChanges();
             
             if (overlap && !Application.isPlaying)
-                EditorGUILayout.HelpBox("Áßº¹µÈ Å° ÀÌ¸§ÀÌ ÀÖ´Â Ä­Àº Á¦°ÅµË´Ï´Ù", MessageType.Warning);
+                EditorGUILayout.HelpBox("ì¤‘ë³µëœ í‚¤ ì´ë¦„ì´ ìˆëŠ” ì¹¸ì€ ì œê±°ë©ë‹ˆë‹¤", MessageType.Warning);
             else if (overlap && Application.isPlaying)
-                EditorGUILayout.HelpBox("Áßº¹µÈ Å° ÀÌ¸§ÀÌ ÀÖ´Â Ä­ÀÌ ÀÖÀ¸¸é ¸ğµç º¯°æ »çÇ×ÀÌ ÀúÀåµÇÁö ¾Ê½À´Ï´Ù", MessageType.Error);
+                EditorGUILayout.HelpBox("ì¤‘ë³µëœ í‚¤ ì´ë¦„ì´ ìˆëŠ” ì¹¸ì´ ìˆìœ¼ë©´ ëª¨ë“  ë³€ê²½ ì‚¬í•­ì´ ì €ì¥ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤", MessageType.Error);
 
             if (GUI.changed)
                 EditorUtility.SetDirty(target);
         }
     }
-#pragma warning restore CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+#pragma warning restore CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
 }

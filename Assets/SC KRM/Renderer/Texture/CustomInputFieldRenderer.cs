@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace SCKRM.Renderer
 {
     [RequireComponent(typeof(InputField))]
-    [AddComponentMenu("Ä¿³Î/Renderer/UI/Input Field", 3)]
+    [AddComponentMenu("ì»¤ë„/Renderer/UI/Input Field", 3)]
     public class CustomInputFieldRenderer : CustomRenderer
     {
         InputField inputfield;

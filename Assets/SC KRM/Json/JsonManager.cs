@@ -11,12 +11,12 @@ namespace SCKRM.Json
     public class JsonManager
     {
         /// <summary>
-        /// JSONÀ» ºÒ·¯¿É´Ï´Ù (ÀÌ°É »ç¿ëÇÒ·Á¸é, JSON ÆÄÀÏÀÇ ¸ðµç Å°¿Í °ªÀÇ Å¸ÀÔÀÌ ¹®ÀÚ¿­ÀÌ¿©¾ßÇÕ´Ï´Ù)
+        /// JSONì„ ë¶ˆëŸ¬ì˜µë‹ˆë‹¤ (ì´ê±¸ ì‚¬ìš©í• ë ¤ë©´, JSON íŒŒì¼ì˜ ëª¨ë“  í‚¤ì™€ ê°’ì˜ íƒ€ìž…ì´ ë¬¸ìžì—´ì´ì—¬ì•¼í•©ë‹ˆë‹¤)
         /// </summary>
-        /// <param name="key">Å°</param>
-        /// <param name="path">JSON ÆÄÀÏ °æ·Î</param>
-        /// <param name="value">°ª</param>
-        /// <param name="resourcePackPath">¸®¼Ò½ºÆÑ¿¡¼­ ÆÄÀÏ ºÒ·¯¿À±â</param>
+        /// <param name="key">í‚¤</param>
+        /// <param name="path">JSON íŒŒì¼ ê²½ë¡œ</param>
+        /// <param name="value">ê°’</param>
+        /// <param name="resourcePackPath">ë¦¬ì†ŒìŠ¤íŒ©ì—ì„œ íŒŒì¼ ë¶ˆëŸ¬ì˜¤ê¸°</param>
         /// <returns></returns>
         public static bool JsonRead(string key, string path, out string value, bool resourcePackPath = true)
         {

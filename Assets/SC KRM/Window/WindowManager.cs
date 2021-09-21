@@ -6,10 +6,12 @@ namespace SCKRM.Window
 {
     public class WindowManager : MonoBehaviour
     {
+#if UNITY_STANDALONE_WIN
+#pragma warning disable IDE0051 // 사용되지 않는 private 멤버 제거
         static float lerpX = 0;
         static float lerpY = 0;
         static IntPtr handle;
-#if UNITY_STANDALONE_WIN
+
         [DllImport("user32.dll", SetLastError = true)]
         static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, int uFlags);
 
@@ -17,6 +19,7 @@ namespace SCKRM.Window
         private const int SWP_NOMOVE = 0x0002;
         private const int SWP_NOZORDER = 0x0004;
         private const int SWP_SHOWWINDOW = 0x0040;
+#pragma warning restore IDE0051 // 사용되지 않는 private 멤버 제거
 
         [DllImport("user32.dll")]
         static extern IntPtr GetActiveWindow();

@@ -6,13 +6,13 @@ using UnityEngine;
 
 namespace SCKRM.Loading
 {
-    [AddComponentMenu("Ä¿³Î/·Îµù/·Îµù ¼³Á¤", 0)]
+    [AddComponentMenu("ì»¤ë„/ë¡œë”©/ë¡œë”© ì„¤ì •", 0)]
     public class LoadingBarManager : MonoBehaviour
     {
         public static LoadingBarManager instance { get; private set; }
 
         
-        [SerializeField, SetName("·Îµù ¹Ù°¡ »ý¼ºµÉ Æ®·£½ºÆû")] Transform parentTransform;
+        [SerializeField, SetName("ë¡œë”© ë°”ê°€ ìƒì„±ë  íŠ¸ëžœìŠ¤í¼")] Transform parentTransform;
 
         void Awake()
         {
@@ -22,7 +22,7 @@ namespace SCKRM.Loading
             instance = this;
         }
 
-        //·Îµù ¹Ù¸¦ »ý¼ºÇÕ´Ï´Ù
-        public static LoadingBar Create() => ObjectPoolingSystem.ObjectCreate("Loading Bar", instance.parentTransform).GetComponent<LoadingBar>();
+        //ë¡œë”© ë°”ë¥¼ ìƒì„±í•©ë‹ˆë‹¤
+        public static LoadingBar Create() => ObjectPoolingSystem.ObjectCreate("loading_manager.loading_bar", instance.parentTransform).GetComponent<LoadingBar>();
     }
 }

@@ -35,13 +35,13 @@ namespace MarpleRPG.Discord
             for (float i = 0.5f; i < length + 0.5f; i++)
             {
                 if (value / max >= i / length)
-                    text += "¡á";
+                    text += "â– ";
                 else
                 {
                     if (value / max >= (i - 0.5f) / length)
-                        text += "¢Ã";
+                        text += "â–£";
                     else
-                        text += "¡à";
+                        text += "â–¡";
                 }
             }
             return text;
@@ -54,13 +54,13 @@ namespace MarpleRPG.Discord
             for (float i = 0.5f; i < length + 0.5f; i++)
             {
                 if (value / max >= i / length)
-                    text += "¡á";
+                    text += "â– ";
                 else
                 {
                     if (value / max >= (i - 0.5f) / length)
-                        text += "¢Ã";
+                        text += "â–£";
                     else
-                        text += "¡à";
+                        text += "â–¡";
                 }
             }
             return text;
@@ -73,13 +73,13 @@ namespace MarpleRPG.Discord
             for (float i = 0.5f; i < length + 0.5f; i++)
             {
                 if (value / max >= i / length)
-                    text += "¡á";
+                    text += "â– ";
                 else
                 {
                     if (value / max >= (i - 0.5f) / length)
-                        text += "¢Ã";
+                        text += "â–£";
                     else
-                        text += "¡à";
+                        text += "â–¡";
                 }
             }
             return text;

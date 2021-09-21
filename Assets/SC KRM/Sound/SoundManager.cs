@@ -7,8 +7,8 @@ using UnityEngine;
 
 namespace SCKRM.Sound
 {
-#pragma warning disable CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
-    [AddComponentMenu("Ä¿³Î/Audio/¿Àµğ¿À ¸Å´ÏÀú", 0)]
+#pragma warning disable CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
+    [AddComponentMenu("ì»¤ë„/Audio/ì˜¤ë””ì˜¤ ë§¤ë‹ˆì €", 0)]
     public class SoundManager : MonoBehaviour
     {
         public static SoundManager instance { get; private set; }
@@ -44,21 +44,21 @@ namespace SCKRM.Sound
         void Awake() => instance = this;
 
         /// <summary>
-        /// BGMÀ» Àç»ıÇÕ´Ï´Ù
+        /// BGMì„ ì¬ìƒí•©ë‹ˆë‹¤
         /// </summary>
-        /// <param name="soundType">Å¸ÀÔ</param>
-        /// <param name="path">°æ·Î</param>
-        /// <param name="volume">º¼·ı</param>
-        /// <param name="loop">·çÇÁ</param>
-        /// <param name="pitch">ÇÇÄ¡</param>
-        /// <param name="rhythmPitchUse">¸®µë ¸Å´ÏÀú¿¡¼­ »ç¿ëÇÏ´Â ÇÇÄ¡¿Í ¿¬µ¿</param>
+        /// <param name="soundType">íƒ€ì…</param>
+        /// <param name="path">ê²½ë¡œ</param>
+        /// <param name="volume">ë³¼ë¥¨</param>
+        /// <param name="loop">ë£¨í”„</param>
+        /// <param name="pitch">í”¼ì¹˜</param>
+        /// <param name="rhythmPitchUse">ë¦¬ë“¬ ë§¤ë‹ˆì €ì—ì„œ ì‚¬ìš©í•˜ëŠ” í”¼ì¹˜ì™€ ì—°ë™</param>
         /// <returns></returns>
         public static SoundObject PlayBGM(SoundType soundType, string path, float volume = 1, bool loop = false, float pitch = 1, bool rhythmPitchUse = false)
         {
             if (BGMList.Count >= MaxBGMCount)
                 return null;
 
-            SoundObject soundObject = ObjectPoolingSystem.ObjectCreate("Sound Object", instance.BGM).GetComponent<SoundObject>();
+            SoundObject soundObject = ObjectPoolingSystem.ObjectCreate("sound_manager.sound_object", instance.BGM).GetComponent<SoundObject>();
             BGMList.Add(soundObject);
 
             soundObject.gameObject.name = path;
@@ -78,22 +78,22 @@ namespace SCKRM.Sound
         }
 
         /// <summary>
-        /// È¿°úÀ½À» Àç»ıÇÕ´Ï´Ù
+        /// íš¨ê³¼ìŒì„ ì¬ìƒí•©ë‹ˆë‹¤
         /// </summary>
-        /// <param name="soundType">Å¸ÀÔ</param>
-        /// <param name="path">°æ·Î</param>
-        /// <param name="volume">º¼·ı</param>
-        /// <param name="pitch">ÇÇÄ¡</param>
+        /// <param name="soundType">íƒ€ì…</param>
+        /// <param name="path">ê²½ë¡œ</param>
+        /// <param name="volume">ë³¼ë¥¨</param>
+        /// <param name="pitch">í”¼ì¹˜</param>
         /// <returns></returns>
         public static SoundObject PlaySound(SoundType soundType, string path, float volume = 1, float pitch = 1) => PlaySound(soundType, new string[] { path }, volume, pitch);
 
         /// <summary>
-        /// È¿°úÀ½À» Àç»ıÇÕ´Ï´Ù
+        /// íš¨ê³¼ìŒì„ ì¬ìƒí•©ë‹ˆë‹¤
         /// </summary>
-        /// <param name="soundType">Å¸ÀÔ</param>
-        /// <param name="path">°æ·Î (·£´ı ¼±ÅÃ)</param>
-        /// <param name="volume">º¼·ı</param>
-        /// <param name="pitch">ÇÇÄ¡</param>
+        /// <param name="soundType">íƒ€ì…</param>
+        /// <param name="path">ê²½ë¡œ (ëœë¤ ì„ íƒ)</param>
+        /// <param name="volume">ë³¼ë¥¨</param>
+        /// <param name="pitch">í”¼ì¹˜</param>
         /// <returns></returns>
         static SoundObject PlaySound(SoundType soundType, string[] path, float volume = 1, float pitch = 1)
         {
@@ -102,7 +102,7 @@ namespace SCKRM.Sound
 
             int random = UnityEngine.Random.Range(0, path.Length);
 
-            SoundObject soundObject = ObjectPoolingSystem.ObjectCreate("Sound Object", instance.Sound).GetComponent<SoundObject>();
+            SoundObject soundObject = ObjectPoolingSystem.ObjectCreate("sound_manager.sound_object", instance.Sound).GetComponent<SoundObject>();
             soundObject.gameObject.name = path[random];
 
             soundObject.path = path[random];
@@ -120,10 +120,10 @@ namespace SCKRM.Sound
         }
         
         /// <summary>
-        /// BGMÀ» ÁßÁöÇÕ´Ï´Ù
+        /// BGMì„ ì¤‘ì§€í•©ë‹ˆë‹¤
         /// </summary>
-        /// <param name="path">°æ·Î</param>
-        /// <param name="all">¸ğµÎ ÁßÁö</param>
+        /// <param name="path">ê²½ë¡œ</param>
+        /// <param name="all">ëª¨ë‘ ì¤‘ì§€</param>
         public static void StopBGM(string path, bool all = false)
         {
             for (int i = 0; i < BGMList.Count; i++)
@@ -132,7 +132,7 @@ namespace SCKRM.Sound
 
                 if (soundObject.path == path)
                 {
-                    ObjectPoolingSystem.ObjectRemove("Sound Object", soundObject.gameObject, soundObject.OnDestroy);
+                    soundObject.Remove();
                     if (!all)
                         return;
                 }
@@ -140,16 +140,16 @@ namespace SCKRM.Sound
         }
 
         /// <summary>
-        /// È¿°úÀ½À» ÁßÁöÇÕ´Ï´Ù
+        /// íš¨ê³¼ìŒì„ ì¤‘ì§€í•©ë‹ˆë‹¤
         /// </summary>
-        /// <param name="soundObject">ÁßÁöÇÒ ¿ÀºêÁ§Æ®</param>
-        public static void StopSound(SoundObject soundObject) => ObjectPoolingSystem.ObjectRemove("Sound Object", soundObject.gameObject, soundObject.OnDestroy);
+        /// <param name="soundObject">ì¤‘ì§€í•  ì˜¤ë¸Œì íŠ¸</param>
+        public static void StopSound(SoundObject soundObject) => soundObject.Remove();
 
         /// <summary>
-        /// È¿°úÀ½À» ÁßÁöÇÕ´Ï´Ù
+        /// íš¨ê³¼ìŒì„ ì¤‘ì§€í•©ë‹ˆë‹¤
         /// </summary>
-        /// <param name="path">°æ·Î</param>
-        /// <param name="all">¸ğµÎ ÁßÁö</param>
+        /// <param name="path">ê²½ë¡œ</param>
+        /// <param name="all">ëª¨ë‘ ì¤‘ì§€</param>
         public static void StopSound(string path, bool all = false)
         {
             for (int i = 0; i < SoundList.Count; i++)
@@ -158,7 +158,7 @@ namespace SCKRM.Sound
 
                 if (soundObject.path == path)
                 {
-                    ObjectPoolingSystem.ObjectRemove("Sound Object", soundObject.gameObject, soundObject.OnDestroy);
+                    soundObject.Remove();
                     if (!all)
                         return;
                 }
@@ -167,17 +167,16 @@ namespace SCKRM.Sound
 
 
         /// <summary>
-        /// ¸ğµç È¿°úÀ½À» ÁßÁöÇÕ´Ï´Ù
+        /// ëª¨ë“  íš¨ê³¼ìŒì„ ì¤‘ì§€í•©ë‹ˆë‹¤
         /// </summary>
-        /// <param name="soundType">Å¸ÀÔ</param>
+        /// <param name="soundType">íƒ€ì…</param>
         public static void StopAll(SoundType soundType)
         {
             if ((soundType & SoundType.BGM) != 0)
             {
                 for (int i = 0; i < BGMList.Count; i++)
                 {
-                    SoundObject soundObject = BGMList[i];
-                    ObjectPoolingSystem.ObjectRemove("Sound Object", soundObject.gameObject, soundObject.OnDestroy);
+                    BGMList[i].Remove();
                     i--;
                 }
             }
@@ -185,8 +184,7 @@ namespace SCKRM.Sound
             {
                 for (int i = 0; i < SoundList.Count; i++)
                 {
-                    SoundObject soundObject = SoundList[i];
-                    ObjectPoolingSystem.ObjectRemove("Sound Object", soundObject.gameObject, soundObject.OnDestroy);
+                    SoundList[i].Remove();
                     i--;
                 }
             }
@@ -194,12 +192,11 @@ namespace SCKRM.Sound
             {
                 for (int i = 0; i < AllList.Count; i++)
                 {
-                    SoundObject soundObject = AllList[i];
-                    ObjectPoolingSystem.ObjectRemove("Sound Object", soundObject.gameObject, soundObject.OnDestroy);
+                    AllList[i].Remove();
                     i--;
                 }
             }
         }
     }
-#pragma warning restore CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+#pragma warning restore CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
 }

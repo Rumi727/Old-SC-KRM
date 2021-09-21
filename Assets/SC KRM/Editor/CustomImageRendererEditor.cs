@@ -43,11 +43,11 @@ namespace SCKRM.InspectorEditor
 
             EditorGUILayout.Space();
 
-            UseProperty("customSprite", "½ºÇÁ¶óÀÌÆ® ¼³Á¤");
+            UseProperty("customSprite", "ìŠ¤í”„ë¼ì´íŠ¸ ì„¤ì •");
 
             EditorGUILayout.Space();
 
-            if (GUILayout.Button("»õ·Î°íÄ§"))
+            if (GUILayout.Button("ìƒˆë¡œê³ ì¹¨"))
                 _editor.Rerender();
 
             if (GUI.changed)

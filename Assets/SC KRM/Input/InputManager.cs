@@ -14,36 +14,79 @@ namespace SCKRM.Input
         public KeyCode value = KeyCode.None;
     }
 
-#pragma warning disable CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
-    [AddComponentMenu("Ä¿³Î/Input/Å° ÀÔ·Â °ª ¼³Á¤", 0)]
+#pragma warning disable CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
+    [AddComponentMenu("ì»¤ë„/Input/í‚¤ ì…ë ¥ ê°’ ì„¤ì •", 0)]
     public class InputManager : MonoBehaviour
     {
         public static InputManager instance { get; private set; }
 
+        public static bool defaultInputLock { get; set; }
+
+        public static KeyCode[] unityKeyCodeList { get; } = Enum.GetValues(typeof(KeyCode)) as KeyCode[];
 
 
-        [Obsolete("If you don't know exactly what you're doing, don't touch this variable")] public List<StringKeyCode> _keyList = new List<StringKeyCode>();
-        [Obsolete("If you don't know exactly what you're doing, don't touch this variable")] public static Dictionary<string, KeyCode> keyList { get; set; }
+        /// <summary>
+        /// The system that manages this variable is serious spaghetti code! If you don't know exactly what you're doing, please stop doing what you're doing.
+        /// </summary>
+		[Obsolete("The system that manages this variable is serious spaghetti code! If you don't know exactly what you're doing, please stop doing what you're doing.")] public List<StringKeyCode> _keyList = new List<StringKeyCode>();
+        /// <summary>
+        /// The system that manages this variable is serious spaghetti code! If you don't know exactly what you're doing, please stop doing what you're doing.
+        /// </summary>
+        [Obsolete("The system that manages this variable is serious spaghetti code! If you don't know exactly what you're doing, please stop doing what you're doing.")] public static Dictionary<string, KeyCode> keyList { get; set; }
+        /// <summary>
+        /// The system that manages this variable is serious spaghetti code! If you don't know exactly what you're doing, please stop doing what you're doing.
+        /// </summary>
+        [Obsolete("The system that manages this variable is serious spaghetti code! If you don't know exactly what you're doing, please stop doing what you're doing.")] public static Dictionary<string, KeyCode> defaultKeyList { get; private set; }
 
 
 
-        [Obsolete("Use UnityEngine.Input.GetKeyDown to optimize")] public static bool GetKeyDown(KeyCode keyCode) => UnityEngine.Input.GetKeyDown(keyCode);
-        public static bool GetKeyDown(string keyCode) => keyList.ContainsKey(keyCode) && UnityEngine.Input.GetKeyDown(keyList[keyCode]);
-        [Obsolete("Use UnityEngine.Input.GetKey to optimize")] public static bool GetKey(KeyCode keyCode) => UnityEngine.Input.GetKey(keyCode);
-        public static bool GetKey(string keyCode) => keyList.ContainsKey(keyCode) && UnityEngine.Input.GetKey(keyList[keyCode]);
-        [Obsolete("Use UnityEngine.Input.GetKeyUp to optimize")] public static bool GetKeyUp(KeyCode keyCode) => UnityEngine.Input.GetKeyUp(keyCode);
-        public static bool GetKeyUp(string keyCode) => keyList.ContainsKey(keyCode) && UnityEngine.Input.GetKeyUp(keyList[keyCode]);
+        public static bool GetKeyDown(KeyCode keyCode, InputLockDeny inputLockDeny = InputLockDeny.None) => !InputLockCheck(inputLockDeny) && UnityEngine.Input.GetKeyDown(keyCode);
+        public static bool GetKeyDown(string keyCode, InputLockDeny inputLockDeny = InputLockDeny.None) => !InputLockCheck(inputLockDeny) && keyList.ContainsKey(keyCode) && UnityEngine.Input.GetKeyDown(keyList[keyCode]);
+
+        public static bool GetKey(KeyCode keyCode, InputLockDeny inputLockDeny = InputLockDeny.None) => !InputLockCheck(inputLockDeny) && UnityEngine.Input.GetKey(keyCode);
+        public static bool GetKey(string keyCode, InputLockDeny inputLockDeny = InputLockDeny.None) => !InputLockCheck(inputLockDeny) && keyList.ContainsKey(keyCode) && UnityEngine.Input.GetKey(keyList[keyCode]);
+
+        public static bool GetKeyUp(KeyCode keyCode, InputLockDeny inputLockDeny = InputLockDeny.None) => !InputLockCheck(inputLockDeny) && UnityEngine.Input.GetKeyUp(keyCode);
+        public static bool GetKeyUp(string keyCode, InputLockDeny inputLockDeny = InputLockDeny.None) => !InputLockCheck(inputLockDeny) && keyList.ContainsKey(keyCode) && UnityEngine.Input.GetKeyUp(keyList[keyCode]);
 
 
 
         public static Vector2 mousePosition { get; private set; }
-        public static bool mousePresent { get; private set; }
-        public static Vector2 mouseScrollDelta { get; private set; }
 
-        public static bool anyKeyDown { get; private set; }
-        public static bool anyKey { get; private set; }
+        static bool _mousePresent;
+        public static bool GetMousePresent(InputLockDeny inputLockDeny = InputLockDeny.None) => !InputLockCheck(inputLockDeny) && _mousePresent;
+
+        static Vector2 _mouseScrollDelta;
+        public static Vector2 GetMouseScrollDelta(InputLockDeny inputLockDeny = InputLockDeny.None)
+        {
+            if (!InputLockCheck(inputLockDeny))
+                return _mouseScrollDelta;
+            else
+                return Vector2.zero;
+        }
 
 
+
+        static bool anyKeyDown;
+        public static bool GetAnyKeyDown(InputLockDeny inputLockDeny = InputLockDeny.None) => !InputLockCheck(inputLockDeny) && anyKeyDown;
+
+        static bool anyKey;
+        public static bool GetAnyKey(InputLockDeny inputLockDeny = InputLockDeny.None) => !InputLockCheck(inputLockDeny) && anyKey;
+
+
+
+        public static bool InputLockCheck(InputLockDeny inputLockDeny = InputLockDeny.None)
+        {
+            if ((inputLockDeny & InputLockDeny.All) != 0)
+                return false;
+
+            bool inputLock = false;
+
+            if (defaultInputLock && (inputLockDeny & InputLockDeny.Default) == 0)
+                inputLock = true;
+
+            return inputLock;
+        }
 
         void Awake()
         {
@@ -63,18 +106,29 @@ namespace SCKRM.Input
                 }
             }
 
-            keyList = _keyList.ToDictionary(t => t.key, t => t.value);
+            _KeyListSaveChanges();
+            defaultKeyList = new Dictionary<string, KeyCode>(keyList);
         }
 
         void Update()
         {
             mousePosition = UnityEngine.Input.mousePosition;
-            mousePresent = UnityEngine.Input.mousePresent;
-            mouseScrollDelta = UnityEngine.Input.mouseScrollDelta;
+            _mousePresent = UnityEngine.Input.mousePresent;
+            _mouseScrollDelta = UnityEngine.Input.mouseScrollDelta;
 
             anyKeyDown = UnityEngine.Input.anyKeyDown;
             anyKey = UnityEngine.Input.anyKey;
         }
+
+        public static void _KeyListSaveChanges() => keyList = instance._keyList.ToDictionary(t => t.key, t => t.value);
     }
-#pragma warning restore CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+
+    [Flags]
+    public enum InputLockDeny
+    {
+        None = 0,
+        All = 1 << 1,
+        Default = 1 << 2,
+    }
+#pragma warning restore CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
 }

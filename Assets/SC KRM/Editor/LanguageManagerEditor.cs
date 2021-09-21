@@ -46,22 +46,22 @@ namespace SCKRM.InspectorEditor
             if (!Application.isPlaying)
                 GUI.enabled = false;
 
-            LanguageManager.currentLanguage = EditorGUILayout.TextField("ÇöÀç ¾ğ¾î", LanguageManager.currentLanguage);
+            LanguageManager.currentLanguage = EditorGUILayout.TextField("í˜„ì¬ ì–¸ì–´", LanguageManager.currentLanguage);
 
             GUI.enabled = true;
 
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("·ÎµåµÈ ¸ğµç ¾ğ¾îÀÇ Á¤º¸");
+            EditorGUILayout.LabelField("ë¡œë“œëœ ëª¨ë“  ì–¸ì–´ì˜ ì •ë³´");
 
             EditorGUILayout.Space();
 
-            if (GUILayout.Button("·ÎµåµÈ ¸ğµç ¾ğ¾î Áö¿ì±â", GUILayout.Width(150)))
+            if (GUILayout.Button("ë¡œë“œëœ ëª¨ë“  ì–¸ì–´ ì§€ìš°ê¸°", GUILayout.Width(150)))
                 LanguageManager.LangList.Clear();
 
             if (showPos <= 0)
                 GUI.enabled = false;
 
-            if (GUILayout.Button("À§·Î", GUILayout.Width(40)) && showPos > 0)
+            if (GUILayout.Button("ìœ„ë¡œ", GUILayout.Width(40)) && showPos > 0)
                 showPos--;
 
             GUI.enabled = true;
@@ -69,7 +69,7 @@ namespace SCKRM.InspectorEditor
             if (showPos >= LanguageManager.LangList.Count - showLength - 1)
                 GUI.enabled = false;
 
-            if (GUILayout.Button("¾Æ·¡·Î", GUILayout.Width(50)) && showPos < LanguageManager.LangList.Count - showLength)
+            if (GUILayout.Button("ì•„ë˜ë¡œ", GUILayout.Width(50)) && showPos < LanguageManager.LangList.Count - showLength)
                 showPos++;
 
             GUI.enabled = true;
@@ -80,7 +80,7 @@ namespace SCKRM.InspectorEditor
 
 
 
-            //º¯¼ö ¼³Á¤
+            //ë³€ìˆ˜ ì„¤ì •
             if (showLength <= LanguageManager.LangList.Count && showPos > LanguageManager.LangList.Count - showLength)
                 showPos = LanguageManager.LangList.Count - showLength;
 
@@ -96,11 +96,11 @@ namespace SCKRM.InspectorEditor
                     break;
 
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Å°", GUILayout.Width(14));
+                EditorGUILayout.LabelField("í‚¤", GUILayout.Width(14));
                 GUI.enabled = false;
                 EditorGUILayout.TextField(item.Key);
                 GUI.enabled = true;
-                EditorGUILayout.LabelField("°ª", GUILayout.Width(14));
+                EditorGUILayout.LabelField("ê°’", GUILayout.Width(14));
                 GUI.enabled = false;
                 EditorGUILayout.TextField(item.Value);
                 GUI.enabled = true;

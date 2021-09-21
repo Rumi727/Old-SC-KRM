@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace SCKRM.Renderer
 {
     [RequireComponent(typeof(Image))]
-    [AddComponentMenu("Ä¿³Î/Renderer/UI/Image", 1)]
+    [AddComponentMenu("ì»¤ë„/Renderer/UI/Image", 1)]
     public class CustomImageRenderer : CustomRenderer
     {
         Image image;
@@ -16,7 +16,7 @@ namespace SCKRM.Renderer
         [SerializeField] string _path = "";
         public string path { get => _path; set => _path = value; }
 
-        [SerializeField, SetName("½ºÇÁ¶óÀÌÆ® ¼³Á¤")] CustomSpriteSetting customSprite = new CustomSpriteSetting();
+        [SerializeField, SetName("ìŠ¤í”„ë¼ì´íŠ¸ ì„¤ì •")] CustomSpriteSetting customSprite = new CustomSpriteSetting();
 
         public override void Rerender()
         {

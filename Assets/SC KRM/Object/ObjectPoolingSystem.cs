@@ -14,15 +14,18 @@ namespace SCKRM.Object
         public List<GameObject> Object = new List<GameObject>();
     }
 
-#pragma warning disable CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
-    [AddComponentMenu("Ä¿³Î/Object/¿ÀºêÁ§Æ® Ç®¸µ ¼³Á¤", 0)]
+#pragma warning disable CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
+    [AddComponentMenu("ì»¤ë„/Object/ì˜¤ë¸Œì íŠ¸ í’€ë§ ì„¤ì •", 0)]
     public class ObjectPoolingSystem : MonoBehaviour
     {
+        #region variable
         /// <summary>
         /// If you don't know what you're doing, don't modify this variable in your script
         /// </summary>
-        #region variable
         [SerializeField, Obsolete("If you don't know exactly what you're doing, don't touch this variable")] public ObjectList _PrefabObject = new ObjectList();
+        /// <summary>
+        /// If you don't know what you're doing, don't modify this variable in your script
+        /// </summary>
         [Obsolete("If you don't know exactly what you're doing, don't touch this variable")] public static ObjectList PrefabObject { get; set; }
 
         static ObjectList ObjectList { get; } = new ObjectList();
@@ -56,17 +59,17 @@ namespace SCKRM.Object
         }
 
         /// <summary>
-        /// ¿ÀºêÁ§Æ®¸¦ »ı¼ºÇÕ´Ï´Ù
+        /// ì˜¤ë¸Œì íŠ¸ë¥¼ ìƒì„±í•©ë‹ˆë‹¤
         /// </summary>
-        /// <param name="ObjectKey">»ı¼ºÇÒ ¿ÀºêÁ§Æ® Å°</param>
+        /// <param name="ObjectKey">ìƒì„±í•  ì˜¤ë¸Œì íŠ¸ í‚¤</param>
         /// <returns></returns>
         public static GameObject ObjectCreate(string ObjectKey) => ObjectCreate(ObjectKey, null);
 
         /// <summary>
-        /// ¿ÀºêÁ§Æ®¸¦ »ı¼ºÇÕ´Ï´Ù
+        /// ì˜¤ë¸Œì íŠ¸ë¥¼ ìƒì„±í•©ë‹ˆë‹¤
         /// </summary>
-        /// <param name="ObjectKey">»ı¼ºÇÒ ¿ÀºêÁ§Æ® Å°</param>
-        /// <param name="Parent">»ı¼ºÇÒ ¿ÀºêÁ§Æ®°¡ ÀÚ½ÄÀ¸·Î°¥ ¿ÀºêÁ§Æ®</param>
+        /// <param name="ObjectKey">ìƒì„±í•  ì˜¤ë¸Œì íŠ¸ í‚¤</param>
+        /// <param name="Parent">ìƒì„±í•  ì˜¤ë¸Œì íŠ¸ê°€ ìì‹ìœ¼ë¡œê°ˆ ì˜¤ë¸Œì íŠ¸</param>
         /// <returns></returns>
         public static GameObject ObjectCreate(string ObjectKey, Transform Parent)
         {
@@ -94,10 +97,10 @@ namespace SCKRM.Object
         }
 
         /// <summary>
-        /// ¿ÀºêÁ§Æ®¸¦ »èÁ¦ÇÕ´Ï´Ù
+        /// ì˜¤ë¸Œì íŠ¸ë¥¼ ì‚­ì œí•©ë‹ˆë‹¤
         /// </summary>
-        /// <param name="ObjectKey">Áö¿ï ¿ÀºêÁ§Æ® Å°</param>
-        /// <param name="gameObject">Áö¿ï ¿ÀºêÁ§Æ®</param>
+        /// <param name="ObjectKey">ì§€ìš¸ ì˜¤ë¸Œì íŠ¸ í‚¤</param>
+        /// <param name="gameObject">ì§€ìš¸ ì˜¤ë¸Œì íŠ¸</param>
         /// <param name="onDestroy"></param>
         public static void ObjectRemove(string ObjectKey, GameObject gameObject, Action onDestroy)
         {
@@ -108,5 +111,5 @@ namespace SCKRM.Object
             ObjectList.Object.Add(gameObject.gameObject);
         }
     }
-#pragma warning restore CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+#pragma warning restore CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
 }

@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using SCKRM.Input;
 using SCKRM.Language;
 using SCKRM.Resources;
 using System.Collections;
@@ -9,7 +10,7 @@ using UnityEngine;
 
 namespace SCKRM.SaveData
 {
-    [AddComponentMenu("Ŀ��/���̺� �ε�/���̺� �ε� �Ŵ���", 0)]
+    [AddComponentMenu("커널/세이브 로드/세이브 로드 매니저", 0)]
     public class SaveLoadManager : MonoBehaviour
     {
         public static SaveLoadManager instance;
@@ -26,12 +27,7 @@ namespace SCKRM.SaveData
 
         void OnApplicationQuit() => SaveData();
 
-        static IEnumerator AllRefresh()
-        {
-            yield return new WaitForEndOfFrame();
-            Kernel.AllRefresh(true);
-        }
-
+#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
         public static void SaveData()
         {
             if (!Directory.Exists(Path.Combine(Kernel.persistentDataPath, "Save Data")))
@@ -42,10 +38,16 @@ namespace SCKRM.SaveData
 
 
 
-            kernelSetting.MainVolume = AudioListener.volume;
+            kernelSetting.MainVolume = Kernel.MainVolume;
             kernelSetting.Language = LanguageManager.currentLanguage;
-            kernelSetting.ResourcePack = ResourcesManager.ResourcePacks.ToList();
+            kernelSetting.ResourcePack = new List<ResourcePack>(ResourcesManager.ResourcePacks);
             kernelSetting.ResourcePack.RemoveAt(kernelSetting.ResourcePack.Count - 1);
+            kernelSetting.Controls = new Dictionary<string, KeyCode>(InputManager.keyList);
+            foreach (var item in InputManager.keyList)
+            {
+                if (item.Value == KeyCode.Escape)
+                    kernelSetting.Controls.Remove(item.Key);
+            }
 
             File.WriteAllText(path, JsonConvert.SerializeObject(kernelSetting, Formatting.Indented));
         }
@@ -62,7 +64,7 @@ namespace SCKRM.SaveData
 
             if (kernelSetting != null)
             {
-                AudioListener.volume = kernelSetting.MainVolume;
+                Kernel.MainVolume = kernelSetting.MainVolume;
                 LanguageManager.currentLanguage = kernelSetting.Language;
 
                 List<ResourcePack> resourcePacks = kernelSetting.ResourcePack;
@@ -70,16 +72,37 @@ namespace SCKRM.SaveData
                 for (int i = 0; i < resourcePacks.Count; i++)
                     ResourcesManager.ResourcePacks.Add(resourcePacks[i]);
                 ResourcesManager.ResourcePacks.Add(ResourcePack.Default);
+
+                List<KeyValuePair<string, KeyCode>> list = kernelSetting.Controls.ToList();
+                int ii = 0;
+                for (int i = 0; i < InputManager.instance._keyList.Count; i++)
+                {
+                    if (ii >= list.Count)
+                        break;
+
+                    KeyValuePair<string, KeyCode> item = list[ii];
+                    StringKeyCode stringKeyCode = InputManager.instance._keyList[i];
+                    
+                    if (item.Key == stringKeyCode.key)
+                    {
+                        stringKeyCode.value = item.Value;
+                        ii++;
+                    }
+                }
+
+                InputManager._KeyListSaveChanges();
             }
 
-            instance.StartCoroutine(AllRefresh());
+            Kernel.AllRefresh(true);
         }
+#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
     }
 
     class KernelSetting
     {
-        [JsonProperty("Main Volume")] public float MainVolume = 1;
+        [JsonProperty("Main Volume")] public int MainVolume = 100;
         public string Language = "en_us";
         [JsonProperty("Resource Pack")] public List<ResourcePack> ResourcePack = new List<ResourcePack>();
+        public Dictionary<string, KeyCode> Controls = new Dictionary<string, KeyCode>();
     }
 }

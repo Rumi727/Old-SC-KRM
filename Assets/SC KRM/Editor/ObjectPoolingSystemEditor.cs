@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace SCKRM.InspectorEditor
 {
-#pragma warning disable CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+#pragma warning disable CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
     [CanEditMultipleObjects]
     [CustomEditor(typeof(ObjectPoolingSystem), true)]
     public class ObjectPoolingSystemEditor : Editor
@@ -45,12 +45,12 @@ namespace SCKRM.InspectorEditor
         public override void OnInspectorGUI()
         {
             //GUI
-            EditorGUILayout.LabelField("¿ÀºêÁ§Æ® ¸®½ºÆ®");
+            EditorGUILayout.LabelField("ì˜¤ë¸Œì íŠ¸ ë¦¬ìŠ¤íŠ¸");
 
             //GUI
             EditorGUILayout.BeginHorizontal();
 
-            if (GUILayout.Button("Ãß°¡", GUILayout.Width(40)))
+            if (GUILayout.Button("ì¶”ê°€", GUILayout.Width(40)))
             {
                 _editor._PrefabObject.ObjectKey.Add("");
                 _editor._PrefabObject.Object.Add(null);
@@ -59,7 +59,7 @@ namespace SCKRM.InspectorEditor
             if (_editor._PrefabObject.ObjectKey.Count <= 0)
                 GUI.enabled = false;
 
-            if (GUILayout.Button("»èÁ¦", GUILayout.Width(40)) && _editor._PrefabObject.ObjectKey.Count > 0)
+            if (GUILayout.Button("ì‚­ì œ", GUILayout.Width(40)) && _editor._PrefabObject.ObjectKey.Count > 0)
             {
                 _editor._PrefabObject.ObjectKey.RemoveAt(_editor._PrefabObject.ObjectKey.Count - 1);
                 _editor._PrefabObject.Object.RemoveAt(_editor._PrefabObject.Object.Count - 1);
@@ -69,14 +69,14 @@ namespace SCKRM.InspectorEditor
 
             EditorGUILayout.Space();
 
-            int count = EditorGUILayout.IntField("¸®½ºÆ® ±æÀÌ", _editor._PrefabObject.ObjectKey.Count, GUILayout.Height(21));
+            int count = EditorGUILayout.IntField("ë¦¬ìŠ¤íŠ¸ ê¸¸ì´", _editor._PrefabObject.ObjectKey.Count, GUILayout.Height(21));
 
             EditorGUILayout.Space();
 
             if (showPos <= 0)
                 GUI.enabled = false;
 
-            if (GUILayout.Button("À§·Î", GUILayout.Width(40)) && showPos > 0)
+            if (GUILayout.Button("ìœ„ë¡œ", GUILayout.Width(40)) && showPos > 0)
                 showPos--;
 
             GUI.enabled = true;
@@ -84,7 +84,7 @@ namespace SCKRM.InspectorEditor
             if (showPos >= _editor._PrefabObject.ObjectKey.Count - showLength)
                 GUI.enabled = false;
 
-            if (GUILayout.Button("¾Æ·¡·Î", GUILayout.Width(50)) && showPos < _editor._PrefabObject.ObjectKey.Count - showLength)
+            if (GUILayout.Button("ì•„ë˜ë¡œ", GUILayout.Width(50)) && showPos < _editor._PrefabObject.ObjectKey.Count - showLength)
                 showPos++;
 
             GUI.enabled = true;
@@ -95,7 +95,7 @@ namespace SCKRM.InspectorEditor
 
 
 
-            //º¯¼ö ¼³Á¤
+            //ë³€ìˆ˜ ì„¤ì •
             while (_editor._PrefabObject.Object.Count > _editor._PrefabObject.ObjectKey.Count)
                 _editor._PrefabObject.Object.RemoveAt(_editor._PrefabObject.ObjectKey.Count);
 
@@ -133,9 +133,9 @@ namespace SCKRM.InspectorEditor
             for (int i = showPos; i < showPos + showLength; i++)
             {
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("ÇÁ¸®ÆÕ Å°", GUILayout.Width(53));
+                EditorGUILayout.LabelField("í”„ë¦¬íŒ¹ í‚¤", GUILayout.Width(53));
                 _editor._PrefabObject.ObjectKey[i] = EditorGUILayout.TextField(_editor._PrefabObject.ObjectKey[i]);
-                EditorGUILayout.LabelField("ÇÁ¸®ÆÕ", GUILayout.Width(38));
+                EditorGUILayout.LabelField("í”„ë¦¬íŒ¹", GUILayout.Width(38));
                 _editor._PrefabObject.Object[i] = (GameObject)EditorGUILayout.ObjectField("", _editor._PrefabObject.Object[i], typeof(GameObject), true);
                 EditorGUILayout.EndHorizontal();
             }
@@ -146,13 +146,13 @@ namespace SCKRM.InspectorEditor
                 ObjectPoolingSystem.PrefabObject = _editor._PrefabObject;
 
             if (overlap && !Application.isPlaying)
-                EditorGUILayout.HelpBox("Áßº¹µÈ ÇÁ¸®ÆÕ ÀÌ¸§ÀÌ ÀÖ´Â Ä­Àº Á¦°ÅµË´Ï´Ù", MessageType.Warning);
+                EditorGUILayout.HelpBox("ì¤‘ë³µëœ í”„ë¦¬íŒ¹ ì´ë¦„ì´ ìˆëŠ” ì¹¸ì€ ì œê±°ë©ë‹ˆë‹¤", MessageType.Warning);
             else if (overlap && Application.isPlaying)
-                EditorGUILayout.HelpBox("¸Ç À§¿¡ ÀÖ´Â Ä­À» Á¦¿ÜÇÑ Áßº¹µÈ ÇÁ¸®ÆÕ ÀÌ¸§ÀÌ ÀÖ´Â Ä­Àº ¹«½ÃµË´Ï´Ù", MessageType.Warning);
+                EditorGUILayout.HelpBox("ë§¨ ìœ„ì— ìˆëŠ” ì¹¸ì„ ì œì™¸í•œ ì¤‘ë³µëœ í”„ë¦¬íŒ¹ ì´ë¦„ì´ ìˆëŠ” ì¹¸ì€ ë¬´ì‹œë©ë‹ˆë‹¤", MessageType.Warning);
 
             if (GUI.changed)
                 EditorUtility.SetDirty(target);
         }
     }
-#pragma warning restore CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+#pragma warning restore CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
 }

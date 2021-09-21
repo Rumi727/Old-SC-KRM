@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace SCKRM.Renderer
 {
     [RequireComponent(typeof(Scrollbar))]
-    [AddComponentMenu("Ä¿³Î/Renderer/UI/Scrollbar", 4)]
+    [AddComponentMenu("ì»¤ë„/Renderer/UI/Scrollbar", 4)]
     public class CustomScrollbarRenderer : CustomRenderer
     {
         Scrollbar scrollbar;

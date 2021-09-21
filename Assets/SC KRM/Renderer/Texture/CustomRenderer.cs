@@ -6,7 +6,7 @@ using UnityEngine;
 namespace SCKRM.Renderer
 {
     [ExecuteAlways]
-    [AddComponentMenu("Ä¿³Î/Renderer/Renderer", 0)]
+    [AddComponentMenu("ì»¤ë„/Renderer/Renderer", 0)]
     public class CustomRenderer : MonoBehaviour
     {
         public UnityEngine.Object Object;
@@ -31,7 +31,7 @@ namespace SCKRM.Renderer
 
 
 
-        [SerializeField, SetName("½ºÇÁ¶óÀÌÆ® ÀÚ¸£±â")] Rect _rect = Rect.zero;
+        [SerializeField, SetName("ìŠ¤í”„ë¼ì´íŠ¸ ìžë¥´ê¸°")] Rect _rect = Rect.zero;
         public Rect rect { get => _rect; set => _rect = value; }
 
         [SerializeField] Vector4 _border = Vector4.zero;
@@ -41,7 +41,7 @@ namespace SCKRM.Renderer
         [Space(10)]
 
 
-        [SerializeField, SetName("½ºÇÁ¶óÀÌÆ® Áß½É")] Vector2 _pivot = new Vector2(0.5f, 0.5f);
+        [SerializeField, SetName("ìŠ¤í”„ë¼ì´íŠ¸ ì¤‘ì‹¬")] Vector2 _pivot = new Vector2(0.5f, 0.5f);
         public Vector2 pivot { get => _pivot; set => _pivot = value; }
 
         [SerializeField] float _pixelsPerUnit = 100;
@@ -78,19 +78,19 @@ namespace SCKRM.Renderer
     [System.Serializable]
     public class CustomButtonSetting
     {
-        [SerializeField, SetName("ÀÏ¹Ý ½ºÇÁ¶óÀÌÆ® ¼³Á¤")] CustomSpriteSetting _normalSprite = new CustomSpriteSetting();
+        [SerializeField, SetName("ì¼ë°˜ ìŠ¤í”„ë¼ì´íŠ¸ ì„¤ì •")] CustomSpriteSetting _normalSprite = new CustomSpriteSetting();
         public CustomSpriteSetting normalSprite { get => _normalSprite; set => _normalSprite = value; }
         
-        [SerializeField, SetName("ÇÏÀÌ¶óÀÌÆ®µÈ ½ºÇÁ¶óÀÌÆ® ¼³Á¤")] CustomSpriteSetting _highlightedSprite = new CustomSpriteSetting();
+        [SerializeField, SetName("í•˜ì´ë¼ì´íŠ¸ëœ ìŠ¤í”„ë¼ì´íŠ¸ ì„¤ì •")] CustomSpriteSetting _highlightedSprite = new CustomSpriteSetting();
         public CustomSpriteSetting highlightedSprite { get => _highlightedSprite; set => _highlightedSprite = value; }
         
-        [SerializeField, SetName("´­¸° ½ºÇÁ¶óÀÌÆ® ¼³Á¤")] CustomSpriteSetting _pressedSprite = new CustomSpriteSetting();
+        [SerializeField, SetName("ëˆŒë¦° ìŠ¤í”„ë¼ì´íŠ¸ ì„¤ì •")] CustomSpriteSetting _pressedSprite = new CustomSpriteSetting();
         public CustomSpriteSetting pressedSprite { get => _pressedSprite; set => _pressedSprite = value; }
         
-        [SerializeField, SetName("¼±ÅÃµÈ ½ºÇÁ¶óÀÌÆ® ¼³Á¤")] CustomSpriteSetting _selectedSprite = new CustomSpriteSetting();
+        [SerializeField, SetName("ì„ íƒëœ ìŠ¤í”„ë¼ì´íŠ¸ ì„¤ì •")] CustomSpriteSetting _selectedSprite = new CustomSpriteSetting();
         public CustomSpriteSetting selectedSprite { get => _selectedSprite; set => _selectedSprite = value; }
         
-        [SerializeField, SetName("ºñÈ°¼ºÈ­µÈ ½ºÇÁ¶óÀÌÆ® ¼³Á¤")] CustomSpriteSetting _disabledSprite = new CustomSpriteSetting();
+        [SerializeField, SetName("ë¹„í™œì„±í™”ëœ ìŠ¤í”„ë¼ì´íŠ¸ ì„¤ì •")] CustomSpriteSetting _disabledSprite = new CustomSpriteSetting();
         public CustomSpriteSetting disabledSprite { get => _disabledSprite; set => _disabledSprite = value; }
     }
 }

@@ -6,15 +6,15 @@ using UnityEngine;
 
 namespace SCKRM.Language.UI
 {
-    [AddComponentMenu("Ä¿³Î/Language/¾ğ¾î ¸®½ºÆ®/¾ğ¾î ¸®½ºÆ® ¼³Á¤", 0)]
+    [AddComponentMenu("ì»¤ë„/Language/ì–¸ì–´ ë¦¬ìŠ¤íŠ¸/ì–¸ì–´ ë¦¬ìŠ¤íŠ¸ ì„¤ì •", 0)]
     public class LanguageListManager : MonoBehaviour
     {
-        [SerializeField, SetName("Exit Å°¸¦ ´­·¶À»¶§ º¸¿©Áú ¿ÀºêÁ§Æ®")]
+        [SerializeField, SetName("Exit í‚¤ë¥¼ ëˆŒë €ì„ë•Œ ë³´ì—¬ì§ˆ ì˜¤ë¸Œì íŠ¸")]
         GameObject visibleGameObject;
 
         void Update()
         {
-            if (InputManager.GetKeyDown("Exit"))
+            if (InputManager.GetKeyDown("gui.exit"))
                 Exit();
         }
 

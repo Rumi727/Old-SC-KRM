@@ -10,7 +10,7 @@ using UnityEngine.Serialization;
 
 namespace SCKRM.Resources.UI
 {
-    [AddComponentMenu("Ä¿³Î/Resources/¸®¼Ò½ºÆÑ ¸®½ºÆ®/¸®¼Ò½ºÆÑ ¸®½ºÆ®", 1)]
+    [AddComponentMenu("ì»¤ë„/Resources/ë¦¬ì†ŒìŠ¤íŒ© ë¦¬ìŠ¤íŠ¸/ë¦¬ì†ŒìŠ¤íŒ© ë¦¬ìŠ¤íŠ¸", 1)]
     public class ResourcePackList : MonoBehaviour
     {
         IEnumerator reloadCoroutine;
@@ -21,7 +21,7 @@ namespace SCKRM.Resources.UI
         public static ResourcePackList instance;
         public static ResourcePackList instanceSelected;
 
-        [SerializeField, SetName("Àû¿ëµÈ ¸®¼Ò½ºÆÑÀ» º¸¿©ÁÖ´Â ¸®½ºÆ®ÀÌ¸é È°¼ºÈ­")] internal bool selected = false;
+        [SerializeField, SetName("ì ìš©ëœ ë¦¬ì†ŒìŠ¤íŒ©ì„ ë³´ì—¬ì£¼ëŠ” ë¦¬ìŠ¤íŠ¸ì´ë©´ í™œì„±í™”")] internal bool selected = false;
 
         void OnEnable() => Reload();
 
@@ -40,7 +40,7 @@ namespace SCKRM.Resources.UI
             for (int i = 0; i < child.Length; i++)
             {
                 ResourcePackButton item = child[i];
-                ObjectPoolingSystem.ObjectRemove("Resources Pack", item.gameObject, item.OnDestroy);
+                ObjectPoolingSystem.ObjectRemove("resource_pack_list.resource_pack_button", item.gameObject, item.OnDestroy);
             }
 
             if (!selected)
@@ -66,7 +66,7 @@ namespace SCKRM.Resources.UI
                     if (forContinue)
                         continue;
 
-                    ResourcePackButton button = ObjectPoolingSystem.ObjectCreate("Resources Pack", transform).GetComponent<ResourcePackButton>();
+                    ResourcePackButton button = ObjectPoolingSystem.ObjectCreate("resource_pack_list.resource_pack_button", transform).GetComponent<ResourcePackButton>();
                     button.resourcePackList = this;
                     button.resourcePack = new ResourcePack();
 
@@ -143,7 +143,7 @@ namespace SCKRM.Resources.UI
                 {
                     ResourcePack item = ResourcesManager.ResourcePacks[i];
 
-                    ResourcePackButton button = ObjectPoolingSystem.ObjectCreate("Resources Pack", transform).GetComponent<ResourcePackButton>();
+                    ResourcePackButton button = ObjectPoolingSystem.ObjectCreate("resource_pack_list.resource_pack_button", transform).GetComponent<ResourcePackButton>();
                     button.resourcePackList = this;
                     button.resourcePack = item;
 

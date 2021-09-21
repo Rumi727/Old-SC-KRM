@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace SCKRM.Language.UI
 {
-    [AddComponentMenu("Ä¿³Î/Language/¾ğ¾î ¸®½ºÆ®/¾ğ¾î ¸®½ºÆ®", 1)]
+    [AddComponentMenu("ì»¤ë„/Language/ì–¸ì–´ ë¦¬ìŠ¤íŠ¸/ì–¸ì–´ ë¦¬ìŠ¤íŠ¸", 1)]
     public class LanguageList : MonoBehaviour
     {
         IEnumerator reloadCoroutine;
@@ -32,7 +32,7 @@ namespace SCKRM.Language.UI
             for (int i = 0; i < child.Length; i++)
             {
                 LanguageButton item = child[i];
-                ObjectPoolingSystem.ObjectRemove("Language Button", item.gameObject, item.OnDestroy);
+                ObjectPoolingSystem.ObjectRemove("language_list.language_button", item.gameObject, item.OnDestroy);
             }
 
             instance = this;
@@ -58,7 +58,7 @@ namespace SCKRM.Language.UI
                             if (languageList.Contains(language))
                                 continue;
 
-                            LanguageButton button = ObjectPoolingSystem.ObjectCreate("Language Button", transform).GetComponent<LanguageButton>();
+                            LanguageButton button = ObjectPoolingSystem.ObjectCreate("language_list.language_button", transform).GetComponent<LanguageButton>();
                             button.gameObject.name = language;
                             button.language = language;
 

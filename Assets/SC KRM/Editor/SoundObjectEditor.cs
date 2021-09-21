@@ -39,14 +39,14 @@ namespace SCKRM.InspectorEditor
 
         public override void OnInspectorGUI()
         {
-            EditorGUILayout.LabelField("»ç¿îµå Å¸ÀÔ - " + _editor.soundType);
-            EditorGUILayout.LabelField("ÇöÀç ½Ã°£ - " + _editor.audioSource.time);
-            EditorGUILayout.LabelField("¿Àµğ¿À ÆÄÀÏ °æ·Î - " + _editor.path);
+            EditorGUILayout.LabelField("ì‚¬ìš´ë“œ íƒ€ì… - " + _editor.soundType);
+            EditorGUILayout.LabelField("í˜„ì¬ ì‹œê°„ - " + _editor.audioSource.time);
+            EditorGUILayout.LabelField("ì˜¤ë””ì˜¤ íŒŒì¼ ê²½ë¡œ - " + _editor.path);
 
             EditorGUILayout.Space();
 
-            UseProperty("_volume", "º¼·ı");
-            UseProperty("_pitch", "ÇÇÄ¡");
+            UseProperty("_volume", "ë³¼ë¥¨");
+            UseProperty("_pitch", "í”¼ì¹˜");
 
             if (GUI.changed)
                 EditorUtility.SetDirty(target);

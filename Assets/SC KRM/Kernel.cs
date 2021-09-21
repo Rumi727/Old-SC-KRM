@@ -7,11 +7,12 @@ using SCKRM.Sound;
 using SCKRM.Window;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace SCKRM
 {
-    [AddComponentMenu("Ä¿³Î/Ä¿³Î", 0)]
+    [AddComponentMenu("ì»¤ë„/ì»¤ë„", 0)]
     public class Kernel : MonoBehaviour
     {
         static IEnumerator allRefreshCoroutine;
@@ -57,6 +58,10 @@ namespace SCKRM
 
 
 
+        public static int MainVolume { get; set; } = 100;
+
+
+
         void Awake()
         {
             if (instance == null)
@@ -92,10 +97,8 @@ namespace SCKRM
             else
                 Application.targetFrameRate = afkFpsLimit;
 
-
-
             //AFK
-            if (InputManager.anyKeyDown)
+            if (InputManager.GetAnyKeyDown())
                 afkTimer = 0;
 
             if (afkTimer >= afkTimerLimit)
@@ -105,6 +108,11 @@ namespace SCKRM
                 isAFK = false;
                 afkTimer += deltaTime;
             }
+
+            if (MainVolume > 200)
+                MainVolume = 200;
+            else if (MainVolume < 0)
+                MainVolume = 0;
         }
 
 #if !UNITY_EDITOR
@@ -112,7 +120,7 @@ namespace SCKRM
         {
             while (true)
             {
-                if (InputManager.GetKeyDown("Full Screen"))
+                if (InputManager.GetKeyDown("kernel.full_screen"))
                 {
                     if (Screen.fullScreen)
                         Screen.SetResolution((int)(Screen.currentResolution.width / 1.5f), (int)(Screen.currentResolution.height / 1.5f), false);
@@ -144,7 +152,7 @@ namespace SCKRM
                 instance.StopCoroutine(allRefreshCoroutine);
 
             if (loadingBar != null)
-                ObjectPoolingSystem.ObjectRemove("Loading Bar", loadingBar.gameObject, loadingBar.OnDestroy);
+                loadingBar.Remove();
 
             allRefreshCoroutine = allRefresh(coroutine, onlyText);
             instance.StartCoroutine(allRefreshCoroutine);
@@ -239,6 +247,180 @@ namespace SCKRM
             value = value.Replace("%Platform%", Kernel.platform.ToString());
 
             return value;
+        }
+
+        public static string AddSpacesToSentence(this string text, bool preserveAcronyms = true)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                return string.Empty;
+
+            StringBuilder newText = new StringBuilder(text.Length * 2);
+            newText.Append(text[0]);
+
+            for (int i = 1; i < text.Length; i++)
+            {
+                if (char.IsUpper(text[i]))
+                    if ((text[i - 1] != ' ' && !char.IsUpper(text[i - 1])) ||
+                        (preserveAcronyms && char.IsUpper(text[i - 1]) &&
+                         i < text.Length - 1 && !char.IsUpper(text[i + 1])))
+                        newText.Append(' ');
+                newText.Append(text[i]);
+            }
+
+            return newText.ToString();
+        }
+
+        public static string KeyCodeToString(this KeyCode keyCode)
+        {
+            string text;
+            if (keyCode == KeyCode.Escape)
+                text = "None";
+            else if (keyCode == KeyCode.Return)
+                text = "Enter";
+            else if (keyCode == KeyCode.Alpha0)
+                text = "0";
+            else if (keyCode == KeyCode.Alpha1)
+                text = "1";
+            else if (keyCode == KeyCode.Alpha2)
+                text = "2";
+            else if (keyCode == KeyCode.Alpha3)
+                text = "3";
+            else if (keyCode == KeyCode.Alpha4)
+                text = "4";
+            else if (keyCode == KeyCode.Alpha5)
+                text = "5";
+            else if (keyCode == KeyCode.Alpha6)
+                text = "6";
+            else if (keyCode == KeyCode.Alpha7)
+                text = "7";
+            else if (keyCode == KeyCode.Alpha8)
+                text = "8";
+            else if (keyCode == KeyCode.Alpha9)
+                text = "9";
+            else if (keyCode == KeyCode.AltGr)
+                text = "Alt Graph";
+            else if (keyCode == KeyCode.Ampersand)
+                text = "&";
+            else if (keyCode == KeyCode.Asterisk)
+                text = "*";
+            else if (keyCode == KeyCode.At)
+                text = "@";
+            else if (keyCode == KeyCode.BackQuote)
+                text = "`";
+            else if (keyCode == KeyCode.Backslash)
+                text = "\\";
+            else if (keyCode == KeyCode.Caret)
+                text = "^";
+            else if (keyCode == KeyCode.Colon)
+                text = ":";
+            else if (keyCode == KeyCode.Comma)
+                text = ",";
+            else if (keyCode == KeyCode.Dollar)
+                text = "$";
+            else if (keyCode == KeyCode.DoubleQuote)
+                text = "\"";
+            else if (keyCode == KeyCode.Equals)
+                text = "=";
+            else if (keyCode == KeyCode.Exclaim)
+                text = "!";
+            else if (keyCode == KeyCode.Greater)
+                text = ">";
+            else if (keyCode == KeyCode.Hash)
+                text = "#";
+            else if (keyCode == KeyCode.Keypad0)
+                text = "0";
+            else if (keyCode == KeyCode.Keypad1)
+                text = "1";
+            else if (keyCode == KeyCode.Keypad2)
+                text = "2";
+            else if (keyCode == KeyCode.Keypad3)
+                text = "3";
+            else if (keyCode == KeyCode.Keypad4)
+                text = "4";
+            else if (keyCode == KeyCode.Keypad5)
+                text = "5";
+            else if (keyCode == KeyCode.Keypad6)
+                text = "6";
+            else if (keyCode == KeyCode.Keypad7)
+                text = "7";
+            else if (keyCode == KeyCode.Keypad8)
+                text = "8";
+            else if (keyCode == KeyCode.Keypad9)
+                text = "9";
+            else if (keyCode == KeyCode.KeypadDivide)
+                text = "/";
+            else if (keyCode == KeyCode.KeypadEnter)
+                text = "Enter";
+            else if (keyCode == KeyCode.KeypadEquals)
+                text = "=";
+            else if (keyCode == KeyCode.KeypadMinus)
+                text = "-";
+            else if (keyCode == KeyCode.KeypadMultiply)
+                text = "*";
+            else if (keyCode == KeyCode.KeypadPeriod)
+                text = ".";
+            else if (keyCode == KeyCode.KeypadPlus)
+                text = "+";
+            else if (keyCode == KeyCode.LeftApple)
+                text = "Left Command";
+            else if (keyCode == KeyCode.LeftBracket)
+                text = "[";
+            else if (keyCode == KeyCode.LeftCurlyBracket)
+                text = "{";
+            else if (keyCode == KeyCode.LeftParen)
+                text = "(";
+            else if (keyCode == KeyCode.Less)
+                text = "<";
+            else if (keyCode == KeyCode.Minus)
+                text = "-";
+            else if (keyCode == KeyCode.Mouse0)
+                text = "Left Click";
+            else if (keyCode == KeyCode.Mouse1)
+                text = "Right Click";
+            else if (keyCode == KeyCode.Mouse2)
+                text = "Middle Click";
+            else if (keyCode == KeyCode.Mouse3)
+                text = "Mouse 3";
+            else if (keyCode == KeyCode.Mouse4)
+                text = "Mouse 4";
+            else if (keyCode == KeyCode.Mouse5)
+                text = "Mouse 5";
+            else if (keyCode == KeyCode.Mouse6)
+                text = "Mouse 6";
+            else if (keyCode == KeyCode.Percent)
+                text = "%";
+            else if (keyCode == KeyCode.Period)
+                text = ".";
+            else if (keyCode == KeyCode.Pipe)
+                text = "|";
+            else if (keyCode == KeyCode.Plus)
+                text = "+";
+            else if (keyCode == KeyCode.Question)
+                text = "?";
+            else if (keyCode == KeyCode.Quote)
+                text = "'";
+            else if (keyCode == KeyCode.RightApple)
+                text = "Right Command";
+            else if (keyCode == KeyCode.RightBracket)
+                text = "]";
+            else if (keyCode == KeyCode.RightCurlyBracket)
+                text = "}";
+            else if (keyCode == KeyCode.RightParen)
+                text = ")";
+            else if (keyCode == KeyCode.Semicolon)
+                text = ";";
+            else if (keyCode == KeyCode.Slash)
+                text = "/";
+            else if (keyCode == KeyCode.SysReq)
+                text = "Print Screen";
+            else if (keyCode == KeyCode.Tilde)
+                text = "~";
+            else if (keyCode == KeyCode.Underscore)
+                text = "_";
+            else
+                text = keyCode.ToString();
+
+            return text.AddSpacesToSentence();
         }
     }
 }

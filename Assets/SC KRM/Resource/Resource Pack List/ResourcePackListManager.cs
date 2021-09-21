@@ -6,15 +6,15 @@ using UnityEngine;
 
 namespace SCKRM.Resources.UI
 {
-    [AddComponentMenu("Ä¿³Î/Resources/¸®¼Ò½ºÆÑ ¸®½ºÆ®/¸®¼Ò½ºÆÑ ¸®½ºÆ® ¼³Á¤", 0)]
+    [AddComponentMenu("ì»¤ë„/Resources/ë¦¬ì†ŒìŠ¤íŒ© ë¦¬ìŠ¤íŠ¸/ë¦¬ì†ŒìŠ¤íŒ© ë¦¬ìŠ¤íŠ¸ ì„¤ì •", 0)]
     public class ResourcePackListManager : MonoBehaviour
     {
-        [SerializeField, SetName("Exit Å°¸¦ ´­·¶À»¶§ º¸¿©Áú ¿ÀºêÁ§Æ®")]
+        [SerializeField, SetName("Exit í‚¤ë¥¼ ëˆŒë €ì„ë•Œ ë³´ì—¬ì§ˆ ì˜¤ë¸Œì íŠ¸")]
         GameObject visibleGameObject;
 
         void Update()
         {
-            if (InputManager.GetKeyDown("Exit"))
+            if (InputManager.GetKeyDown("gui.exit"))
                 Exit();
         }
 

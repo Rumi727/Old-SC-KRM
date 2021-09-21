@@ -8,7 +8,7 @@ using System;
 
 namespace SCKRM.InspectorEditor
 {
-#pragma warning disable CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+#pragma warning disable CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
     [CanEditMultipleObjects]
     [CustomEditor(typeof(SoundManager), true)]
     public class SoundManagerEditor : Editor
@@ -46,32 +46,32 @@ namespace SCKRM.InspectorEditor
         {
             if (_editor.BGM == null)
             {
-                EditorGUILayout.LabelField("À½¾ÇÀÌ »ı¼ºµÉ ¿ÀºêÁ§Æ®ÀÇ ºÎ¸ğ ¿ÀºêÁ§Æ®¸¦ ¾Æ·¡¿¡ ³Ö¾îÁÖ¼¼¿ä!!");
-                UseProperty("_BGM", "À½¾ÇÀ» ´ãÀ» ¿ÀºêÁ§Æ®");
+                EditorGUILayout.LabelField("ìŒì•…ì´ ìƒì„±ë  ì˜¤ë¸Œì íŠ¸ì˜ ë¶€ëª¨ ì˜¤ë¸Œì íŠ¸ë¥¼ ì•„ë˜ì— ë„£ì–´ì£¼ì„¸ìš”!!");
+                UseProperty("_BGM", "ìŒì•…ì„ ë‹´ì„ ì˜¤ë¸Œì íŠ¸");
                 EditorGUILayout.Space();
             }
             if (_editor.Sound == null)
             {
-                EditorGUILayout.LabelField("È¿°úÀ½ÀÌ »ı¼ºµÉ ¿ÀºêÁ§Æ®ÀÇ ºÎ¸ğ ¿ÀºêÁ§Æ®¸¦ ¾Æ·¡¿¡ ³Ö¾îÁÖ¼¼¿ä!!");
-                UseProperty("_Sound", "È¿°úÀ½À» ´ãÀ» ¿ÀºêÁ§Æ®");
+                EditorGUILayout.LabelField("íš¨ê³¼ìŒì´ ìƒì„±ë  ì˜¤ë¸Œì íŠ¸ì˜ ë¶€ëª¨ ì˜¤ë¸Œì íŠ¸ë¥¼ ì•„ë˜ì— ë„£ì–´ì£¼ì„¸ìš”!!");
+                UseProperty("_Sound", "íš¨ê³¼ìŒì„ ë‹´ì„ ì˜¤ë¸Œì íŠ¸");
                 EditorGUILayout.Space();
             }
 
-            EditorGUILayout.LabelField("Àç»ıµÇ°í ÀÖ´Â À½¾Ç - " + SoundManager.BGMList.Count + " / " + SoundManager.MaxBGMCount);
-            EditorGUILayout.LabelField("Àç»ıµÇ°í ÀÖ´Â È¿°úÀ½ - " + SoundManager.SoundList.Count + " / " + SoundManager.MaxSoundCount);
+            EditorGUILayout.LabelField("ì¬ìƒë˜ê³  ìˆëŠ” ìŒì•… - " + SoundManager.BGMList.Count + " / " + SoundManager.MaxBGMCount);
+            EditorGUILayout.LabelField("ì¬ìƒë˜ê³  ìˆëŠ” íš¨ê³¼ìŒ - " + SoundManager.SoundList.Count + " / " + SoundManager.MaxSoundCount);
 
             EditorGUILayout.Space();
 
             //GUI
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("Àç»ıµÇ°í ÀÖ´Â ¸ğµç ¿Àµğ¿À Å¬¸³ÀÇ Á¤º¸");
+            EditorGUILayout.LabelField("ì¬ìƒë˜ê³  ìˆëŠ” ëª¨ë“  ì˜¤ë””ì˜¤ í´ë¦½ì˜ ì •ë³´");
 
             EditorGUILayout.Space();
 
             if (showPos <= 0)
                 GUI.enabled = false;
 
-            if (GUILayout.Button("À§·Î", GUILayout.Width(40)) && showPos > 0)
+            if (GUILayout.Button("ìœ„ë¡œ", GUILayout.Width(40)) && showPos > 0)
                 showPos--;
 
             GUI.enabled = true;
@@ -79,7 +79,7 @@ namespace SCKRM.InspectorEditor
             if (showPos >= SoundManager.AllList.Count - showLength - 1)
                 GUI.enabled = false;
 
-            if (GUILayout.Button("¾Æ·¡·Î", GUILayout.Width(50)) && showPos < SoundManager.AllList.Count - showLength)
+            if (GUILayout.Button("ì•„ë˜ë¡œ", GUILayout.Width(50)) && showPos < SoundManager.AllList.Count - showLength)
                 showPos++;
 
             GUI.enabled = true;
@@ -90,7 +90,7 @@ namespace SCKRM.InspectorEditor
 
 
 
-            //º¯¼ö ¼³Á¤
+            //ë³€ìˆ˜ ì„¤ì •
             if (showLength <= SoundManager.AllList.Count && showPos > SoundManager.AllList.Count - showLength)
                 showPos = SoundManager.AllList.Count - showLength;
 
@@ -152,5 +152,5 @@ namespace SCKRM.InspectorEditor
                 serializedObject.ApplyModifiedProperties();
         }
     }
-#pragma warning restore CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+#pragma warning restore CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
 }

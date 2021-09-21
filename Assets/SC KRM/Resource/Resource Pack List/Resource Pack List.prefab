@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506c5646042392b41829eff13f426940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _jsonKey: resourcePackList.folderOpen
+  _jsonKey: pack.openFolder
 --- !u!114 &7366090870815089974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,7 +463,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5000
   m_TargetDisplay: 0
 --- !u!114 &1762042766931162732
 MonoBehaviour:
@@ -1331,7 +1331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506c5646042392b41829eff13f426940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _jsonKey: resourcePackList.selected
+  _jsonKey: pack.selected.title
 --- !u!114 &1346012563803510154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1461,7 +1461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506c5646042392b41829eff13f426940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _jsonKey: resourcePackList.available
+  _jsonKey: pack.available.title
 --- !u!114 &6113001858742413830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2257,7 +2257,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uB9AC\uC18C\uC2A4\uD329 \uC120\uD0DD"
+  m_Text: Select Resource Packs
 --- !u!114 &8422124058353480459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2270,7 +2270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506c5646042392b41829eff13f426940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _jsonKey: resourcePack.select
+  _jsonKey: resourcePack.title
 --- !u!114 &6804585050764271561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2379,7 +2379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506c5646042392b41829eff13f426940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _jsonKey: done
+  _jsonKey: gui.done
 --- !u!114 &2051752642629724477
 MonoBehaviour:
   m_ObjectHideFlags: 0

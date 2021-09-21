@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SCKRM.Language
 {
-    [AddComponentMenu("Ä¿³Î/Language/¾ğ¾î ¸Å´ÏÀú", 0)]
+    [AddComponentMenu("ì»¤ë„/Language/ì–¸ì–´ ë§¤ë‹ˆì €", 0)]
     public class LanguageManager : MonoBehaviour
     {
         public static LanguageManager instance { get; private set; }
@@ -24,12 +24,12 @@ namespace SCKRM.Language
         }
 
         /// <summary>
-        /// ¸®¼Ò½ºÆÑ¿¡ ÀÖ´Â ¾ğ¾î ÆÄÀÏÀ» ºÒ·¯¿É´Ï´Ù
+        /// ë¦¬ì†ŒìŠ¤íŒ©ì— ìˆëŠ” ì–¸ì–´ íŒŒì¼ì„ ë¶ˆëŸ¬ì˜µë‹ˆë‹¤
         /// </summary>
-        /// <param name="key">ºÒ·¯¿Ã Å°</param>
-        /// <param name="language">ºÒ·¯¿Ã ¾ğ¾î (ºñ¾îÀÖÀ»°æ¿ì¿£, ÇöÀç ¼±ÅÃµÈ ¾ğ¾î·Î ºÒ·¯¿È)</param>
+        /// <param name="key">ë¶ˆëŸ¬ì˜¬ í‚¤</param>
+        /// <param name="language">ë¶ˆëŸ¬ì˜¬ ì–¸ì–´ (ë¹„ì–´ìˆì„ê²½ìš°ì—”, í˜„ì¬ ì„ íƒëœ ì–¸ì–´ë¡œ ë¶ˆëŸ¬ì˜´)</param>
         /// <returns></returns>
-        public static string LangLoad(string key, string language = "")
+        public static string LanguageLoad(string key, string language = "")
         {
             if (!LangList.ContainsKey(key))
             {

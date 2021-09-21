@@ -43,7 +43,7 @@ namespace SCKRM.InspectorEditor
 
             EditorGUILayout.Space();
 
-            if (GUILayout.Button("»õ·Î°íÄ§"))
+            if (GUILayout.Button("ìƒˆë¡œê³ ì¹¨"))
                 _editor.Rerender();
 
             if (GUI.changed)

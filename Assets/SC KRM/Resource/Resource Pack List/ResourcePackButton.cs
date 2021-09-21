@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.Resources.UI
 {
-    [AddComponentMenu("Ä¿³Î/Resources/¸®¼Ò½ºÆÑ ¸®½ºÆ®/¸®¼Ò½ºÆÑ ¼³Á¤ ¹öÆ°", 2)]
+    [AddComponentMenu("ì»¤ë„/Resources/ë¦¬ì†ŒìŠ¤íŒ© ë¦¬ìŠ¤íŠ¸/ë¦¬ì†ŒìŠ¤íŒ© ì„¤ì • ë²„íŠ¼", 2)]
     public class ResourcePackButton : MonoBehaviour
     {
         internal ResourcePack resourcePack;

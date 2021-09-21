@@ -10,7 +10,7 @@ namespace SCKRM.Renderer
 {
     [ExecuteAlways]
     [RequireComponent(typeof(Text))]
-    [AddComponentMenu("ƒø≥Œ/Text/Text", 0)]
+    [AddComponentMenu("Ïª§ÎÑê/Text/Text", 0)]
     public class CustomText : MonoBehaviour
     {
         Text text;
@@ -26,7 +26,7 @@ namespace SCKRM.Renderer
             if (text == null)
                 return;
 
-            text.text = LanguageManager.LangLoad(jsonKey).EnvironmentVariable();
+            text.text = LanguageManager.LanguageLoad(jsonKey).EnvironmentVariable();
         }
     }
 }

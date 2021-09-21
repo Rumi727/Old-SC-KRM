@@ -7,54 +7,105 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI
 {
-    [RequireComponent(typeof(RectTransform))]
-    [AddComponentMenu("Ä¿³Î/UI/º¼·ı ÄÁÆ®·Ñ ¹Ù ¼³Á¤", 0)]
+    [RequireComponent(typeof(RectTransform)), RequireComponent(typeof(Image))]
+    [AddComponentMenu("ì»¤ë„/UI/ë³¼ë¥¨ ì»¨íŠ¸ë¡¤ ë°” ì„¤ì •", 0)]
     public class VolumeControl : MonoBehaviour
     {
-        [SerializeField, HideInInspector] RectTransform rectTransform;
-        [SerializeField, SetName("Ã¤¿ì±â ¾çÀ» ¹Ù²Ü ÀÌ¹ÌÁö")] Image image;
-        [SerializeField, SetName("º¼·ı ÆÛ¼¾Æ®¸¦ Ç¥½ÃÇÒ ÅØ½ºÆ®")] Text text;
+        [HideInInspector] RectTransform rectTransform;
+        [SerializeField] RectTransform sliderRectTransform;
+        [SerializeField] Slider slider;
+        [SerializeField, SetName("ë³¼ë¥¨ í¼ì„¼íŠ¸ë¥¼ í‘œì‹œí•  í…ìŠ¤íŠ¸")] Text text;
 
         [Range(0, 1)]
         [SerializeField] float lerpT = 0.15f;
         [Range(0, 100)]
-        [SerializeField] float addValue = 10f;
+        [SerializeField] int addValue = 10;
         [Range(0, 10)]
         [SerializeField] float hideTimer = 1.5f;
 
         float timer = float.MaxValue;
+        [HideInInspector] float value = 0;
+
+        bool timerReset = false;
+        bool sliderOnStay = false;
+        bool sliderOnDragStay = false;
 
         void Update()
         {
             if (rectTransform == null)
                 rectTransform = GetComponent<RectTransform>();
 
-            if (InputManager.GetKeyDown("Volume Down"))
+            if (sliderOnDragStay && UnityEngine.Input.GetMouseButtonUp(0))
+                sliderOnDragStay = false;
+
+            if (!sliderOnDragStay)
             {
-                AudioListener.volume -= addValue * 0.01f;
-                timer = 0;
-            }
-            else if (InputManager.GetKeyDown("Volume Up") || InputManager.GetKeyDown("Volume Up2"))
-            {
-                AudioListener.volume += addValue * 0.01f;
-                timer = 0;
+                if (InputManager.GetKeyDown("volume_control.volume_down"))
+                {
+                    Kernel.MainVolume -= addValue;
+                    timer = 0;
+                }
+                else if (InputManager.GetKeyDown("volume_control.volume_up"))
+                {
+                    Kernel.MainVolume += addValue;
+                    timer = 0;
+                }
             }
 
-            if (AudioListener.volume > 1)
-                AudioListener.volume = 1;
-            else if (AudioListener.volume < 0)
-                AudioListener.volume = 0;
+            if (Kernel.MainVolume > 200)
+                Kernel.MainVolume = 200;
+            else if (Kernel.MainVolume < 0)
+                Kernel.MainVolume = 0;
 
-            image.fillAmount = Mathf.Lerp(image.fillAmount, AudioListener.volume, lerpT * Kernel.fpsDeltaTime);
-            text.text = Mathf.Round(AudioListener.volume * 100) + "%";
+            if (lerpT != 1)
+                value = Mathf.Lerp(value, Kernel.MainVolume, lerpT * Kernel.fpsDeltaTime);
+            else
+                value = Kernel.MainVolume;
+
+            if (!sliderOnDragStay)
+                slider.value = value;
+
+            if (timerReset || sliderOnDragStay)
+                timer = 0;
+
+            text.text = Mathf.Round(Kernel.MainVolume) + "%";
 
             if (timer < hideTimer)
             {
-                timer += Kernel.deltaTime;
-                rectTransform.anchoredPosition = Vector2.Lerp(rectTransform.anchoredPosition, Vector2.zero, lerpT * Kernel.fpsDeltaTime);
+                if (!timerReset && !sliderOnDragStay)
+                    timer += Kernel.deltaTime;
+
+                if (lerpT != 1)
+                    rectTransform.anchoredPosition = Vector2.Lerp(rectTransform.anchoredPosition, new Vector2(0, -16), lerpT * Kernel.fpsDeltaTime);
+                else
+                    rectTransform.anchoredPosition = new Vector2(0, -16);
             }
             else
-                rectTransform.anchoredPosition = Vector2.Lerp(rectTransform.anchoredPosition, new Vector2(rectTransform.sizeDelta.x, 0), lerpT * Kernel.fpsDeltaTime);
+            {
+                if (lerpT != 1)
+                    rectTransform.anchoredPosition = Vector2.Lerp(rectTransform.anchoredPosition, new Vector2(0, rectTransform.sizeDelta.y + 1), lerpT * Kernel.fpsDeltaTime);
+                else
+                    rectTransform.anchoredPosition = new Vector2(0, rectTransform.sizeDelta.y + 1);
+            }
         }
+
+        public void SetVolume()
+        {
+            if (!sliderOnDragStay)
+                sliderOnDragStay = sliderOnStay && UnityEngine.Input.GetMouseButton(0);
+
+            if (sliderOnDragStay)
+            {
+                sliderOnDragStay = true;
+                value = slider.value;
+                Kernel.MainVolume = (int)slider.value;
+            }
+        }
+        
+        public void SliderOnEnter() => sliderOnStay = true;
+        public void SliderOnExit() => sliderOnStay = false;
+
+        public void TimerResetOn() => timerReset = true;
+        public void TimerResetOff() => timerReset = false;
     }
 }

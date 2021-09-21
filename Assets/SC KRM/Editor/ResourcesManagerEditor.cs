@@ -44,17 +44,17 @@ namespace SCKRM.InspectorEditor
         {
             /*//GUI
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("·ÎµåµÈ ¸ğµç ¿Àµğ¿À Å¬¸³ÀÇ Á¤º¸");
+            EditorGUILayout.LabelField("ë¡œë“œëœ ëª¨ë“  ì˜¤ë””ì˜¤ í´ë¦½ì˜ ì •ë³´");
 
             EditorGUILayout.Space();
 
-            if (GUILayout.Button("·ÎµåµÈ ¸ğµç ¿Àµğ¿À Å¬¸³ Áö¿ì±â", GUILayout.Width(190)))
+            if (GUILayout.Button("ë¡œë“œëœ ëª¨ë“  ì˜¤ë””ì˜¤ í´ë¦½ ì§€ìš°ê¸°", GUILayout.Width(190)))
                 ResourcesManager.AudioList.Clear();
 
             if (showPos <= 0)
                 GUI.enabled = false;
 
-            if (GUILayout.Button("À§·Î", GUILayout.Width(40)) && showPos > 0)
+            if (GUILayout.Button("ìœ„ë¡œ", GUILayout.Width(40)) && showPos > 0)
                 showPos--;
 
             GUI.enabled = true;
@@ -62,7 +62,7 @@ namespace SCKRM.InspectorEditor
             if (showPos >= ResourcesManager.AudioList.Count - showLength - 1)
                 GUI.enabled = false;
 
-            if (GUILayout.Button("¾Æ·¡·Î", GUILayout.Width(50)) && showPos < ResourcesManager.AudioList.Count - showLength)
+            if (GUILayout.Button("ì•„ë˜ë¡œ", GUILayout.Width(50)) && showPos < ResourcesManager.AudioList.Count - showLength)
                 showPos++;
 
             GUI.enabled = true;
@@ -73,7 +73,7 @@ namespace SCKRM.InspectorEditor
 
 
 
-            //º¯¼ö ¼³Á¤
+            //ë³€ìˆ˜ ì„¤ì •
             if (showLength <= ResourcesManager.AudioList.Count && showPos > ResourcesManager.AudioList.Count - showLength)
                 showPos = ResourcesManager.AudioList.Count - showLength;
 
@@ -89,11 +89,11 @@ namespace SCKRM.InspectorEditor
                     break;
 
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("°æ·Î", GUILayout.Width(27));
+                EditorGUILayout.LabelField("ê²½ë¡œ", GUILayout.Width(27));
                 GUI.enabled = false;
                 EditorGUILayout.TextField(item.Key);
                 GUI.enabled = true;
-                EditorGUILayout.LabelField("¿Àµğ¿À Å¬¸³", GUILayout.Width(38));
+                EditorGUILayout.LabelField("ì˜¤ë””ì˜¤ í´ë¦½", GUILayout.Width(38));
                 GUI.enabled = false;
                 EditorGUILayout.ObjectField(item.Value, typeof(AudioClip), true);
                 GUI.enabled = true;
@@ -103,10 +103,10 @@ namespace SCKRM.InspectorEditor
             if (!Application.isPlaying)
                 GUI.enabled = false;
 
-            if (GUILayout.Button("»õ·Î°íÄ§"))
+            if (GUILayout.Button("ìƒˆë¡œê³ ì¹¨"))
                 Kernel.AllRefresh();
 
-            if (GUILayout.Button("¾ğ¾î »õ·Î°íÄ§"))
+            if (GUILayout.Button("ì–¸ì–´ ìƒˆë¡œê³ ì¹¨"))
                 Kernel.AllRefresh(true, true);
 
             GUI.enabled = true;

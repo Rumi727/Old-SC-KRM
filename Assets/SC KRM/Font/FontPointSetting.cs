@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SCKRM.Font
 {
     [ExecuteAlways]
-    [AddComponentMenu("Ä¿³Î/Font/±Û²ÃÀÇ ÅØ½ºÃÄ ÇÊÅÍ ¸ğµå¸¦ Á¡À¸·Î ¼³Á¤", 0)]
+    [AddComponentMenu("ì»¤ë„/Font/ê¸€ê¼´ì˜ í…ìŠ¤ì³ í•„í„° ëª¨ë“œë¥¼ ì ìœ¼ë¡œ ì„¤ì •", 0)]
     public class FontPointSetting : MonoBehaviour
     {
         [SerializeField]

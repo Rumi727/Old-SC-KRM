@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace SCKRM.Sound
 {
-#pragma warning disable CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+#pragma warning disable CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
     [RequireComponent(typeof(AudioSource))]
-    [AddComponentMenu("Ä¿³Î/Audio/¿Àµğ¿À Àç»ı ¿ÀºêÁ§Æ®", 0)]
+    [AddComponentMenu("ì»¤ë„/Audio/ì˜¤ë””ì˜¤ ì¬ìƒ ì˜¤ë¸Œì íŠ¸", 0)]
     public class SoundObject : MonoBehaviour
     {
         [SerializeField, HideInInspector]
@@ -65,16 +65,18 @@ namespace SCKRM.Sound
 
             if (audioSource == null)
             {
-                ObjectPoolingSystem.ObjectRemove("Sound Object", gameObject, OnDestroy);
+                Remove();
                 return;
             }
 
-            audioSource.volume = volume;
+            audioSource.volume = volume * (Kernel.MainVolume * 0.01f);
             audioSource.pitch = pitch;
 
             if (!audioSource.isPlaying)
-                ObjectPoolingSystem.ObjectRemove("Sound Object", gameObject, OnDestroy);
+                Remove();
         }
+
+        public void Remove() => ObjectPoolingSystem.ObjectRemove("sound_manager.sound_object", gameObject, OnDestroy);
 
         public void OnDestroy()
         {
@@ -97,7 +99,7 @@ namespace SCKRM.Sound
             audioSource.clip = null;
         }
     }
-#pragma warning restore CS0618 // Çü½Ä ¶Ç´Â ¸â¹ö´Â »ç¿ëµÇÁö ¾Ê½À´Ï´Ù.
+#pragma warning restore CS0618 // í˜•ì‹ ë˜ëŠ” ë©¤ë²„ëŠ” ì‚¬ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
 
     [System.Flags]
     public enum SoundType
