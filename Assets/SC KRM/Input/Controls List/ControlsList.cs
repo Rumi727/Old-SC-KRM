@@ -21,7 +21,7 @@ namespace SCKRM.Input.UI
                 ObjectPoolingSystem.ObjectRemove("controls_list.controls_button", item.gameObject, item.OnDestroy);
             }
 
-            foreach (var item in InputManager.keyList)
+            foreach (var item in InputManager.controlSettingList)
             {
                 if (item.Value == KeyCode.Escape)
                     continue;

@@ -1,6 +1,9 @@
+using Newtonsoft.Json;
+using SCKRM.Resources;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -14,40 +17,69 @@ namespace SCKRM.Input
         public KeyCode value = KeyCode.None;
     }
 
-#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
     [AddComponentMenu("커널/Input/키 입력 값 설정", 0)]
     public class InputManager : MonoBehaviour
     {
         public static InputManager instance { get; private set; }
+        public static string settingFilePath { get; } = Path.Combine(ResourcePack.Default.Path, ResourcePack.SettingsPath, "inputManager.controlsSettingList.json");
+
+
+        public static Dictionary<string, KeyCode> controlSettingList { get; set; }
+
+
 
         public static bool defaultInputLock { get; set; }
 
         public static KeyCode[] unityKeyCodeList { get; } = Enum.GetValues(typeof(KeyCode)) as KeyCode[];
 
 
-        /// <summary>
-        /// The system that manages this variable is serious spaghetti code! If you don't know exactly what you're doing, please stop doing what you're doing.
-        /// </summary>
-		[Obsolete("The system that manages this variable is serious spaghetti code! If you don't know exactly what you're doing, please stop doing what you're doing.")] public List<StringKeyCode> _keyList = new List<StringKeyCode>();
-        /// <summary>
-        /// The system that manages this variable is serious spaghetti code! If you don't know exactly what you're doing, please stop doing what you're doing.
-        /// </summary>
-        [Obsolete("The system that manages this variable is serious spaghetti code! If you don't know exactly what you're doing, please stop doing what you're doing.")] public static Dictionary<string, KeyCode> keyList { get; set; }
-        /// <summary>
-        /// The system that manages this variable is serious spaghetti code! If you don't know exactly what you're doing, please stop doing what you're doing.
-        /// </summary>
-        [Obsolete("The system that manages this variable is serious spaghetti code! If you don't know exactly what you're doing, please stop doing what you're doing.")] public static Dictionary<string, KeyCode> defaultKeyList { get; private set; }
+
+        void Awake()
+        {
+            if (instance != null)
+                Destroy(this);
+
+            instance = this;
+
+            SettingFileLoad();
+        }
+
+        void Update()
+        {
+            mousePosition = UnityEngine.Input.mousePosition;
+            _mousePresent = UnityEngine.Input.mousePresent;
+            _mouseScrollDelta = UnityEngine.Input.mouseScrollDelta;
+
+            anyKeyDown = UnityEngine.Input.anyKeyDown;
+            anyKey = UnityEngine.Input.anyKey;
+        }
+
+
+
+        public static void SettingFileSave()
+        {
+            string json = JsonConvert.SerializeObject(controlSettingList, Formatting.Indented);
+
+            File.WriteAllText(settingFilePath, json);
+        }
+
+        public static void SettingFileLoad()
+        {
+            string json = File.ReadAllText(settingFilePath);
+
+            controlSettingList = JsonConvert.DeserializeObject<Dictionary<string, KeyCode>>(json);
+        }
 
 
 
         public static bool GetKeyDown(KeyCode keyCode, InputLockDeny inputLockDeny = InputLockDeny.None) => !InputLockCheck(inputLockDeny) && UnityEngine.Input.GetKeyDown(keyCode);
-        public static bool GetKeyDown(string keyCode, InputLockDeny inputLockDeny = InputLockDeny.None) => !InputLockCheck(inputLockDeny) && keyList.ContainsKey(keyCode) && UnityEngine.Input.GetKeyDown(keyList[keyCode]);
+        public static bool GetKeyDown(string keyCode, InputLockDeny inputLockDeny = InputLockDeny.None) => !InputLockCheck(inputLockDeny) && controlSettingList.ContainsKey(keyCode) && UnityEngine.Input.GetKeyDown(controlSettingList[keyCode]);
 
         public static bool GetKey(KeyCode keyCode, InputLockDeny inputLockDeny = InputLockDeny.None) => !InputLockCheck(inputLockDeny) && UnityEngine.Input.GetKey(keyCode);
-        public static bool GetKey(string keyCode, InputLockDeny inputLockDeny = InputLockDeny.None) => !InputLockCheck(inputLockDeny) && keyList.ContainsKey(keyCode) && UnityEngine.Input.GetKey(keyList[keyCode]);
+        public static bool GetKey(string keyCode, InputLockDeny inputLockDeny = InputLockDeny.None) => !InputLockCheck(inputLockDeny) && controlSettingList.ContainsKey(keyCode) && UnityEngine.Input.GetKey(controlSettingList[keyCode]);
 
         public static bool GetKeyUp(KeyCode keyCode, InputLockDeny inputLockDeny = InputLockDeny.None) => !InputLockCheck(inputLockDeny) && UnityEngine.Input.GetKeyUp(keyCode);
-        public static bool GetKeyUp(string keyCode, InputLockDeny inputLockDeny = InputLockDeny.None) => !InputLockCheck(inputLockDeny) && keyList.ContainsKey(keyCode) && UnityEngine.Input.GetKeyUp(keyList[keyCode]);
+        public static bool GetKeyUp(string keyCode, InputLockDeny inputLockDeny = InputLockDeny.None) => !InputLockCheck(inputLockDeny) && controlSettingList.ContainsKey(keyCode) && UnityEngine.Input.GetKeyUp(controlSettingList[keyCode]);
 
 
 
@@ -87,40 +119,6 @@ namespace SCKRM.Input
 
             return inputLock;
         }
-
-        void Awake()
-        {
-            if (instance != null)
-                Destroy(this);
-
-            instance = this;
-
-            List<StringKeyCode> deduplicationKeyList = _keyList;
-            for (int i = 0; i < _keyList.Count; i++)
-            {
-                StringKeyCode item = _keyList[i];
-                if (i + 1 < _keyList.Count && item.key == _keyList[i + 1].key)
-                {
-                    deduplicationKeyList.Remove(item);
-                    i--;
-                }
-            }
-
-            _KeyListSaveChanges();
-            defaultKeyList = new Dictionary<string, KeyCode>(keyList);
-        }
-
-        void Update()
-        {
-            mousePosition = UnityEngine.Input.mousePosition;
-            _mousePresent = UnityEngine.Input.mousePresent;
-            _mouseScrollDelta = UnityEngine.Input.mouseScrollDelta;
-
-            anyKeyDown = UnityEngine.Input.anyKeyDown;
-            anyKey = UnityEngine.Input.anyKey;
-        }
-
-        public static void _KeyListSaveChanges() => keyList = instance._keyList.ToDictionary(t => t.key, t => t.value);
     }
 
     [Flags]
@@ -130,5 +128,4 @@ namespace SCKRM.Input
         All = 1 << 1,
         Default = 1 << 2,
     }
-#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
 }

@@ -1,3 +1,4 @@
+using SCKRM.Json;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,11 @@ namespace SCKRM.Input.UI
 
         public void KeyReset()
         {
-#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
-            InputManager.instance._keyList[InputManager.keyList.Keys.ToList().IndexOf(key)].value = InputManager.defaultKeyList[key];
-            InputManager._KeyListSaveChanges();
-
-            valueText.text = InputManager.defaultKeyList[key].KeyCodeToString();
-#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
+            if (JsonManager.JsonRead(key, InputManager.settingFilePath, out KeyCode keyCode, false))
+            {
+                InputManager.controlSettingList[key] = keyCode;
+                valueText.text = keyCode.KeyCodeToString();
+            }
         }
 
         public void OnDestroy()

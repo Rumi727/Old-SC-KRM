@@ -1,32 +1,24 @@
+using Newtonsoft.Json;
+using SCKRM.Resources;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SCKRM.Object
 {
-    [System.Serializable]
-    public class ObjectList
+    class ObjectList
     {
         public List<string> ObjectKey = new List<string>();
         public List<GameObject> Object = new List<GameObject>();
     }
 
-#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
     [AddComponentMenu("커널/Object/오브젝트 풀링 설정", 0)]
     public class ObjectPoolingSystem : MonoBehaviour
     {
         #region variable
-        /// <summary>
-        /// If you don't know what you're doing, don't modify this variable in your script
-        /// </summary>
-        [SerializeField, Obsolete("If you don't know exactly what you're doing, don't touch this variable")] public ObjectList _PrefabObject = new ObjectList();
-        /// <summary>
-        /// If you don't know what you're doing, don't modify this variable in your script
-        /// </summary>
-        [Obsolete("If you don't know exactly what you're doing, don't touch this variable")] public static ObjectList PrefabObject { get; set; }
+        public static Dictionary<string, string> PrefabList { get; set; } = new Dictionary<string, string>();
 
         static ObjectList ObjectList { get; } = new ObjectList();
 
@@ -42,20 +34,24 @@ namespace SCKRM.Object
             instance = this;
 
             thisTransform = transform;
-            PrefabObject = _PrefabObject;
 
-            PrefabObject.ObjectKey = PrefabObject.ObjectKey.Distinct().ToList();
-            while (PrefabObject.Object.Count > PrefabObject.ObjectKey.Count)
-                PrefabObject.Object.RemoveAt(PrefabObject.ObjectKey.Count);
+            SettingFileLoad();
         }
 
-        void Update()
+        public static void SettingFileSave()
         {
-            while (PrefabObject.Object.Count > PrefabObject.ObjectKey.Count)
-                PrefabObject.Object.RemoveAt(PrefabObject.ObjectKey.Count);
+            string path = Path.Combine(ResourcePack.Default.Path, ResourcePack.SettingsPath, "objectPoolingSystem.prefabList.json");
+            string json = JsonConvert.SerializeObject(PrefabList, Formatting.Indented);
 
-            while (PrefabObject.Object.Count < PrefabObject.ObjectKey.Count)
-                PrefabObject.Object.Add(null);
+            File.WriteAllText(path, json);
+        }
+
+        public static void SettingFileLoad()
+        {
+            string path = Path.Combine(ResourcePack.Default.Path, ResourcePack.SettingsPath, "objectPoolingSystem.prefabList.json");
+            string json = File.ReadAllText(path);
+
+            PrefabList = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
         }
 
         /// <summary>
@@ -85,9 +81,9 @@ namespace SCKRM.Object
 
                 return gameObject;
             }
-            else if (PrefabObject.ObjectKey.Contains(ObjectKey))
+            else if (PrefabList.ContainsKey(ObjectKey))
             {
-                GameObject gameObject = Instantiate(PrefabObject.Object[PrefabObject.ObjectKey.IndexOf(ObjectKey)], Parent);
+                GameObject gameObject = Instantiate(UnityEngine.Resources.Load<GameObject>(PrefabList[ObjectKey]), Parent);
                 gameObject.name = ObjectKey;
 
                 return gameObject;
@@ -107,9 +103,9 @@ namespace SCKRM.Object
             onDestroy.Invoke();
             gameObject.SetActive(false);
             gameObject.transform.SetParent(thisTransform);
+
             ObjectList.ObjectKey.Add(ObjectKey);
-            ObjectList.Object.Add(gameObject.gameObject);
+            ObjectList.Object.Add(gameObject);
         }
     }
-#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
 }

@@ -376,6 +376,8 @@ namespace SCKRM.Resources
 
         public const string LanguagePath = "assets/%NameSpace%/lang/";
 
+        public const string SettingsPath = "projectSettings/";
+
         [JsonProperty("Name Space")] public string[] NameSpace = { "sc-krm" };
         public string Path = Kernel.streamingAssetsPath;
 

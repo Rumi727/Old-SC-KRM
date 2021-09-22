@@ -814,8 +814,6 @@ MonoBehaviour:
     value: 45
   - key: volume_control.volume_up
     value: 61
-  - key: volume_control.volume_up2
-    value: 43
   - key: gui.exit
     value: 27
   - key: kernel.full_screen

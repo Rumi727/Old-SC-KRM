@@ -8,13 +8,10 @@ using System.Linq;
 
 namespace SCKRM.InspectorEditor
 {
-#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
     [CanEditMultipleObjects]
     [CustomEditor(typeof(InputManager), true)]
     public class InputManagerEditor : Editor
     {
-        InputManager _editor;
-
         int showLength = 8;
         int showPos = 0;
 
@@ -22,8 +19,6 @@ namespace SCKRM.InspectorEditor
 
         void OnEnable()
         {
-            _editor = target as InputManager;
-
             if (Application.isPlaying)
             {
                 repaint = true;
@@ -44,24 +39,34 @@ namespace SCKRM.InspectorEditor
 
         public override void OnInspectorGUI()
         {
+            //JSON 읽기
+            InputManager.SettingFileLoad();
+
             //GUI
-            EditorGUILayout.LabelField("사용자 지정 키");
+            EditorGUILayout.LabelField("오브젝트 리스트");
+
+            //GUI
             EditorGUILayout.BeginHorizontal();
 
-            if (GUILayout.Button("추가", GUILayout.Width(40)))
-                _editor._keyList.Add(new StringKeyCode());
-
-            if (_editor._keyList.Count <= 0)
+            if (InputManager.controlSettingList.ContainsKey(""))
                 GUI.enabled = false;
 
-            if (GUILayout.Button("삭제", GUILayout.Width(40)) && _editor._keyList.Count > 0)
-                _editor._keyList.RemoveAt(_editor._keyList.Count - 1);
+            if (GUILayout.Button("추가", GUILayout.Width(40)))
+                InputManager.controlSettingList.Add("", KeyCode.None);
+
+            GUI.enabled = true;
+
+            if (InputManager.controlSettingList.Count <= 0)
+                GUI.enabled = false;
+
+            if (GUILayout.Button("삭제", GUILayout.Width(40)) && InputManager.controlSettingList.Count > 0)
+                InputManager.controlSettingList.Remove(InputManager.controlSettingList.ToList()[InputManager.controlSettingList.Count - 1].Key);
 
             GUI.enabled = true;
 
             EditorGUILayout.Space();
 
-            int count = EditorGUILayout.IntField("리스트 길이", _editor._keyList.Count, GUILayout.Height(21));
+            int count = EditorGUILayout.IntField("리스트 길이", InputManager.controlSettingList.Count, GUILayout.Height(21));
 
             EditorGUILayout.Space();
 
@@ -73,10 +78,10 @@ namespace SCKRM.InspectorEditor
 
             GUI.enabled = true;
 
-            if (showPos >= _editor._keyList.Count - showLength)
+            if (showPos >= InputManager.controlSettingList.Count - showLength)
                 GUI.enabled = false;
 
-            if (GUILayout.Button("아래로", GUILayout.Width(50)) && showPos < _editor._keyList.Count - showLength)
+            if (GUILayout.Button("아래로", GUILayout.Width(50)) && showPos < InputManager.controlSettingList.Count - showLength)
                 showPos++;
 
             GUI.enabled = true;
@@ -85,54 +90,64 @@ namespace SCKRM.InspectorEditor
 
             EditorGUILayout.Space();
 
-            
+
 
             //변수 설정
             if (count < 0)
                 count = 0;
 
-            if (count > _editor._keyList.Count)
+            if (count > InputManager.controlSettingList.Count)
             {
-                for (int i = _editor._keyList.Count; i < count; i++)
-                    _editor._keyList.Add(new StringKeyCode());
+                for (int i = InputManager.controlSettingList.Count; i < count; i++)
+                    InputManager.controlSettingList.Add("", KeyCode.None);
             }
-            else if (count < _editor._keyList.Count)
+            else if (count < InputManager.controlSettingList.Count)
             {
-                for (int i = _editor._keyList.Count - 1; i >= count; i--)
-                    _editor._keyList.RemoveAt(i);
+                for (int i = InputManager.controlSettingList.Count - 1; i >= count; i--)
+                    InputManager.controlSettingList.Remove(InputManager.controlSettingList.ToList()[InputManager.controlSettingList.Count - 1].Key);
             }
 
-            if (showLength <= _editor._keyList.Count && showPos > _editor._keyList.Count - showLength)
-                showPos = _editor._keyList.Count - showLength;
+            if (showLength <= InputManager.controlSettingList.Count && showPos > InputManager.controlSettingList.Count - showLength)
+                showPos = InputManager.controlSettingList.Count - showLength;
 
             if (showLength < 33)
                 showLength = 33;
-            if (showLength + showPos > _editor._keyList.Count)
-                showLength = _editor._keyList.Count - showPos;
+            if (showLength + showPos > InputManager.controlSettingList.Count)
+                showLength = InputManager.controlSettingList.Count - showPos;
+
+
+
+            List<KeyValuePair<string, KeyCode>> controlList = InputManager.controlSettingList.ToList();
+
+            //딕셔너리는 키를 수정할수 없기때문에, 리스트로 분활해줘야함
+            List<string> keyList = new List<string>();
+            List<KeyCode> valueList = new List<KeyCode>();
 
             for (int i = showPos; i < showPos + showLength; i++)
             {
+                KeyValuePair<string, KeyCode> item = controlList[i];
+
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("키 이름", GUILayout.Width(41));
-                _editor._keyList[i].key = EditorGUILayout.TextField(_editor._keyList[i].key);
-                EditorGUILayout.LabelField("키 코드", GUILayout.Width(41));
-                _editor._keyList[i].value = (KeyCode)EditorGUILayout.EnumPopup("", _editor._keyList[i].value);
+
+                EditorGUILayout.LabelField("프리팹 키", GUILayout.Width(53));
+                keyList.Add(EditorGUILayout.TextField(item.Key));
+
+                EditorGUILayout.LabelField("프리팹", GUILayout.Width(38));
+                valueList.Add((KeyCode)EditorGUILayout.EnumPopup(item.Value));
+
                 EditorGUILayout.EndHorizontal();
             }
 
-            bool overlap = _editor._keyList.GroupBy(x => x.key).Where(x => x.Skip(1).Any()).Any();
-
-            if (GUI.changed && Application.isPlaying && !overlap)
-                InputManager._KeyListSaveChanges();
-            
-            if (overlap && !Application.isPlaying)
-                EditorGUILayout.HelpBox("중복된 키 이름이 있는 칸은 제거됩니다", MessageType.Warning);
-            else if (overlap && Application.isPlaying)
-                EditorGUILayout.HelpBox("중복된 키 이름이 있는 칸이 있으면 모든 변경 사항이 저장되지 않습니다", MessageType.Error);
+            //키 중복 감지
+            bool overlap = keyList.Count != keyList.Distinct().Count();
+            if (!overlap)
+            {
+                //리스트 2개를 딕셔너리로 변환
+                InputManager.controlSettingList = keyList.Zip(valueList, (key, value) => new { key, value }).ToDictionary(a => a.key, a => a.value);
+            }
 
             if (GUI.changed)
-                EditorUtility.SetDirty(target);
+                InputManager.SettingFileSave();
         }
     }
-#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
 }

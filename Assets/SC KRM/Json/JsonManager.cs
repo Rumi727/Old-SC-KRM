@@ -11,14 +11,14 @@ namespace SCKRM.Json
     public class JsonManager
     {
         /// <summary>
-        /// JSON을 불러옵니다 (이걸 사용할려면, JSON 파일의 모든 키와 값의 타입이 문자열이여야합니다)
+        /// JSON을 불러옵니다 (이걸 사용할려면, JSON 파일의 모든 키와 값의 타입이 T랑 같아야합니다)
         /// </summary>
         /// <param name="key">키</param>
         /// <param name="path">JSON 파일 경로</param>
         /// <param name="value">값</param>
         /// <param name="resourcePackPath">리소스팩에서 파일 불러오기</param>
         /// <returns></returns>
-        public static bool JsonRead(string key, string path, out string value, bool resourcePackPath = true)
+        public static bool JsonRead<T>(string key, string path, out T value, bool resourcePackPath = true)
         {
             if (resourcePackPath)
             {
@@ -41,7 +41,7 @@ namespace SCKRM.Json
                         {
                             string json = File.ReadAllText(allPath);
 
-                            Dictionary<string, string> jsonDic = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+                            Dictionary<string, T> jsonDic = JsonConvert.DeserializeObject<Dictionary<string, T>>(json);
                             if (jsonDic == null)
                                 break;
                             else if (!jsonDic.ContainsKey(key))
@@ -61,15 +61,15 @@ namespace SCKRM.Json
                     string json = sr.ReadToEnd();
                     sr.Close();
 
-                    Dictionary<string, string> jsonDic = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+                    Dictionary<string, T> jsonDic = JsonConvert.DeserializeObject<Dictionary<string, T>>(json);
                     if (jsonDic == null)
                     {
-                        value = "";
+                        value = default(T);
                         return false;
                     }
                     else if (!jsonDic.ContainsKey(key))
                     {
-                        value = "";
+                        value = default(T);
                         return false;
                     }
 
@@ -78,7 +78,7 @@ namespace SCKRM.Json
                 }
             }
 
-            value = "";
+            value = default(T);
             return false;
         }
     }

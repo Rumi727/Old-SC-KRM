@@ -32,11 +32,9 @@ namespace SCKRM.Input.UI
                 if (UnityEngine.Input.GetKeyDown(keyCode))
                 {
                     if (keyCode == KeyCode.Escape)
-                        InputManager.instance._keyList[InputManager.keyList.Keys.ToList().IndexOf(controlsButton.key)].value = KeyCode.None;
+                        InputManager.controlSettingList[controlsButton.key] = KeyCode.None;
                     else
-                        InputManager.instance._keyList[InputManager.keyList.Keys.ToList().IndexOf(controlsButton.key)].value = keyCode;
-
-                    InputManager._KeyListSaveChanges();
+                        InputManager.controlSettingList[controlsButton.key] = keyCode;
 
                     controlsButton.valueText.text = keyCode.KeyCodeToString();
                 }

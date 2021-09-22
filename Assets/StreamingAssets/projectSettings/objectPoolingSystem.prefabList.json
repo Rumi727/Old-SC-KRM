@@ -1,0 +1,7 @@
+{
+  "sound manager.sound_object": "Prefab/Sound Object",
+  "loading_manager.loading_bar": "Prefab/Loading Bar Background",
+  "resource_pack_list.resource_pack_button": "Prefab/Default",
+  "language_list.language_button": "Prefab/Language Button",
+  "controls_list.controls_button": "Prefab/Controls Button"
+}

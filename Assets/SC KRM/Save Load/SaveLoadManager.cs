@@ -27,7 +27,6 @@ namespace SCKRM.SaveData
 
         void OnApplicationQuit() => SaveData();
 
-#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
         public static void SaveData()
         {
             if (!Directory.Exists(Path.Combine(Kernel.persistentDataPath, "Save Data")))
@@ -42,8 +41,8 @@ namespace SCKRM.SaveData
             kernelSetting.Language = LanguageManager.currentLanguage;
             kernelSetting.ResourcePack = new List<ResourcePack>(ResourcesManager.ResourcePacks);
             kernelSetting.ResourcePack.RemoveAt(kernelSetting.ResourcePack.Count - 1);
-            kernelSetting.Controls = new Dictionary<string, KeyCode>(InputManager.keyList);
-            foreach (var item in InputManager.keyList)
+            kernelSetting.Controls = new Dictionary<string, KeyCode>(InputManager.controlSettingList);
+            foreach (var item in InputManager.controlSettingList)
             {
                 if (item.Value == KeyCode.Escape)
                     kernelSetting.Controls.Remove(item.Key);
@@ -72,30 +71,11 @@ namespace SCKRM.SaveData
                 for (int i = 0; i < resourcePacks.Count; i++)
                     ResourcesManager.ResourcePacks.Add(resourcePacks[i]);
                 ResourcesManager.ResourcePacks.Add(ResourcePack.Default);
-
-                List<KeyValuePair<string, KeyCode>> list = kernelSetting.Controls.ToList();
-                int ii = 0;
-                for (int i = 0; i < InputManager.instance._keyList.Count; i++)
-                {
-                    if (ii >= list.Count)
-                        break;
-
-                    KeyValuePair<string, KeyCode> item = list[ii];
-                    StringKeyCode stringKeyCode = InputManager.instance._keyList[i];
-                    
-                    if (item.Key == stringKeyCode.key)
-                    {
-                        stringKeyCode.value = item.Value;
-                        ii++;
-                    }
-                }
-
-                InputManager._KeyListSaveChanges();
+                InputManager.controlSettingList = kernelSetting.Controls;
             }
 
             Kernel.AllRefresh(true);
         }
-#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
     }
 
     class KernelSetting
