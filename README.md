@@ -55,9 +55,9 @@ Kernel.deltaTime을 사용 할 경우, 일반 변수처럼 비슷하게 작동�
   
   rect의 x와 y는 창의 위치이고 width랑 height는 창의 크기를 담당합니다.
   
-  windowDatumPoint는 창의 중심점을 설정합니다, 즉 x0.5 y0.5으로 설정하면 창의 왼쪽 위가 중심점이 됩니다.
+  windowDatumPoint는 창의 중심점을 설정합니다, 즉 x1 y1으로 설정하면 창의 오른쪽 아래가 중심점이 됩니다.
   
-  screenDatumPoint는 화면의 중심점을 설정합니다, 즉 x0.5 y0.5으로 설정하면 화면의 왼쪽 위가 중심점이 됩니다.
+  screenDatumPoint는 화면의 중심점을 설정합니다, 즉 x1 y1으로 설정하면 화면의 오른쪽 아래가 중심점이 됩니다.
   
   clientDatum은 켜져있으면 크기를 설정할때 윈도우의 보더를 포함하지 않고 크기를 설정하지만 (`Screen.SetResolution`랑 동일) 꺼져있으면 윈도우의 보더를 포함해서 크기를 설정합니다.
   
