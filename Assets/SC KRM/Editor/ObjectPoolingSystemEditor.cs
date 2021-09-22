@@ -16,6 +16,7 @@ namespace SCKRM.InspectorEditor
         int showPos = 0;
 
         bool repaint = false;
+        bool deleteSafety = true;
 
         void OnEnable()
         {
@@ -39,11 +40,19 @@ namespace SCKRM.InspectorEditor
 
         public override void OnInspectorGUI()
         {
-            //JSON 읽기
-            ObjectPoolingSystem.SettingFileLoad();
+            //플레이 모드가 아니면 파일에서 JSON을 읽어서 리스트 불러오기
+            if (!Application.isPlaying)
+                ObjectPoolingSystem.SettingFileLoad();
 
             //GUI
             EditorGUILayout.LabelField("오브젝트 리스트");
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("안전 삭제 모드 (삭제 할 리스트가 빈 값이 아니면 삭제 금지)", GUILayout.Width(330));
+            deleteSafety = EditorGUILayout.Toggle(deleteSafety);
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.Space();
 
             //GUI
             EditorGUILayout.BeginHorizontal();
@@ -56,10 +65,10 @@ namespace SCKRM.InspectorEditor
 
             GUI.enabled = true;
 
-            if (ObjectPoolingSystem.PrefabList.Count <= 0)
+            if (ObjectPoolingSystem.PrefabList.Count <= 0 || ((ObjectPoolingSystem.PrefabList.Keys.ToList()[ObjectPoolingSystem.PrefabList.Count - 1] != "" || ObjectPoolingSystem.PrefabList.Values.ToList()[ObjectPoolingSystem.PrefabList.Count - 1] != "") && deleteSafety))
                 GUI.enabled = false;
 
-            if (GUILayout.Button("삭제", GUILayout.Width(40)) && ObjectPoolingSystem.PrefabList.Count > 0)
+            if (GUILayout.Button("삭제", GUILayout.Width(40)))
                 ObjectPoolingSystem.PrefabList.Remove(ObjectPoolingSystem.PrefabList.ToList()[ObjectPoolingSystem.PrefabList.Count - 1].Key);
 
             GUI.enabled = true;
@@ -99,12 +108,22 @@ namespace SCKRM.InspectorEditor
             if (count > ObjectPoolingSystem.PrefabList.Count)
             {
                 for (int i = ObjectPoolingSystem.PrefabList.Count; i < count; i++)
-                    ObjectPoolingSystem.PrefabList.Add("", "");
+                {
+                    if (!ObjectPoolingSystem.PrefabList.ContainsKey(""))
+                        ObjectPoolingSystem.PrefabList.Add("", "");
+                    else
+                        count--;
+                }
             }
             else if (count < ObjectPoolingSystem.PrefabList.Count)
             {
                 for (int i = ObjectPoolingSystem.PrefabList.Count - 1; i >= count; i--)
-                    ObjectPoolingSystem.PrefabList.Remove(ObjectPoolingSystem.PrefabList.ToList()[ObjectPoolingSystem.PrefabList.Count - 1].Key);
+                {
+                    if ((ObjectPoolingSystem.PrefabList.Keys.ToList()[ObjectPoolingSystem.PrefabList.Count - 1] == "" && ObjectPoolingSystem.PrefabList.Values.ToList()[ObjectPoolingSystem.PrefabList.Count - 1] == "") || !deleteSafety)
+                        ObjectPoolingSystem.PrefabList.Remove(ObjectPoolingSystem.PrefabList.ToList()[ObjectPoolingSystem.PrefabList.Count - 1].Key);
+                    else
+                        count++;
+                }
             }
 
             if (showLength <= ObjectPoolingSystem.PrefabList.Count && showPos > ObjectPoolingSystem.PrefabList.Count - showLength)
@@ -149,11 +168,11 @@ namespace SCKRM.InspectorEditor
                    경로가 중첩되는 현상을 대비하기 위해 경로를 빈 문자열로 변경해줌
                  */
                 string assetsPath = AssetDatabase.GetAssetPath(gameObject);
-                if (assetsPath.Contains("Resources"))
+                if (assetsPath.Contains("Resources/"))
                 {
                     keyList.Add(key);
 
-                    assetsPath = assetsPath.Substring(assetsPath.IndexOf("Resources") + 10);
+                    assetsPath = assetsPath.Substring(assetsPath.IndexOf("Resources/") + 10);
                     assetsPath = assetsPath.Remove(assetsPath.LastIndexOf("."));
 
                     valueList.Add(assetsPath);
@@ -178,8 +197,8 @@ namespace SCKRM.InspectorEditor
                 ObjectPoolingSystem.PrefabList = keyList.Zip(valueList, (key, value) => new { key, value }).ToDictionary(a => a.key, a => a.value);
             }
 
-            //JSON으로 저장
-            if (GUI.changed)
+            //플레이 모드가 아니면 변경한 리스트의 데이터를 잃어버리지 않게 파일로 저장
+            if (GUI.changed && !Application.isPlaying)
                 ObjectPoolingSystem.SettingFileSave();
         }
     }

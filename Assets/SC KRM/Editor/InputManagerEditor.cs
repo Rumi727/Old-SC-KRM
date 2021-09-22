@@ -16,6 +16,7 @@ namespace SCKRM.InspectorEditor
         int showPos = 0;
 
         bool repaint = false;
+        bool deleteSafety = true;
 
         void OnEnable()
         {
@@ -39,11 +40,19 @@ namespace SCKRM.InspectorEditor
 
         public override void OnInspectorGUI()
         {
-            //JSON 읽기
-            InputManager.SettingFileLoad();
+            //플레이 모드가 아니면 파일에서 JSON을 읽어서 리스트 불러오기
+            if (!Application.isPlaying)
+                InputManager.SettingFileLoad();
 
             //GUI
             EditorGUILayout.LabelField("오브젝트 리스트");
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("안전 삭제 모드 (삭제 할 리스트가 빈 값이 아니면 삭제 금지)", GUILayout.Width(330));
+            deleteSafety = EditorGUILayout.Toggle(deleteSafety);
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.Space();
 
             //GUI
             EditorGUILayout.BeginHorizontal();
@@ -56,7 +65,7 @@ namespace SCKRM.InspectorEditor
 
             GUI.enabled = true;
 
-            if (InputManager.controlSettingList.Count <= 0)
+            if (InputManager.controlSettingList.Count <= 0 || ((InputManager.controlSettingList.Keys.ToList()[InputManager.controlSettingList.Count - 1] != "" || InputManager.controlSettingList.Values.ToList()[InputManager.controlSettingList.Count - 1] != KeyCode.None) && deleteSafety))
                 GUI.enabled = false;
 
             if (GUILayout.Button("삭제", GUILayout.Width(40)) && InputManager.controlSettingList.Count > 0)
@@ -99,12 +108,22 @@ namespace SCKRM.InspectorEditor
             if (count > InputManager.controlSettingList.Count)
             {
                 for (int i = InputManager.controlSettingList.Count; i < count; i++)
-                    InputManager.controlSettingList.Add("", KeyCode.None);
+                {
+                    if (!InputManager.controlSettingList.ContainsKey(""))
+                        InputManager.controlSettingList.Add("", KeyCode.None);
+                    else
+                        count--;
+                }
             }
             else if (count < InputManager.controlSettingList.Count)
             {
                 for (int i = InputManager.controlSettingList.Count - 1; i >= count; i--)
-                    InputManager.controlSettingList.Remove(InputManager.controlSettingList.ToList()[InputManager.controlSettingList.Count - 1].Key);
+                {
+                    if ((InputManager.controlSettingList.Keys.ToList()[InputManager.controlSettingList.Count - 1] == "" && InputManager.controlSettingList.Values.ToList()[InputManager.controlSettingList.Count - 1] == KeyCode.None) || !deleteSafety)
+                        InputManager.controlSettingList.Remove(InputManager.controlSettingList.ToList()[InputManager.controlSettingList.Count - 1].Key);
+                    else
+                        count++;
+                }
             }
 
             if (showLength <= InputManager.controlSettingList.Count && showPos > InputManager.controlSettingList.Count - showLength)
@@ -146,7 +165,8 @@ namespace SCKRM.InspectorEditor
                 InputManager.controlSettingList = keyList.Zip(valueList, (key, value) => new { key, value }).ToDictionary(a => a.key, a => a.value);
             }
 
-            if (GUI.changed)
+            //플레이 모드가 아니면 변경한 리스트의 데이터를 잃어버리지 않게 파일로 저장
+            if (GUI.changed && !Application.isPlaying)
                 InputManager.SettingFileSave();
         }
     }

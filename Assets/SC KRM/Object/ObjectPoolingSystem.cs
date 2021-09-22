@@ -17,14 +17,15 @@ namespace SCKRM.Object
     [AddComponentMenu("커널/Object/오브젝트 풀링 설정", 0)]
     public class ObjectPoolingSystem : MonoBehaviour
     {
-        #region variable
-        public static Dictionary<string, string> PrefabList { get; set; } = new Dictionary<string, string>();
-
-        static ObjectList ObjectList { get; } = new ObjectList();
-
         public static ObjectPoolingSystem instance { get; private set; }
         public static Transform thisTransform { get; private set; }
-        #endregion
+
+        public static string settingFilePath { get; } = Path.Combine(ResourcePack.Default.Path, ResourcePack.SettingsPath, "objectPoolingSystem.prefabList.json");
+
+
+
+        public static Dictionary<string, string> PrefabList { get; set; } = new Dictionary<string, string>();
+        static ObjectList ObjectList { get; } = new ObjectList();
 
         void Awake()
         {
@@ -35,23 +36,26 @@ namespace SCKRM.Object
 
             thisTransform = transform;
 
+            //파일에서 JSON을 읽어서 리스트 불러오기
             SettingFileLoad();
         }
 
         public static void SettingFileSave()
         {
-            string path = Path.Combine(ResourcePack.Default.Path, ResourcePack.SettingsPath, "objectPoolingSystem.prefabList.json");
             string json = JsonConvert.SerializeObject(PrefabList, Formatting.Indented);
-
-            File.WriteAllText(path, json);
+            File.WriteAllText(settingFilePath, json);
         }
 
         public static void SettingFileLoad()
         {
-            string path = Path.Combine(ResourcePack.Default.Path, ResourcePack.SettingsPath, "objectPoolingSystem.prefabList.json");
-            string json = File.ReadAllText(path);
-
+            string json = File.ReadAllText(settingFilePath);
             PrefabList = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+        }
+
+        public static Dictionary<string, KeyCode> SettingFileRead()
+        {
+            string json = File.ReadAllText(settingFilePath);
+            return JsonConvert.DeserializeObject<Dictionary<string, KeyCode>>(json);
         }
 
         /// <summary>

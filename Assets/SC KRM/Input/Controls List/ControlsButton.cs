@@ -19,11 +19,9 @@ namespace SCKRM.Input.UI
 
         public void KeyReset()
         {
-            if (JsonManager.JsonRead(key, InputManager.settingFilePath, out KeyCode keyCode, false))
-            {
-                InputManager.controlSettingList[key] = keyCode;
-                valueText.text = keyCode.KeyCodeToString();
-            }
+            KeyCode keyCode = InputManager.SettingFileRead()[key];
+            InputManager.controlSettingList[key] = keyCode;
+            valueText.text = keyCode.KeyCodeToString();
         }
 
         public void OnDestroy()

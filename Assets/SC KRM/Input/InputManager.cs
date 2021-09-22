@@ -40,8 +40,6 @@ namespace SCKRM.Input
                 Destroy(this);
 
             instance = this;
-
-            SettingFileLoad();
         }
 
         void Update()
@@ -59,15 +57,19 @@ namespace SCKRM.Input
         public static void SettingFileSave()
         {
             string json = JsonConvert.SerializeObject(controlSettingList, Formatting.Indented);
-
             File.WriteAllText(settingFilePath, json);
         }
 
         public static void SettingFileLoad()
         {
             string json = File.ReadAllText(settingFilePath);
-
             controlSettingList = JsonConvert.DeserializeObject<Dictionary<string, KeyCode>>(json);
+        }
+
+        public static Dictionary<string, KeyCode> SettingFileRead()
+        {
+            string json = File.ReadAllText(settingFilePath);
+            return JsonConvert.DeserializeObject<Dictionary<string, KeyCode>>(json);
         }
 
 

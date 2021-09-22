@@ -27,6 +27,12 @@ namespace SCKRM.SaveData
 
         void OnApplicationQuit() => SaveData();
 
+        static IEnumerator AllRefresh()
+        {
+            yield return new WaitForEndOfFrame();
+            Kernel.AllRefresh(true);
+        }
+
         public static void SaveData()
         {
             if (!Directory.Exists(Path.Combine(Kernel.persistentDataPath, "Save Data")))
@@ -71,10 +77,17 @@ namespace SCKRM.SaveData
                 for (int i = 0; i < resourcePacks.Count; i++)
                     ResourcesManager.ResourcePacks.Add(resourcePacks[i]);
                 ResourcesManager.ResourcePacks.Add(ResourcePack.Default);
-                InputManager.controlSettingList = kernelSetting.Controls;
+
+                InputManager.SettingFileLoad();
+                foreach (var item in kernelSetting.Controls)
+                {
+                    string key = item.Key;
+                    if (InputManager.controlSettingList.ContainsKey(key))
+                        InputManager.controlSettingList[key] = kernelSetting.Controls[key];
+                }
             }
 
-            Kernel.AllRefresh(true);
+            instance.StartCoroutine(AllRefresh());
         }
     }
 
