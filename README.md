@@ -6,7 +6,7 @@ Simsimhan Chobo Kernel Manager
 
 Newtonsoft.Json이 내장 되어있습니다.
 
-만약 오류가 발생한다면 Vesion Control 패키지를 지우거나 SC KRM/Json/Newtonsoft.Json.dll을 지워주세요.
+만약 중복되었다는 오류가 발생한다면 Vesion Control 패키지를 지우거나 SC KRM/Json/Newtonsoft.Json.dll을 지워주세요.
 
 ## 기능
 - Minecraft에 있는 리소스팩 기능이 포함되어있습니다 (리소스팩을 바꿀수 있는 GUI 포함됨)
