@@ -11,6 +11,9 @@ namespace SCKRM.Renderer
     {
         public UnityEngine.Object Object;
 
+        [SerializeField] bool _customPath = false;
+        public bool customPath { get => _customPath; set => _customPath = value; }
+
         void Awake()
         {
             if (!Application.isPlaying || Object == null)

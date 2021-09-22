@@ -366,6 +366,8 @@ namespace SCKRM.Resources
         public static ResourcePack Default { get; } = new ResourcePack() { NameSpace = new string[] { "sc-krm" }, Name = "Default", Description = "The default look and feel of %ProductName%" };
         public const string DefaultNameSpace = "sc-krm";
 
+        public const string AssetsPath = "assets/%NameSpace%/";
+
         public const string TexturePath = "assets/%NameSpace%/textures/";
         public const string GuiPath = "assets/%NameSpace%/textures/gui/";
 

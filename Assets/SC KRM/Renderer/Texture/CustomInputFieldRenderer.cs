@@ -31,7 +31,7 @@ namespace SCKRM.Renderer
             if (inputfield == null)
                 inputfield = GetComponent<InputField>();
 
-            if (inputfield == null)
+            if (inputfield.image == null)
             {
                 Object = null;
                 return;
@@ -60,10 +60,17 @@ namespace SCKRM.Renderer
         public void SpriteSetting(string path, CustomSpriteSetting spriteSetting)
         {
             NameSpaceAndPath nameSpaceAndPath = ResourcesManager.GetNameSpaceAndPath(path);
-            Texture2D texture = ResourcesManager.Search<Texture2D>(ResourcePack.GuiPath + nameSpaceAndPath.Path, nameSpaceAndPath.NameSpace);
+            Texture2D texture;
+            if (customPath)
+                texture = ResourcesManager.Search<Texture2D>(ResourcePack.AssetsPath + nameSpaceAndPath.Path, nameSpaceAndPath.NameSpace);
+            else
+                texture = ResourcesManager.Search<Texture2D>(ResourcePack.GuiPath + nameSpaceAndPath.Path, nameSpaceAndPath.NameSpace);
 
             if (texture == null)
+            {
+                spriteSetting.sprite = null;
                 return;
+            }
 
             spriteSetting.RectMaxSet(texture);
             spriteSetting.PixelsPreUnitMaxSet();

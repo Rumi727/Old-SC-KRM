@@ -8,16 +8,16 @@ using SCKRM.Renderer;
 namespace SCKRM.InspectorEditor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(CustomInputFieldRenderer), true)]
-    public class CustomInputFieldRendererEditor : Editor
+    [CustomEditor(typeof(CustomToggleRenderer), true)]
+    public class CustomToggleRendererEditor : Editor
     {
-        CustomInputFieldRenderer _editor;
+        CustomToggleRenderer _editor;
 
         bool repaint = false;
 
         void OnEnable()
         {
-            _editor = target as CustomInputFieldRenderer;
+            _editor = target as CustomToggleRenderer;
             
             if (Application.isPlaying)
             {

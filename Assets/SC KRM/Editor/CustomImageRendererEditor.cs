@@ -43,6 +43,10 @@ namespace SCKRM.InspectorEditor
 
             EditorGUILayout.Space();
 
+            UseProperty("_customPath", "커스텀 경로");
+
+            EditorGUILayout.Space();
+
             UseProperty("customSprite", "스프라이트 설정");
 
             EditorGUILayout.Space();

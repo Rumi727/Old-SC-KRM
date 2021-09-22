@@ -8,16 +8,16 @@ using SCKRM.Renderer;
 namespace SCKRM.InspectorEditor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(CustomInputFieldRenderer), true)]
-    public class CustomInputFieldRendererEditor : Editor
+    [CustomEditor(typeof(CustomSliderRenderer), true)]
+    public class CustomSliderRendererEditor : Editor
     {
-        CustomInputFieldRenderer _editor;
+        CustomSliderRenderer _editor;
 
         bool repaint = false;
 
         void OnEnable()
         {
-            _editor = target as CustomInputFieldRenderer;
+            _editor = target as CustomSliderRenderer;
             
             if (Application.isPlaying)
             {

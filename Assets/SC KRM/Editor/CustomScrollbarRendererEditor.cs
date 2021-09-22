@@ -47,6 +47,10 @@ namespace SCKRM.InspectorEditor
 
             EditorGUILayout.Space();
 
+            UseProperty("_customPath", "커스텀 경로");
+
+            EditorGUILayout.Space();
+
             UseProperty("buttonSprite", "버튼 스프라이트 설정");
 
             if (GUILayout.Button("새로고침"))

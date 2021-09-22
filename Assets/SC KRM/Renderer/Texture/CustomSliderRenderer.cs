@@ -7,11 +7,11 @@ using UnityEngine.UI;
 
 namespace SCKRM.Renderer
 {
-    [RequireComponent(typeof(Scrollbar))]
-    [AddComponentMenu("커널/Renderer/UI/Scrollbar", 4)]
-    public class CustomScrollbarRenderer : CustomRenderer
+    [RequireComponent(typeof(Slider))]
+    [AddComponentMenu("커널/Renderer/UI/Slider", 2)]
+    public class CustomSliderRenderer : CustomRenderer
     {
-        Scrollbar scrollbar;
+        Slider slider;
 
         [SerializeField] string _normalPath = "";
         [SerializeField] string _highlightedPath = "";
@@ -28,16 +28,16 @@ namespace SCKRM.Renderer
 
         public override void Rerender()
         {
-            if (scrollbar == null)
-                scrollbar = GetComponent<Scrollbar>();
+            if (slider == null)
+                slider = GetComponent<Slider>();
 
-            if (scrollbar.image == null)
+            if (slider.image == null)
             {
                 Object = null;
                 return;
             }
 
-            scrollbar.transition = Selectable.Transition.SpriteSwap;
+            slider.transition = Selectable.Transition.SpriteSwap;
 
             SpriteSetting(normalPath, buttonSprite.normalSprite);
             SpriteSetting(highlightedPath, buttonSprite.highlightedSprite);
@@ -47,14 +47,14 @@ namespace SCKRM.Renderer
 
             SpriteState spriteState = new SpriteState();
 
-            scrollbar.image.sprite = buttonSprite.normalSprite.sprite;
+            slider.image.sprite = buttonSprite.normalSprite.sprite;
             spriteState.highlightedSprite = buttonSprite.highlightedSprite.sprite;
             spriteState.pressedSprite = buttonSprite.pressedSprite.sprite;
             spriteState.selectedSprite = buttonSprite.selectedSprite.sprite;
             spriteState.disabledSprite = buttonSprite.disabledSprite.sprite;
 
             Object = buttonSprite.normalSprite.sprite;
-            scrollbar.spriteState = spriteState;
+            slider.spriteState = spriteState;
         }
 
         public void SpriteSetting(string path, CustomSpriteSetting spriteSetting)

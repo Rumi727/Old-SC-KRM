@@ -8,17 +8,17 @@ using SCKRM.Renderer;
 namespace SCKRM.InspectorEditor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(CustomInputFieldRenderer), true)]
-    public class CustomInputFieldRendererEditor : Editor
+    [CustomEditor(typeof(CustomText), true)]
+    public class CustomTextEditor : Editor
     {
-        CustomInputFieldRenderer _editor;
+        CustomText _editor;
 
         bool repaint = false;
 
         void OnEnable()
         {
-            _editor = target as CustomInputFieldRenderer;
-            
+            _editor = target as CustomText;
+
             if (Application.isPlaying)
             {
                 repaint = true;
@@ -39,19 +39,9 @@ namespace SCKRM.InspectorEditor
 
         public override void OnInspectorGUI()
         {
-            UseProperty("_normalPath", "일반 스프라이트 경로");
-            UseProperty("_highlightedPath", "하이라이트된 스프라이트 경로");
-            UseProperty("_pressedPath", "눌린 스프라이트 경로");
-            UseProperty("_selectedPath", "선택된 스프라이트 경로");
-            UseProperty("_disabledPath", "비활성화된 스프라이트 경로");
+            UseProperty("_jsonKey");
 
             EditorGUILayout.Space();
-
-            UseProperty("_customPath", "커스텀 경로");
-
-            EditorGUILayout.Space();
-
-            UseProperty("buttonSprite", "버튼 스프라이트 설정");
 
             if (GUILayout.Button("새로고침"))
                 _editor.Rerender();
@@ -61,6 +51,15 @@ namespace SCKRM.InspectorEditor
                 EditorUtility.SetDirty(target);
                 _editor.Rerender();
             }
+        }
+
+        void UseProperty(string propertyName)
+        {
+            SerializedProperty tps = serializedObject.FindProperty(propertyName);
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.PropertyField(tps, true);
+            if (EditorGUI.EndChangeCheck())
+                serializedObject.ApplyModifiedProperties();
         }
 
         void UseProperty(string propertyName, string label)

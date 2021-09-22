@@ -2,16 +2,17 @@ using SCKRM.InspectorEditor;
 using SCKRM.Resources;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace SCKRM.Renderer
 {
-    [RequireComponent(typeof(Scrollbar))]
-    [AddComponentMenu("커널/Renderer/UI/Scrollbar", 4)]
-    public class CustomScrollbarRenderer : CustomRenderer
+    [RequireComponent(typeof(TMP_InputField))]
+    [AddComponentMenu("커널/Renderer/UI/TextMeshPro - Input Field", 3)]
+    public class CustomTMP_InputFieldRenderer : CustomRenderer
     {
-        Scrollbar scrollbar;
+        TMP_InputField inputfield;
 
         [SerializeField] string _normalPath = "";
         [SerializeField] string _highlightedPath = "";
@@ -28,16 +29,16 @@ namespace SCKRM.Renderer
 
         public override void Rerender()
         {
-            if (scrollbar == null)
-                scrollbar = GetComponent<Scrollbar>();
+            if (inputfield == null)
+                inputfield = GetComponent<TMP_InputField>();
 
-            if (scrollbar.image == null)
+            if (inputfield.image == null)
             {
                 Object = null;
                 return;
             }
 
-            scrollbar.transition = Selectable.Transition.SpriteSwap;
+            inputfield.transition = Selectable.Transition.SpriteSwap;
 
             SpriteSetting(normalPath, buttonSprite.normalSprite);
             SpriteSetting(highlightedPath, buttonSprite.highlightedSprite);
@@ -47,14 +48,14 @@ namespace SCKRM.Renderer
 
             SpriteState spriteState = new SpriteState();
 
-            scrollbar.image.sprite = buttonSprite.normalSprite.sprite;
+            inputfield.image.sprite = buttonSprite.normalSprite.sprite;
             spriteState.highlightedSprite = buttonSprite.highlightedSprite.sprite;
             spriteState.pressedSprite = buttonSprite.pressedSprite.sprite;
             spriteState.selectedSprite = buttonSprite.selectedSprite.sprite;
             spriteState.disabledSprite = buttonSprite.disabledSprite.sprite;
 
             Object = buttonSprite.normalSprite.sprite;
-            scrollbar.spriteState = spriteState;
+            inputfield.spriteState = spriteState;
         }
 
         public void SpriteSetting(string path, CustomSpriteSetting spriteSetting)
@@ -67,10 +68,7 @@ namespace SCKRM.Renderer
                 texture = ResourcesManager.Search<Texture2D>(ResourcePack.GuiPath + nameSpaceAndPath.Path, nameSpaceAndPath.NameSpace);
 
             if (texture == null)
-            {
-                spriteSetting.sprite = null;
                 return;
-            }
 
             spriteSetting.RectMaxSet(texture);
             spriteSetting.PixelsPreUnitMaxSet();
