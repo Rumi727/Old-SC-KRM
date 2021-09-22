@@ -49,7 +49,7 @@ Kernel.deltaTime을 사용 할 경우, 일반 변수처럼 비슷하게 작동�
 - 오브젝트 풀링에서 가져올 오브젝트를 설정하는건 Kernel 오브젝트에 있는 Object Polling System 오브젝트로 가서 수정하거나, 스트리밍 에셋에 있는 projectSettings 폴더에 가서 objectPollingSystem.json을 수정하면 됩니다.
 - 오브젝트 풀링 관련 함수는 `ObjectPollingSystem.ObjectCreate() ObjectPollingSystem.ObjectRemove()` 입니다.
 - 스크립트에서 언어 파일을 수동으로 불러올려면 `LanguageManager.LanguageLoad()` 함수를 사용하면 됩니다.
-- 윈도우에서 창 위치와 크기를 마음대로 지지고 볶을려면 `WindowManager.public static void SetWindowRect(Rect rect, Vector2 windowDatumPoint, Vector2 screenDatumPoint, bool clientDatum = true, bool Lerp = false, float time = 0.05f)` 함수를 사용하시면 됩니다.
+- 윈도우에서 창 위치와 크기를 마음대로 지지고 볶을려면 `WindowManager.SetWindowRect(Rect rect, Vector2 windowDatumPoint, Vector2 screenDatumPoint, bool clientDatum = true, bool Lerp = false, float time = 0.05f)` 함수를 사용하시면 됩니다.
   
   들어가기에 앞서, 윈도우는 유니티랑 y좌표가 반대입니다. 즉 맨 위가 y의 0이 됩니다.
   
