@@ -40,6 +40,7 @@ Kernel.deltaTime을 사용 할 경우, 일반 변수처럼 비슷하게 작동�
 - 세이브 로드 기능이 있습니다, 자동화가 아니기 때문에 SaveLoadManager 스크립트에서 직접 수정해줘야하지만 만들어진것들이 있기때문에 의미만 파악하면 쉽게 할수 있습니다.
 - 오브젝트 풀링 시스템이 만들어져 있습니다. Kernel 프리팹에 Object Polling System 오브젝트의 스크립트를 보시면 사용 방법을 웬만하면 쉽게 알 수 있습니다.
 - 마인크래프트의 PlaySound랑 비슷한 기능이 만들어져있습니다 관련 함수는 `SoundManager.PlayBGM() SoundManager.PlaySound() SoundManager.StopBGM() SoundManager.StopSound() SoundManager.StopAll()` 입니다
+  파일은 `assets/%NameSpace%/sound`에 위치해 있어야합니다
 - 윈도우에서는 무려 창 위치와 크기를 마음대로 지지고 볶을 수 있습니다! 리듬게임에 들어간다면 금상첨화죠.
 - 등등...
 
