@@ -24,7 +24,7 @@ namespace SCKRM.Input
         public static string settingFilePath { get; } = Path.Combine(ResourcePack.Default.Path, ResourcePack.SettingsPath, "inputManager.controlsSettingList.json");
 
 
-        public static Dictionary<string, KeyCode> controlSettingList { get; set; }
+        public static Dictionary<string, KeyCode> controlSettingList { get; set; } = new Dictionary<string, KeyCode>();
 
 
 
