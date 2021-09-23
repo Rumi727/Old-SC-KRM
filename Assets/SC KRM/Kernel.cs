@@ -171,17 +171,22 @@ namespace SCKRM
                 LanguageManager.LangList.Clear();
 
                 CustomText[] customTextRenderers = FindObjectsOfType<CustomText>(true);
-                for (int i = 0; i < customTextRenderers.Length; i++)
+                if (customTextRenderers.Length != 0)
                 {
-                    customTextRenderers[i].Rerender();
-
-                    if (coroutine)
+                    for (int i = 0; i < customTextRenderers.Length; i++)
                     {
-                        loadingBar.text.text = $"Text Reload... ({i + 1}/{customTextRenderers.Length})";
-                        loadingBar.value = i / (float)(customTextRenderers.Length - 1);
-                        yield return null;
+                        customTextRenderers[i].Rerender();
+
+                        if (coroutine)
+                        {
+                            loadingBar.text.text = $"Text Reload... ({i + 1}/{customTextRenderers.Length})";
+                            loadingBar.value = i / (float)(customTextRenderers.Length - 1);
+                            yield return null;
+                        }
                     }
                 }
+                else
+                    loadingBar.Remove();
             }
             else
             {
@@ -191,6 +196,20 @@ namespace SCKRM
                 CustomRenderer[] customRenderers = FindObjectsOfType<CustomRenderer>(true);
                 CustomText[] customTextRenderers = FindObjectsOfType<CustomText>(true);
                 SoundObject[] soundObjects = SoundManager.instance.GetComponentsInChildren<SoundObject>(true);
+                int renderersLength = customRenderers.Length - 1;
+                int textRenderersLength = customTextRenderers.Length - 1;
+                int soundObjectsLength = soundObjects.Length - 1;
+
+                if (renderersLength == -1)
+                    renderersLength = 0;
+                if (textRenderersLength == -1)
+                    textRenderersLength = 0;
+                if (soundObjectsLength == -1)
+                    soundObjectsLength = 0;
+
+                if (renderersLength + textRenderersLength + soundObjectsLength == 0)
+                    loadingBar.Remove();
+
                 int i;
                 int ii;
                 for (i = 0; i < customRenderers.Length; i++)
@@ -200,7 +219,7 @@ namespace SCKRM
                     if (coroutine)
                     {
                         loadingBar.text.text = $"Texture Reload... ({i + 1}/{customRenderers.Length})";
-                        loadingBar.value = i / (float)(customRenderers.Length - 1 + customTextRenderers.Length - 1 + soundObjects.Length - 1);
+                        loadingBar.value = i / (float)(renderersLength + textRenderersLength + soundObjectsLength);
                         yield return null;
                     }
                 }
@@ -212,7 +231,7 @@ namespace SCKRM
                     if (coroutine)
                     {
                         loadingBar.text.text = $"Text Reload... ({ii + 1}/{customTextRenderers.Length})";
-                        loadingBar.value = (i + ii) / (float)(customRenderers.Length - 1 + customTextRenderers.Length - 1 + soundObjects.Length - 1);
+                        loadingBar.value = (i + ii) / (float)(renderersLength + textRenderersLength + soundObjectsLength);
                         yield return null;
                     }
                 }
@@ -224,7 +243,7 @@ namespace SCKRM
                     if (coroutine)
                     {
                         loadingBar.text.text = $"Sound Reload... ({iii + 1}/{soundObjects.Length})";
-                        loadingBar.value = (i + ii + iii) / (float)(customRenderers.Length - 1 + customTextRenderers.Length - 1 + soundObjects.Length - 1);
+                        loadingBar.value = (i + ii + iii) / (float)(renderersLength + textRenderersLength + soundObjectsLength);
                         yield return null;
                     }
                 }
