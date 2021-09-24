@@ -72,6 +72,9 @@ namespace SCKRM.InspectorEditor
                     EditorGUILayout.Space();
                     EditorGUILayout.LabelField("AFK 상태");
                 }
+
+                EditorGUILayout.Space();
+                Kernel.gameSpeed = EditorGUILayout.FloatField("게임 속도", Kernel.gameSpeed);
             }
             else
             {

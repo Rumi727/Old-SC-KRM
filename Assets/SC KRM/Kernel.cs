@@ -60,6 +60,7 @@ namespace SCKRM
 
         public static bool isReload { get; private set; } = false;
         public static int MainVolume { get; set; } = 100;
+        public static float gameSpeed { get; set; } = 1;
 
 
 
@@ -114,6 +115,10 @@ namespace SCKRM
                 MainVolume = 200;
             else if (MainVolume < 0)
                 MainVolume = 0;
+
+            if (gameSpeed < 0)
+                gameSpeed = 0;
+            Time.timeScale = gameSpeed;
         }
 
 #if !UNITY_EDITOR

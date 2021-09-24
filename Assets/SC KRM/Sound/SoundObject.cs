@@ -69,7 +69,7 @@ namespace SCKRM.Sound
             }
 
             audioSource.volume = volume * (Kernel.MainVolume * 0.01f);
-            audioSource.pitch = pitch;
+            audioSource.pitch = pitch * Kernel.gameSpeed;
 
             if (!audioSource.isPlaying)
                 Remove();
