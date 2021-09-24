@@ -49,6 +49,12 @@ namespace SCKRM.InspectorEditor
 
             UseProperty("customSprite", "스프라이트 설정");
 
+            if (_editor.GetComponent<SpriteRenderer>().drawMode != SpriteDrawMode.Simple)
+            {
+                EditorGUILayout.Space();
+                UseProperty("_size");
+            }
+
             EditorGUILayout.Space();
 
             if (GUILayout.Button("새로고침"))
