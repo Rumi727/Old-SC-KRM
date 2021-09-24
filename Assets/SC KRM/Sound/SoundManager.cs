@@ -1,4 +1,5 @@
 using SCKRM.Object;
+using SCKRM.Resources;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -53,7 +54,7 @@ namespace SCKRM.Sound
         /// <param name="pitch">피치</param>
         /// <param name="rhythmPitchUse">리듬 매니저에서 사용하는 피치와 연동</param>
         /// <returns></returns>
-        public static SoundObject PlayBGM(SoundType soundType, string path, float volume = 1, bool loop = false, float pitch = 1, bool rhythmPitchUse = false)
+        public static SoundObject PlayBGM(SoundType soundType, string path, float volume = 1, bool loop = false, float pitch = 1)
         {
             if (BGMList.Count >= MaxBGMCount)
                 return null;
@@ -63,14 +64,15 @@ namespace SCKRM.Sound
 
             soundObject.gameObject.name = path;
 
-            soundObject.path = path;
+            NameSpaceAndPath nameSpaceAndPath = ResourcesManager.GetNameSpaceAndPath(path);
+            soundObject.nameSpace = nameSpaceAndPath.NameSpace;
+            soundObject.path = nameSpaceAndPath.Path;
 
             soundObject.soundType = soundType | SoundType.BGM;
             soundObject.bgm = true;
             soundObject.volume = volume;
             soundObject.pitch = pitch;
             soundObject.audioSource.loop = loop;
-            soundObject.rhythmPitchUse = rhythmPitchUse;
 
             soundObject.Reload();
 
@@ -105,6 +107,8 @@ namespace SCKRM.Sound
             SoundObject soundObject = ObjectPoolingSystem.ObjectCreate("sound_manager.sound_object", instance.Sound).GetComponent<SoundObject>();
             soundObject.gameObject.name = path[random];
 
+            NameSpaceAndPath nameSpaceAndPath = ResourcesManager.GetNameSpaceAndPath(path[random]);
+            soundObject.nameSpace = nameSpaceAndPath.NameSpace;
             soundObject.path = path[random];
 
             soundObject.soundType = soundType | SoundType.Sound;
@@ -112,7 +116,6 @@ namespace SCKRM.Sound
             soundObject.volume = volume;
             soundObject.pitch = pitch;
             soundObject.audioSource.loop = false;
-            soundObject.rhythmPitchUse = false;
 
             soundObject.Reload();
 

@@ -21,11 +21,10 @@ namespace SCKRM.Sound
         #region Variables managed by scripts
         public SoundType soundType { get; set; } = SoundType.All;
 
+        public string nameSpace { get; set; } = "";
         public string path { get; set; } = "";
 
         public bool bgm { get; set; }
-
-        public bool rhythmPitchUse { get; set; }
 
 
         [SerializeField, Range(0, 1)] float _volume = 1;
@@ -45,12 +44,12 @@ namespace SCKRM.Sound
             OnDestroy();
             if (bgm)
             {
-                audioSource.clip = ResourcesManager.Search<AudioClip>(ResourcePack.BGMPath + path);
+                audioSource.clip = ResourcesManager.Search<AudioClip>(ResourcePack.BGMPath + path, nameSpace);
                 SoundManager.BGMList.Add(this);
             }
             else
             {
-                audioSource.clip = ResourcesManager.Search<AudioClip>(ResourcePack.SoundPath + path);
+                audioSource.clip = ResourcesManager.Search<AudioClip>(ResourcePack.SoundPath + path, nameSpace);
                 SoundManager.SoundList.Add(this);
             }
 
