@@ -39,7 +39,7 @@ namespace SCKRM.Renderer
 
             customSprite.RectMaxSet(texture);
             customSprite.PixelsPreUnitMaxSet();
-            customSprite.sprite = Sprite.Create(texture, customSprite.rect, customSprite.pivot, customSprite.pixelsPerUnit, 1, SpriteMeshType.Tight, customSprite.border);
+            customSprite.sprite = Sprite.Create(texture, customSprite.rect, customSprite.pivot, customSprite.pixelsPerUnit, 1, SpriteMeshType.FullRect, customSprite.border);
 
             image.sprite = customSprite.sprite;
             Object = customSprite.sprite;

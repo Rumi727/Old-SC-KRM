@@ -74,7 +74,7 @@ namespace SCKRM.Renderer
 
             spriteSetting.RectMaxSet(texture);
             spriteSetting.PixelsPreUnitMaxSet();
-            spriteSetting.sprite = Sprite.Create(texture, spriteSetting.rect, spriteSetting.pivot, spriteSetting.pixelsPerUnit, 1, SpriteMeshType.Tight, spriteSetting.border);
+            spriteSetting.sprite = Sprite.Create(texture, spriteSetting.rect, spriteSetting.pivot, spriteSetting.pixelsPerUnit, 1, SpriteMeshType.FullRect, spriteSetting.border);
         }
     }
 }
