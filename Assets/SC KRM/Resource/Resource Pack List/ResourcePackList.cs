@@ -87,10 +87,10 @@ namespace SCKRM.Resources.UI
 
                     button.icon.sprite = ResourcesManager.Search<Sprite>(Path.Combine(item, "pack"), "", false);
 
-                    if (JsonManager.JsonRead("name", Path.Combine(item, "pack.json"), out string name, false))
+                    if (JsonManager.JsonReadDictionary("name", Path.Combine(item, "pack.json"), out string name, false))
                         button.resourcePack.Name = name;
 
-                    if (JsonManager.JsonRead("description", Path.Combine(item, "pack.json"), out string description, false))
+                    if (JsonManager.JsonReadDictionary("description", Path.Combine(item, "pack.json"), out string description, false))
                         button.resourcePack.Description = description;
 
                     button.gameObject.name = button.resourcePack.Name.EnvironmentVariable();

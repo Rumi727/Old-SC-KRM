@@ -78,10 +78,7 @@ namespace SCKRM.Resources
 
                                     SpriteJsonSetting spriteJsonSetting = new SpriteJsonSetting();
                                     if (File.Exists(allPath + ".json"))
-                                    {
-                                        string json = File.ReadAllText(allPath + ".json");
-                                        spriteJsonSetting = JsonConvert.DeserializeObject<SpriteJsonSetting>(json);
-                                    }
+                                        JsonManager.JsonRead(allPath + ".json", out spriteJsonSetting, false);
 
                                     Rect rect = JRect.JRectToRect(spriteJsonSetting.rect);
                                     Vector2 pivot = JVector2.JVector3ToVector3(spriteJsonSetting.pivot);
@@ -217,10 +214,7 @@ namespace SCKRM.Resources
 
                             SpriteJsonSetting spriteJsonSetting = new SpriteJsonSetting();
                             if (File.Exists(path + ".json"))
-                            {
-                                string json = File.ReadAllText(path + ".json");
-                                spriteJsonSetting = JsonConvert.DeserializeObject<SpriteJsonSetting>(json);
-                            }
+                                JsonManager.JsonRead(path + ".json", out spriteJsonSetting, false);
 
                             Rect rect = JRect.JRectToRect(spriteJsonSetting.rect);
                             Vector2 pivot = JVector2.JVector3ToVector3(spriteJsonSetting.pivot);
@@ -356,7 +350,7 @@ namespace SCKRM.Resources
         [JsonProperty("Filter Mode")] public FilterMode filterMode = FilterMode.Point;
         [JsonProperty("Rect")] public JRect rect = new JRect(-1);
         [JsonProperty("Pivot")] public JVector2 pivot = new JVector2(-1);
-        [JsonProperty("Pixels Per Unit")] public int pixelsPerUnit = 100;
+        [JsonProperty("Pixels Per Unit")] public float pixelsPerUnit = 100;
         [JsonProperty("Border")] public JVector4 border = new JVector4(-1);
     }
 

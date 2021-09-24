@@ -36,7 +36,7 @@ namespace SCKRM.Language
                 if (language == "")
                     language = currentLanguage;
 
-                if (JsonManager.JsonRead(key, ResourcePack.LanguagePath + language, out string value))
+                if (JsonManager.JsonReadDictionary(key, ResourcePack.LanguagePath + language, out string value))
                     LangList.Add(key, value);
                 else
                     value = "null";

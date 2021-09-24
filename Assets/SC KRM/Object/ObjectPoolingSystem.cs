@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using SCKRM.Json;
 using SCKRM.Resources;
 using System;
 using System.Collections;
@@ -24,8 +25,8 @@ namespace SCKRM.Object
 
 
 
-        public static Dictionary<string, string> PrefabList { get; set; } = new Dictionary<string, string>();
-        static ObjectList ObjectList { get; } = new ObjectList();
+        public static Dictionary<string, string> prefabList { get; set; } = new Dictionary<string, string>();
+        static ObjectList objectList { get; } = new ObjectList();
 
         void Awake()
         {
@@ -42,20 +43,28 @@ namespace SCKRM.Object
 
         public static void SettingFileSave()
         {
-            string json = JsonConvert.SerializeObject(PrefabList, Formatting.Indented);
+            string json = JsonConvert.SerializeObject(prefabList, Formatting.Indented);
             File.WriteAllText(settingFilePath, json);
         }
 
         public static void SettingFileLoad()
         {
-            string json = File.ReadAllText(settingFilePath);
-            PrefabList = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+            if (!File.Exists(settingFilePath))
+                SettingFileSave();
+
+            if (JsonManager.JsonRead(settingFilePath, out Dictionary<string, string> value, false))
+                prefabList = value;
         }
 
-        public static Dictionary<string, KeyCode> SettingFileRead()
+        public static Dictionary<string, string> SettingFileRead()
         {
-            string json = File.ReadAllText(settingFilePath);
-            return JsonConvert.DeserializeObject<Dictionary<string, KeyCode>>(json);
+            if (!File.Exists(settingFilePath))
+                SettingFileSave();
+
+            if (JsonManager.JsonRead(settingFilePath, out Dictionary<string, string> value, false))
+                return value;
+            else
+                return null;
         }
 
         /// <summary>
@@ -73,21 +82,21 @@ namespace SCKRM.Object
         /// <returns></returns>
         public static GameObject ObjectCreate(string ObjectKey, Transform Parent)
         {
-            if (ObjectList.ObjectKey.Contains(ObjectKey))
+            if (objectList.ObjectKey.Contains(ObjectKey))
             {
-                GameObject gameObject = ObjectList.Object[ObjectList.ObjectKey.IndexOf(ObjectKey)];
+                GameObject gameObject = objectList.Object[objectList.ObjectKey.IndexOf(ObjectKey)];
                 gameObject.transform.SetParent(Parent);
                 gameObject.SetActive(true);
 
-                int i = ObjectList.ObjectKey.IndexOf(ObjectKey);
-                ObjectList.ObjectKey.RemoveAt(i);
-                ObjectList.Object.RemoveAt(i);
+                int i = objectList.ObjectKey.IndexOf(ObjectKey);
+                objectList.ObjectKey.RemoveAt(i);
+                objectList.Object.RemoveAt(i);
 
                 return gameObject;
             }
-            else if (PrefabList.ContainsKey(ObjectKey))
+            else if (prefabList.ContainsKey(ObjectKey))
             {
-                GameObject gameObject = Instantiate(UnityEngine.Resources.Load<GameObject>(PrefabList[ObjectKey]), Parent);
+                GameObject gameObject = Instantiate(UnityEngine.Resources.Load<GameObject>(prefabList[ObjectKey]), Parent);
                 gameObject.name = ObjectKey;
 
                 return gameObject;
@@ -108,8 +117,8 @@ namespace SCKRM.Object
             gameObject.SetActive(false);
             gameObject.transform.SetParent(thisTransform);
 
-            ObjectList.ObjectKey.Add(ObjectKey);
-            ObjectList.Object.Add(gameObject);
+            objectList.ObjectKey.Add(ObjectKey);
+            objectList.Object.Add(gameObject);
         }
     }
 }

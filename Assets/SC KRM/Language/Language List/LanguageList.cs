@@ -64,9 +64,9 @@ namespace SCKRM.Language.UI
 
                             languageList.Add(language);
 
-                            if (JsonManager.JsonRead("language.name", path, out string name, false))
+                            if (JsonManager.JsonReadDictionary("language.name", path, out string name, false))
                                 button.text.text = name;
-                            if (JsonManager.JsonRead("language.region", path, out string region, false))
+                            if (JsonManager.JsonReadDictionary("language.region", path, out string region, false))
                                 button.text.text += $" ({region})";
 
                             if (button.text.text == "")

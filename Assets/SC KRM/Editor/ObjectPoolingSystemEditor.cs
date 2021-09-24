@@ -57,25 +57,25 @@ namespace SCKRM.InspectorEditor
             //GUI
             EditorGUILayout.BeginHorizontal();
 
-            if (ObjectPoolingSystem.PrefabList.ContainsKey(""))
+            if (ObjectPoolingSystem.prefabList.ContainsKey(""))
                 GUI.enabled = false;
 
             if (GUILayout.Button("추가", GUILayout.Width(40)))
-                    ObjectPoolingSystem.PrefabList.Add("", "");
+                    ObjectPoolingSystem.prefabList.Add("", "");
 
             GUI.enabled = true;
 
-            if (ObjectPoolingSystem.PrefabList.Count <= 0 || ((ObjectPoolingSystem.PrefabList.Keys.ToList()[ObjectPoolingSystem.PrefabList.Count - 1] != "" || ObjectPoolingSystem.PrefabList.Values.ToList()[ObjectPoolingSystem.PrefabList.Count - 1] != "") && deleteSafety))
+            if (ObjectPoolingSystem.prefabList.Count <= 0 || ((ObjectPoolingSystem.prefabList.Keys.ToList()[ObjectPoolingSystem.prefabList.Count - 1] != "" || ObjectPoolingSystem.prefabList.Values.ToList()[ObjectPoolingSystem.prefabList.Count - 1] != "") && deleteSafety))
                 GUI.enabled = false;
 
             if (GUILayout.Button("삭제", GUILayout.Width(40)))
-                ObjectPoolingSystem.PrefabList.Remove(ObjectPoolingSystem.PrefabList.ToList()[ObjectPoolingSystem.PrefabList.Count - 1].Key);
+                ObjectPoolingSystem.prefabList.Remove(ObjectPoolingSystem.prefabList.ToList()[ObjectPoolingSystem.prefabList.Count - 1].Key);
 
             GUI.enabled = true;
 
             EditorGUILayout.Space();
 
-            int count = EditorGUILayout.IntField("리스트 길이", ObjectPoolingSystem.PrefabList.Count, GUILayout.Height(21));
+            int count = EditorGUILayout.IntField("리스트 길이", ObjectPoolingSystem.prefabList.Count, GUILayout.Height(21));
 
             EditorGUILayout.Space();
 
@@ -87,10 +87,10 @@ namespace SCKRM.InspectorEditor
 
             GUI.enabled = true;
 
-            if (showPos >= ObjectPoolingSystem.PrefabList.Count - showLength)
+            if (showPos >= ObjectPoolingSystem.prefabList.Count - showLength)
                 GUI.enabled = false;
 
-            if (GUILayout.Button("아래로", GUILayout.Width(50)) && showPos < ObjectPoolingSystem.PrefabList.Count - showLength)
+            if (GUILayout.Button("아래로", GUILayout.Width(50)) && showPos < ObjectPoolingSystem.prefabList.Count - showLength)
                 showPos++;
 
             GUI.enabled = true;
@@ -105,34 +105,34 @@ namespace SCKRM.InspectorEditor
             if (count < 0)
                 count = 0;
 
-            if (count > ObjectPoolingSystem.PrefabList.Count)
+            if (count > ObjectPoolingSystem.prefabList.Count)
             {
-                for (int i = ObjectPoolingSystem.PrefabList.Count; i < count; i++)
+                for (int i = ObjectPoolingSystem.prefabList.Count; i < count; i++)
                 {
-                    if (!ObjectPoolingSystem.PrefabList.ContainsKey(""))
-                        ObjectPoolingSystem.PrefabList.Add("", "");
+                    if (!ObjectPoolingSystem.prefabList.ContainsKey(""))
+                        ObjectPoolingSystem.prefabList.Add("", "");
                     else
                         count--;
                 }
             }
-            else if (count < ObjectPoolingSystem.PrefabList.Count)
+            else if (count < ObjectPoolingSystem.prefabList.Count)
             {
-                for (int i = ObjectPoolingSystem.PrefabList.Count - 1; i >= count; i--)
+                for (int i = ObjectPoolingSystem.prefabList.Count - 1; i >= count; i--)
                 {
-                    if ((ObjectPoolingSystem.PrefabList.Keys.ToList()[ObjectPoolingSystem.PrefabList.Count - 1] == "" && ObjectPoolingSystem.PrefabList.Values.ToList()[ObjectPoolingSystem.PrefabList.Count - 1] == "") || !deleteSafety)
-                        ObjectPoolingSystem.PrefabList.Remove(ObjectPoolingSystem.PrefabList.ToList()[ObjectPoolingSystem.PrefabList.Count - 1].Key);
+                    if ((ObjectPoolingSystem.prefabList.Keys.ToList()[ObjectPoolingSystem.prefabList.Count - 1] == "" && ObjectPoolingSystem.prefabList.Values.ToList()[ObjectPoolingSystem.prefabList.Count - 1] == "") || !deleteSafety)
+                        ObjectPoolingSystem.prefabList.Remove(ObjectPoolingSystem.prefabList.ToList()[ObjectPoolingSystem.prefabList.Count - 1].Key);
                     else
                         count++;
                 }
             }
 
-            if (showLength <= ObjectPoolingSystem.PrefabList.Count && showPos > ObjectPoolingSystem.PrefabList.Count - showLength)
-                showPos = ObjectPoolingSystem.PrefabList.Count - showLength;
+            if (showLength <= ObjectPoolingSystem.prefabList.Count && showPos > ObjectPoolingSystem.prefabList.Count - showLength)
+                showPos = ObjectPoolingSystem.prefabList.Count - showLength;
 
             if (showLength < 33)
                 showLength = 33;
-            if (showLength + showPos > ObjectPoolingSystem.PrefabList.Count)
-                showLength = ObjectPoolingSystem.PrefabList.Count - showPos;
+            if (showLength + showPos > ObjectPoolingSystem.prefabList.Count)
+                showLength = ObjectPoolingSystem.prefabList.Count - showPos;
 
 
 
@@ -142,7 +142,7 @@ namespace SCKRM.InspectorEditor
                인스펙터에서 쉽게 드래그로 오브젝트를 바꾸기 위해선
                GameObject 형식이여야해서 이런 소용돌이가 나오게 된것
             */
-            List<KeyValuePair<string, string>> prefabObject = ObjectPoolingSystem.PrefabList.ToList();
+            List<KeyValuePair<string, string>> prefabObject = ObjectPoolingSystem.prefabList.ToList();
 
             //딕셔너리는 키를 수정할수 없기때문에, 리스트로 분활해줘야함
             List<string> keyList = new List<string>();
@@ -194,7 +194,7 @@ namespace SCKRM.InspectorEditor
             if (!overlap)
             {
                 //리스트 2개를 딕셔너리로 변환
-                ObjectPoolingSystem.PrefabList = keyList.Zip(valueList, (key, value) => new { key, value }).ToDictionary(a => a.key, a => a.value);
+                ObjectPoolingSystem.prefabList = keyList.Zip(valueList, (key, value) => new { key, value }).ToDictionary(a => a.key, a => a.value);
             }
 
             //플레이 모드가 아니면 변경한 리스트의 데이터를 잃어버리지 않게 파일로 저장

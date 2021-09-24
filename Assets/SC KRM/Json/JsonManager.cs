@@ -11,6 +11,67 @@ namespace SCKRM.Json
     public class JsonManager
     {
         /// <summary>
+        /// JSON을 불러옵니다
+        /// </summary>
+        /// <param name="path">JSON 파일 경로</param>
+        /// <param name="value">값</param>
+        /// <param name="resourcePackPath">리소스팩에서 파일 불러오기</param>
+        /// <returns></returns>
+        public static bool JsonRead<T>(string path, out T value, bool resourcePackPath = true)
+        {
+            if (resourcePackPath)
+            {
+                NameSpaceAndPath nameSpaceAndPath = ResourcesManager.GetNameSpaceAndPath(path);
+                string selectedNameSpace = nameSpaceAndPath.NameSpace;
+
+                string allPath;
+                for (int i = 0; i < ResourcesManager.ResourcePacks.Count; i++)
+                {
+                    ResourcePack resourcePack = ResourcesManager.ResourcePacks[i];
+                    for (int j = 0; j < resourcePack.NameSpace.Length; j++)
+                    {
+                        string nameSpace = resourcePack.NameSpace[j];
+                        if (nameSpace != selectedNameSpace)
+                            continue;
+
+                        allPath = Path.Combine(resourcePack.Path, path).Replace("\\", "/").Replace("%NameSpace%", nameSpace) + ".json";
+                        if (File.Exists(allPath))
+                        {
+                            string json = File.ReadAllText(allPath);
+
+                            T jsonDic = JsonConvert.DeserializeObject<T>(json);
+                            if (jsonDic == null)
+                                break;
+
+                            value = jsonDic;
+                            return true;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (File.Exists(path))
+                {
+                    string json = File.ReadAllText(path);
+
+                    T jsonDic = JsonConvert.DeserializeObject<T>(json);
+                    if (jsonDic == null)
+                    {
+                        value = default(T);
+                        return false;
+                    }
+
+                    value = jsonDic;
+                    return true;
+                }
+            }
+
+            value = default(T);
+            return false;
+        }
+
+        /// <summary>
         /// JSON을 불러옵니다 (이걸 사용할려면, JSON 파일의 모든 키와 값의 타입이 T랑 같아야합니다)
         /// </summary>
         /// <param name="key">키</param>
@@ -18,7 +79,7 @@ namespace SCKRM.Json
         /// <param name="value">값</param>
         /// <param name="resourcePackPath">리소스팩에서 파일 불러오기</param>
         /// <returns></returns>
-        public static bool JsonRead<T>(string key, string path, out T value, bool resourcePackPath = true)
+        public static bool JsonReadDictionary<T>(string key, string path, out T value, bool resourcePackPath = true)
         {
             if (resourcePackPath)
             {
@@ -57,9 +118,7 @@ namespace SCKRM.Json
             {
                 if (File.Exists(path))
                 {
-                    StreamReader sr = new StreamReader(path);
-                    string json = sr.ReadToEnd();
-                    sr.Close();
+                    string json = File.ReadAllText(path);
 
                     Dictionary<string, T> jsonDic = JsonConvert.DeserializeObject<Dictionary<string, T>>(json);
                     if (jsonDic == null)

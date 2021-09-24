@@ -1,7 +1,9 @@
 using SCKRM.InspectorEditor;
+using SCKRM.Json;
 using SCKRM.Resources;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -70,9 +72,22 @@ namespace SCKRM.Renderer
             if (texture == null)
                 return;
 
+            SpriteJsonSetting spriteJsonSetting = new SpriteJsonSetting();
+            spriteJsonSetting.border = new JVector4(spriteSetting.border);
+            spriteJsonSetting.pivot = new JVector2(spriteSetting.pivot);
+            spriteJsonSetting.pixelsPerUnit = spriteSetting.pixelsPerUnit;
+            spriteJsonSetting.rect = new JRect(spriteSetting.rect);
+
+            if (File.Exists(path + ".json"))
+                JsonManager.JsonRead(path + ".json", out spriteJsonSetting, false);
+
+            Rect rect = JRect.JRectToRect(spriteJsonSetting.rect);
+            Vector2 pivot = JVector2.JVector3ToVector3(spriteJsonSetting.pivot);
+            Vector4 border = JVector4.JVector4ToVector4(spriteJsonSetting.border);
+
             spriteSetting.RectMaxSet(texture);
             spriteSetting.PixelsPreUnitMaxSet();
-            spriteSetting.sprite = Sprite.Create(texture, spriteSetting.rect, spriteSetting.pivot, spriteSetting.pixelsPerUnit, 1, SpriteMeshType.FullRect, spriteSetting.border);
+            spriteSetting.sprite = Sprite.Create(texture, rect, pivot, spriteJsonSetting.pixelsPerUnit, 1, SpriteMeshType.FullRect, border);
         }
     }
 }

@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using SCKRM.Json;
 using SCKRM.Resources;
 using System;
 using System.Collections;
@@ -62,14 +63,22 @@ namespace SCKRM.Input
 
         public static void SettingFileLoad()
         {
-            string json = File.ReadAllText(settingFilePath);
-            controlSettingList = JsonConvert.DeserializeObject<Dictionary<string, KeyCode>>(json);
+            if (!File.Exists(settingFilePath))
+                SettingFileSave();
+
+            if (JsonManager.JsonRead(settingFilePath, out Dictionary<string, KeyCode> value, false))
+                controlSettingList = value;
         }
 
         public static Dictionary<string, KeyCode> SettingFileRead()
         {
-            string json = File.ReadAllText(settingFilePath);
-            return JsonConvert.DeserializeObject<Dictionary<string, KeyCode>>(json);
+            if (!File.Exists(settingFilePath))
+                SettingFileSave();
+
+            if (JsonManager.JsonRead(settingFilePath, out Dictionary<string, KeyCode> value, false))
+                return value;
+            else
+                return null;
         }
 
 
