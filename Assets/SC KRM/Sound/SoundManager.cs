@@ -54,7 +54,7 @@ namespace SCKRM.Sound
         /// <param name="pitch">피치</param>
         /// <param name="rhythmPitchUse">리듬 매니저에서 사용하는 피치와 연동</param>
         /// <returns></returns>
-        public static SoundObject PlayBGM(SoundType soundType, string path, float volume = 1, bool loop = false, float pitch = 1)
+        public static SoundObject PlayBGM(SoundType soundType, string path, float volume = 1, bool loop = false, float pitch = 1, bool autoStart = true)
         {
             if (BGMList.Count >= MaxBGMCount)
                 return null;
@@ -74,7 +74,8 @@ namespace SCKRM.Sound
             soundObject.pitch = pitch;
             soundObject.audioSource.loop = loop;
 
-            soundObject.Reload();
+            if (autoStart)
+                soundObject.Reload();
 
             return soundObject;
         }
@@ -87,7 +88,7 @@ namespace SCKRM.Sound
         /// <param name="volume">볼륨</param>
         /// <param name="pitch">피치</param>
         /// <returns></returns>
-        public static SoundObject PlaySound(SoundType soundType, string path, float volume = 1, float pitch = 1) => PlaySound(soundType, new string[] { path }, volume, pitch);
+        public static SoundObject PlaySound(SoundType soundType, string path, float volume = 1, float pitch = 1, bool autoStart = true) => PlaySound(soundType, new string[] { path }, volume, pitch, autoStart);
 
         /// <summary>
         /// 효과음을 재생합니다
@@ -97,7 +98,7 @@ namespace SCKRM.Sound
         /// <param name="volume">볼륨</param>
         /// <param name="pitch">피치</param>
         /// <returns></returns>
-        static SoundObject PlaySound(SoundType soundType, string[] path, float volume = 1, float pitch = 1)
+        static SoundObject PlaySound(SoundType soundType, string[] path, float volume = 1, float pitch = 1, bool autoStart = true)
         {
             if (BGMList.Count >= MaxBGMCount)
                 return null;
@@ -117,11 +118,12 @@ namespace SCKRM.Sound
             soundObject.pitch = pitch;
             soundObject.audioSource.loop = false;
 
-            soundObject.Reload();
+            if (autoStart)
+                soundObject.Reload();
 
             return soundObject;
         }
-        
+
         /// <summary>
         /// BGM을 중지합니다
         /// </summary>

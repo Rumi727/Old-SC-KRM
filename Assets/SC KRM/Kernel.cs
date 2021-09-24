@@ -58,6 +58,7 @@ namespace SCKRM
 
 
 
+        public static bool isReload { get; private set; } = false;
         public static int MainVolume { get; set; } = 100;
 
 
@@ -148,6 +149,8 @@ namespace SCKRM
 
         public static void AllRefresh(bool coroutine = true, bool onlyText = false)
         {
+            isReload = true;
+
             if (allRefreshCoroutine != null)
                 instance.StopCoroutine(allRefreshCoroutine);
 
@@ -248,6 +251,8 @@ namespace SCKRM
                     }
                 }
             }
+
+            isReload = false;
         }
     }
 
