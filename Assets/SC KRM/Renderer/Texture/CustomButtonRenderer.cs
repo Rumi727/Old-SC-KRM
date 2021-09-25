@@ -87,8 +87,6 @@ namespace SCKRM.Renderer
             Vector2 pivot = JVector2.JVector3ToVector3(spriteJsonSetting.pivot);
             Vector4 border = JVector4.JVector4ToVector4(spriteJsonSetting.border);
 
-            spriteSetting.RectMaxSet(texture);
-            spriteSetting.PixelsPreUnitMaxSet();
             spriteSetting.sprite = Sprite.Create(texture, rect, pivot, spriteJsonSetting.pixelsPerUnit, 1, SpriteMeshType.FullRect, border);
         }
     }

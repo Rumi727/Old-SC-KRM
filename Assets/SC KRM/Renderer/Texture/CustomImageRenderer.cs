@@ -39,6 +39,9 @@ namespace SCKRM.Renderer
                 return;
             }
 
+            customSprite.RectMaxSet(texture);
+            customSprite.PixelsPreUnitMaxSet();
+
             SpriteJsonSetting spriteJsonSetting = new SpriteJsonSetting();
             spriteJsonSetting.border = new JVector4(customSprite.border);
             spriteJsonSetting.pivot = new JVector2(customSprite.pivot);
@@ -52,8 +55,6 @@ namespace SCKRM.Renderer
             Vector2 pivot = JVector2.JVector3ToVector3(spriteJsonSetting.pivot);
             Vector4 border = JVector4.JVector4ToVector4(spriteJsonSetting.border);
 
-            customSprite.RectMaxSet(texture);
-            customSprite.PixelsPreUnitMaxSet();
             customSprite.sprite = Sprite.Create(texture, rect, pivot, spriteJsonSetting.pixelsPerUnit, 1, SpriteMeshType.FullRect, border);
 
             image.sprite = customSprite.sprite;
