@@ -36,6 +36,7 @@ namespace SCKRM.Sound
         float previousFrameTimer = 0;
         public bool isLooped { get; private set; }
         public bool isEnded { get; private set; }
+        public float time { get; private set; }
 
         public void Reload()
         {
@@ -74,6 +75,7 @@ namespace SCKRM.Sound
 
             audioSource.volume = volume * (Kernel.MainVolume * 0.01f);
             audioSource.pitch = pitch * Kernel.gameSpeed;
+            time = audioSource.time;
 
             if (!isEnded && !audioSource.loop)
                 Remove();
