@@ -23,6 +23,7 @@ namespace SCKRM.Sound
 
         public string nameSpace { get; set; } = "";
         public string path { get; set; } = "";
+        public AudioClip clip { get; set; }
 
         public bool bgm { get; set; }
 
@@ -34,9 +35,9 @@ namespace SCKRM.Sound
         #endregion
 
         float previousFrameTimer = 0;
-        public bool isLooped { get; private set; }
-        public bool isEnded { get; private set; }
-        public float time { get; private set; }
+        public bool isLooped { get; private set; } = false;
+        public bool isEnded { get; private set; } = false;
+        public float time { get; private set; } = 0;
 
         public void Reload()
         {
@@ -49,12 +50,18 @@ namespace SCKRM.Sound
             OnDestroy();
             if (bgm)
             {
-                audioSource.clip = ResourcesManager.Search<AudioClip>(ResourcePack.BGMPath + path, nameSpace);
+                if (clip != null)
+                    audioSource.clip = clip;
+                else
+                    audioSource.clip = ResourcesManager.Search<AudioClip>(ResourcePack.BGMPath + path, nameSpace);
                 SoundManager.BGMList.Add(this);
             }
             else
             {
-                audioSource.clip = ResourcesManager.Search<AudioClip>(ResourcePack.SoundPath + path, nameSpace);
+                if (clip != null)
+                    audioSource.clip = clip;
+                else
+                    audioSource.clip = ResourcesManager.Search<AudioClip>(ResourcePack.SoundPath + path, nameSpace);
                 SoundManager.SoundList.Add(this);
             }
 
@@ -77,7 +84,7 @@ namespace SCKRM.Sound
             audioSource.pitch = pitch * Kernel.gameSpeed;
             time = audioSource.time;
 
-            if (!isEnded && !audioSource.loop)
+            if (isEnded && !audioSource.loop)
                 Remove();
             else if (audioSource.loop)
             {
@@ -100,6 +107,10 @@ namespace SCKRM.Sound
             gameObject.transform.localPosition = Vector3.zero;
             gameObject.transform.localEulerAngles = Vector3.zero;
             gameObject.transform.localScale = Vector3.one;
+
+            previousFrameTimer = 0;
+            isLooped = false;
+            isEnded = false;
 
             if (bgm)
                 SoundManager.BGMList.Remove(this);

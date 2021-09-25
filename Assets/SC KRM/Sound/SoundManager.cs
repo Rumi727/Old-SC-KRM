@@ -81,6 +81,42 @@ namespace SCKRM.Sound
         }
 
         /// <summary>
+        /// BGM을 재생합니다
+        /// </summary>
+        /// <param name="soundType">타입</param>
+        /// <param name="clip">클립</param>
+        /// <param name="volume">볼륨</param>
+        /// <param name="loop">루프</param>
+        /// <param name="pitch">피치</param>
+        /// <param name="rhythmPitchUse">리듬 매니저에서 사용하는 피치와 연동</param>
+        /// <returns></returns>
+        public static SoundObject PlayBGM(SoundType soundType, AudioClip clip, float volume = 1, bool loop = false, float pitch = 1, bool autoStart = true)
+        {
+            if (BGMList.Count >= MaxBGMCount)
+                return null;
+
+            if (clip == null)
+                return null;
+
+            SoundObject soundObject = ObjectPoolingSystem.ObjectCreate("sound_manager.sound_object", instance.BGM).GetComponent<SoundObject>();
+            BGMList.Add(soundObject);
+
+            soundObject.gameObject.name = clip.ToString();
+            soundObject.clip = clip;
+
+            soundObject.soundType = soundType | SoundType.BGM;
+            soundObject.bgm = true;
+            soundObject.volume = volume;
+            soundObject.pitch = pitch;
+            soundObject.audioSource.loop = loop;
+
+            if (autoStart)
+                soundObject.Reload();
+
+            return soundObject;
+        }
+
+        /// <summary>
         /// 효과음을 재생합니다
         /// </summary>
         /// <param name="soundType">타입</param>
@@ -111,6 +147,50 @@ namespace SCKRM.Sound
             NameSpaceAndPath nameSpaceAndPath = ResourcesManager.GetNameSpaceAndPath(path[random]);
             soundObject.nameSpace = nameSpaceAndPath.NameSpace;
             soundObject.path = nameSpaceAndPath.Path;
+
+            soundObject.soundType = soundType | SoundType.Sound;
+            soundObject.bgm = false;
+            soundObject.volume = volume;
+            soundObject.pitch = pitch;
+            soundObject.audioSource.loop = false;
+
+            if (autoStart)
+                soundObject.Reload();
+
+            return soundObject;
+        }
+
+        /// <summary>
+        /// 효과음을 재생합니다
+        /// </summary>
+        /// <param name="soundType">타입</param>
+        /// <param name="path">클립</param>
+        /// <param name="volume">볼륨</param>
+        /// <param name="pitch">피치</param>
+        /// <returns></returns>
+        public static SoundObject PlaySound(SoundType soundType, AudioClip path, float volume = 1, float pitch = 1, bool autoStart = true) => PlaySound(soundType, new AudioClip[] { path }, volume, pitch, autoStart);
+
+        /// <summary>
+        /// 효과음을 재생합니다
+        /// </summary>
+        /// <param name="soundType">타입</param>
+        /// <param name="clip">클립 (랜덤 선택)</param>
+        /// <param name="volume">볼륨</param>
+        /// <param name="pitch">피치</param>
+        /// <returns></returns>
+        static SoundObject PlaySound(SoundType soundType, AudioClip[] clip, float volume = 1, float pitch = 1, bool autoStart = true)
+        {
+            if (BGMList.Count >= MaxBGMCount)
+                return null;
+
+            int random = UnityEngine.Random.Range(0, clip.Length);
+
+            if (clip[random] == null)
+                return null;
+
+            SoundObject soundObject = ObjectPoolingSystem.ObjectCreate("sound_manager.sound_object", instance.Sound).GetComponent<SoundObject>();
+            soundObject.gameObject.name = clip[random].ToString();
+            soundObject.clip = clip[random];
 
             soundObject.soundType = soundType | SoundType.Sound;
             soundObject.bgm = false;
