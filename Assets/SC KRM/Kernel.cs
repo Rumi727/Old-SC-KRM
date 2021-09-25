@@ -235,6 +235,7 @@ namespace SCKRM
                             forCount = 0;
                             yield return null;
                         }
+                        forCount++;
                     }
                 }
 
@@ -252,6 +253,7 @@ namespace SCKRM
                             forCount = 0;
                             yield return null;
                         }
+                        forCount++;
                     }
                 }
 
@@ -269,6 +271,7 @@ namespace SCKRM
                             forCount = 0;
                             yield return null;
                         }
+                        forCount++;
                     }
                 }
             }

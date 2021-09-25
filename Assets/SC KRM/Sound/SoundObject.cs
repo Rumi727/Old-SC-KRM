@@ -65,6 +65,9 @@ namespace SCKRM.Sound
                 SoundManager.SoundList.Add(this);
             }
 
+            audioSource.volume = volume * (Kernel.MainVolume * 0.01f);
+            audioSource.pitch = pitch * Kernel.gameSpeed;
+
             SoundManager.AllList.Add(this);
             audioSource.Play();
         }
