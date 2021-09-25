@@ -121,7 +121,7 @@ namespace SCKRM.Sound
 
             audioSource.Stop();
 
-            if (audioSource.clip != null) //&& !ResourcesManager.AudioList.ContainsValue(audioSource.clip))
+            if (clip == null && audioSource.clip != null) //&& !ResourcesManager.AudioList.ContainsValue(audioSource.clip))
                 Destroy(audioSource.clip);
 
             audioSource.clip = null;
