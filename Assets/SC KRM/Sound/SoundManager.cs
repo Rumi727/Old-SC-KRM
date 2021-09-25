@@ -110,7 +110,7 @@ namespace SCKRM.Sound
 
             NameSpaceAndPath nameSpaceAndPath = ResourcesManager.GetNameSpaceAndPath(path[random]);
             soundObject.nameSpace = nameSpaceAndPath.NameSpace;
-            soundObject.path = path[random];
+            soundObject.path = nameSpaceAndPath.Path;
 
             soundObject.soundType = soundType | SoundType.Sound;
             soundObject.bgm = false;
