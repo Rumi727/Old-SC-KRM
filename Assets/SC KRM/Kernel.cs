@@ -218,6 +218,7 @@ namespace SCKRM
                 if (renderersLength + textRenderersLength + soundObjectsLength == 0)
                     loadingBar.Remove();
 
+                int forCount = 0;
                 int i;
                 int ii;
                 for (i = 0; i < customRenderers.Length; i++)
@@ -228,7 +229,12 @@ namespace SCKRM
                     {
                         loadingBar.text.text = $"Texture Reload... ({i + 1}/{customRenderers.Length})";
                         loadingBar.value = i / (float)(renderersLength + textRenderersLength + soundObjectsLength);
-                        yield return null;
+
+                        if (forCount >= 100)
+                        {
+                            forCount = 0;
+                            yield return null;
+                        }
                     }
                 }
 
@@ -240,7 +246,12 @@ namespace SCKRM
                     {
                         loadingBar.text.text = $"Text Reload... ({ii + 1}/{customTextRenderers.Length})";
                         loadingBar.value = (i + ii) / (float)(renderersLength + textRenderersLength + soundObjectsLength);
-                        yield return null;
+
+                        if (forCount >= 100)
+                        {
+                            forCount = 0;
+                            yield return null;
+                        }
                     }
                 }
 
@@ -252,7 +263,12 @@ namespace SCKRM
                     {
                         loadingBar.text.text = $"Sound Reload... ({iii + 1}/{soundObjects.Length})";
                         loadingBar.value = (i + ii + iii) / (float)(renderersLength + textRenderersLength + soundObjectsLength);
-                        yield return null;
+
+                        if (forCount >= 100)
+                        {
+                            forCount = 0;
+                            yield return null;
+                        }
                     }
                 }
             }
