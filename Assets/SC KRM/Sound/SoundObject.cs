@@ -33,6 +33,9 @@ namespace SCKRM.Sound
         public float pitch { get => _pitch; set => _pitch = value; }
         #endregion
 
+        float previousFrameTimer = 0;
+        public bool isLooped { get; private set; }
+
         public void Reload()
         {
             if (audioSource == null)
@@ -73,6 +76,15 @@ namespace SCKRM.Sound
 
             if (!audioSource.isPlaying)
                 Remove();
+            else if (audioSource.loop)
+            {
+                isLooped = false;
+
+                if (audioSource.time - previousFrameTimer < 0)
+                    isLooped = true;
+
+                previousFrameTimer = audioSource.time;
+            }
         }
 
         public void Remove() => ObjectPoolingSystem.ObjectRemove("sound_manager.sound_object", gameObject, OnDestroy);
