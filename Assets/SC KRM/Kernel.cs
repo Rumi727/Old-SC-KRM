@@ -92,7 +92,7 @@ namespace SCKRM
             fpsUnscaledDeltaTime = unscaledDeltaTime * 60;
 
             //FPS Limit
-            if (!isAFK && Application.isFocused)
+            if (!isAFK && (Application.isFocused || Application.isEditor))
                 Application.targetFrameRate = fpsLimit;
             else if (!isAFK && !Application.isFocused)
                 Application.targetFrameRate = notFocusFpsLimit;
