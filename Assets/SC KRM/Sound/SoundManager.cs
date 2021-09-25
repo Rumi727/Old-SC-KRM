@@ -164,11 +164,11 @@ namespace SCKRM.Sound
         /// 효과음을 재생합니다
         /// </summary>
         /// <param name="soundType">타입</param>
-        /// <param name="path">클립</param>
+        /// <param name="clip">클립</param>
         /// <param name="volume">볼륨</param>
         /// <param name="pitch">피치</param>
         /// <returns></returns>
-        public static SoundObject PlaySound(SoundType soundType, AudioClip path, float volume = 1, float pitch = 1, bool autoStart = true) => PlaySound(soundType, new AudioClip[] { path }, volume, pitch, autoStart);
+        public static SoundObject PlaySound(SoundType soundType, AudioClip clip, float volume = 1, float pitch = 1, bool autoStart = true) => PlaySound(soundType, new AudioClip[] { clip }, volume, pitch, autoStart);
 
         /// <summary>
         /// 효과음을 재생합니다
