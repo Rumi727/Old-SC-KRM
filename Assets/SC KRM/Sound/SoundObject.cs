@@ -35,6 +35,7 @@ namespace SCKRM.Sound
 
         float previousFrameTimer = 0;
         public bool isLooped { get; private set; }
+        public bool isEnded { get; private set; }
 
         public void Reload()
         {
@@ -74,7 +75,7 @@ namespace SCKRM.Sound
             audioSource.volume = volume * (Kernel.MainVolume * 0.01f);
             audioSource.pitch = pitch * Kernel.gameSpeed;
 
-            if (!audioSource.isPlaying)
+            if (!isEnded && !audioSource.loop)
                 Remove();
             else if (audioSource.loop)
             {
@@ -85,6 +86,9 @@ namespace SCKRM.Sound
 
                 previousFrameTimer = audioSource.time;
             }
+
+            if (!audioSource.isPlaying && !audioSource.loop)
+                isEnded = true;
         }
 
         public void Remove() => ObjectPoolingSystem.ObjectRemove("sound_manager.sound_object", gameObject, OnDestroy);
