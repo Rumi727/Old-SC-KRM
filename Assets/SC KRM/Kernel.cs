@@ -108,7 +108,7 @@ namespace SCKRM
             else
             {
                 isAFK = false;
-                afkTimer += deltaTime;
+                afkTimer += unscaledDeltaTime;
             }
 
             if (MainVolume > 200)
@@ -116,8 +116,7 @@ namespace SCKRM
             else if (MainVolume < 0)
                 MainVolume = 0;
 
-            if (gameSpeed < 0)
-                gameSpeed = 0;
+            gameSpeed = gameSpeed.Clamp(0, 100);
             Time.timeScale = gameSpeed;
         }
 
@@ -282,6 +281,117 @@ namespace SCKRM
 
     public static class KernelExtensionMethod
     {
+        #region Mathf
+        public static int Abs(this int value)
+        {
+            if (value < 0)
+                return -value;
+            else
+                return value;
+        }
+
+        public static float Abs(this float value)
+        {
+            if (value < 0)
+                return -value;
+            else
+                return value;
+        }
+
+        public static double Abs(this double value)
+        {
+            if (value < 0)
+                return -value;
+            else
+                return value;
+        }
+
+        public static int Sign(this int value)
+        {
+            if (value < 0)
+                return -1;
+            else
+                return 1;
+        }
+
+        public static int Sign(this float value)
+        {
+            if (value < 0)
+                return -1;
+            else
+                return 1;
+        }
+
+        public static int Sign(this double value)
+        {
+            if (value < 0)
+                return -1;
+            else
+                return 1;
+        }
+
+        public static int Clamp(this int value, int min, int max = int.MaxValue)
+        {
+            if (value < min)
+                return min;
+            else if (value > max)
+                return max;
+            else
+                return value;
+        }
+
+        public static float Clamp(this float value, float min, float max = float.PositiveInfinity)
+        {
+            if (value < min)
+                return min;
+            else if (value > max)
+                return max;
+            else
+                return value;
+        }
+
+        public static double Clamp(this double value, double min, double max = double.PositiveInfinity)
+        {
+            if (value < min)
+                return min;
+            else if (value > max)
+                return max;
+            else
+                return value;
+        }
+
+        public static int Lerp(this int a, int b, float t) => (int)(((1 - t) * a) + (b * t));
+        public static int Lerp(this int a, int b, double t) => (int)(((1 - t) * a) + (b * t));
+
+        public static float Lerp(this float a, float b, float t) => ((1 - t) * a) + (b * t);
+
+        public static double Lerp(this double a, double b, double t) => ((1 - t) * a) + (b * t);
+
+        public static int MoveTowards(this int current, int target, int maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return current + (target - current).Sign() * maxDelta;
+        }
+
+        public static float MoveTowards(this float current, float target, float maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return current + (target - current).Sign() * maxDelta;
+        }
+
+        public static double MoveTowards(this double current, double target, double maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return current + (target - current).Sign() * maxDelta;
+        }
+        #endregion
+
         public static string EnvironmentVariable(this string value)
         {
             value = value.Replace("%DataPath%", Kernel.dataPath);

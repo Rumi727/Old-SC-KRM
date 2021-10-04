@@ -54,7 +54,7 @@ namespace SCKRM.Sound
         /// <param name="pitch">피치</param>
         /// <param name="rhythmPitchUse">리듬 매니저에서 사용하는 피치와 연동</param>
         /// <returns></returns>
-        public static SoundObject PlayBGM(SoundType soundType, string path, float volume = 1, bool loop = false, float pitch = 1, bool autoStart = true)
+        public static SoundObject PlayBGM(SoundType soundType, string path, float volume = 1, bool loop = false, float pitch = 1, bool resourcePackPath = true)
         {
             if (BGMList.Count >= MaxBGMCount)
                 return null;
@@ -64,9 +64,14 @@ namespace SCKRM.Sound
 
             soundObject.gameObject.name = path;
 
-            NameSpaceAndPath nameSpaceAndPath = ResourcesManager.GetNameSpaceAndPath(path);
-            soundObject.nameSpace = nameSpaceAndPath.NameSpace;
-            soundObject.path = nameSpaceAndPath.Path;
+            if (resourcePackPath)
+            {
+                NameSpaceAndPath nameSpaceAndPath = ResourcesManager.GetNameSpaceAndPath(path);
+                soundObject.nameSpace = nameSpaceAndPath.NameSpace;
+                soundObject.path = nameSpaceAndPath.Path;
+            }
+            else
+                soundObject.path = path;
 
             soundObject.soundType = soundType | SoundType.BGM;
             soundObject.bgm = true;
@@ -74,8 +79,7 @@ namespace SCKRM.Sound
             soundObject.pitch = pitch;
             soundObject.audioSource.loop = loop;
 
-            if (autoStart)
-                soundObject.Reload();
+            soundObject.Reload(resourcePackPath);
 
             return soundObject;
         }
@@ -90,7 +94,7 @@ namespace SCKRM.Sound
         /// <param name="pitch">피치</param>
         /// <param name="rhythmPitchUse">리듬 매니저에서 사용하는 피치와 연동</param>
         /// <returns></returns>
-        public static SoundObject PlayBGM(SoundType soundType, AudioClip clip, float volume = 1, bool loop = false, float pitch = 1, bool autoStart = true)
+        public static SoundObject PlayBGM(SoundType soundType, AudioClip clip, float volume = 1, bool loop = false, float pitch = 1)
         {
             if (BGMList.Count >= MaxBGMCount)
                 return null;
@@ -110,8 +114,7 @@ namespace SCKRM.Sound
             soundObject.pitch = pitch;
             soundObject.audioSource.loop = loop;
 
-            if (autoStart)
-                soundObject.Reload();
+            soundObject.Reload();
 
             return soundObject;
         }
@@ -124,7 +127,7 @@ namespace SCKRM.Sound
         /// <param name="volume">볼륨</param>
         /// <param name="pitch">피치</param>
         /// <returns></returns>
-        public static SoundObject PlaySound(SoundType soundType, string path, float volume = 1, float pitch = 1, bool autoStart = true) => PlaySound(soundType, new string[] { path }, volume, pitch, autoStart);
+        public static SoundObject PlaySound(SoundType soundType, string path, float volume = 1, float pitch = 1, bool resourcePackPath = true) => PlaySound(soundType, new string[] { path }, volume, pitch, resourcePackPath);
 
         /// <summary>
         /// 효과음을 재생합니다
@@ -134,7 +137,7 @@ namespace SCKRM.Sound
         /// <param name="volume">볼륨</param>
         /// <param name="pitch">피치</param>
         /// <returns></returns>
-        static SoundObject PlaySound(SoundType soundType, string[] path, float volume = 1, float pitch = 1, bool autoStart = true)
+        static SoundObject PlaySound(SoundType soundType, string[] path, float volume = 1, float pitch = 1, bool resourcePackPath = true)
         {
             if (BGMList.Count >= MaxBGMCount)
                 return null;
@@ -144,9 +147,14 @@ namespace SCKRM.Sound
             SoundObject soundObject = ObjectPoolingSystem.ObjectCreate("sound_manager.sound_object", instance.Sound).GetComponent<SoundObject>();
             soundObject.gameObject.name = path[random];
 
-            NameSpaceAndPath nameSpaceAndPath = ResourcesManager.GetNameSpaceAndPath(path[random]);
-            soundObject.nameSpace = nameSpaceAndPath.NameSpace;
-            soundObject.path = nameSpaceAndPath.Path;
+            if (resourcePackPath)
+            {
+                NameSpaceAndPath nameSpaceAndPath = ResourcesManager.GetNameSpaceAndPath(path[random]);
+                soundObject.nameSpace = nameSpaceAndPath.NameSpace;
+                soundObject.path = nameSpaceAndPath.Path;
+            }
+            else
+                soundObject.path = path[random];
 
             soundObject.soundType = soundType | SoundType.Sound;
             soundObject.bgm = false;
@@ -154,8 +162,7 @@ namespace SCKRM.Sound
             soundObject.pitch = pitch;
             soundObject.audioSource.loop = false;
 
-            if (autoStart)
-                soundObject.Reload();
+            soundObject.Reload(resourcePackPath);
 
             return soundObject;
         }
@@ -168,7 +175,7 @@ namespace SCKRM.Sound
         /// <param name="volume">볼륨</param>
         /// <param name="pitch">피치</param>
         /// <returns></returns>
-        public static SoundObject PlaySound(SoundType soundType, AudioClip clip, float volume = 1, float pitch = 1, bool autoStart = true) => PlaySound(soundType, new AudioClip[] { clip }, volume, pitch, autoStart);
+        public static SoundObject PlaySound(SoundType soundType, AudioClip clip, float volume = 1, float pitch = 1) => PlaySound(soundType, new AudioClip[] { clip }, volume, pitch);
 
         /// <summary>
         /// 효과음을 재생합니다
@@ -178,7 +185,7 @@ namespace SCKRM.Sound
         /// <param name="volume">볼륨</param>
         /// <param name="pitch">피치</param>
         /// <returns></returns>
-        static SoundObject PlaySound(SoundType soundType, AudioClip[] clip, float volume = 1, float pitch = 1, bool autoStart = true)
+        static SoundObject PlaySound(SoundType soundType, AudioClip[] clip, float volume = 1, float pitch = 1)
         {
             if (BGMList.Count >= MaxBGMCount)
                 return null;
@@ -198,8 +205,7 @@ namespace SCKRM.Sound
             soundObject.pitch = pitch;
             soundObject.audioSource.loop = false;
 
-            if (autoStart)
-                soundObject.Reload();
+            soundObject.Reload();
 
             return soundObject;
         }

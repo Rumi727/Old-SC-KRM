@@ -334,6 +334,150 @@ namespace SCKRM.Resources
             return default(ResourceType);
         }
 
+        public static Sprite SearchSprite(string path, SpriteJsonSetting spriteJsonSetting, string nameSpace = "", bool resourcePackPath = true)
+        {
+            if (resourcePackPath)
+            {
+                NameSpaceAndPath nameSpaceAndPath = GetNameSpaceAndPath(path);
+                string selectedNameSpace;
+                if (nameSpace == "")
+                    selectedNameSpace = nameSpaceAndPath.NameSpace;
+                else
+                    selectedNameSpace = nameSpace;
+                path = nameSpaceAndPath.Path;
+
+                string allPath;
+
+                for (int i = 0; i < ResourcePacks.Count; i++)
+                {
+                    ResourcePack resourcePack = ResourcePacks[i];
+
+                    if (resourcePack.NameSpace.Contains(selectedNameSpace))
+                    {
+                        allPath = Path.Combine(resourcePack.Path, path).Replace("\\", "/").Replace("%NameSpace%", selectedNameSpace);
+
+                        allPath += ".png";
+
+                        if (File.Exists(allPath))
+                        {
+                            byte[] bytes = File.ReadAllBytes(allPath);
+
+                            if (bytes.Length > 0)
+                            {
+                                Texture2D texture = new Texture2D(0, 0);
+                                texture.LoadImage(bytes);
+
+                                if (File.Exists(allPath + ".json"))
+                                    JsonManager.JsonRead(allPath + ".json", out spriteJsonSetting, false);
+
+                                Rect rect = JRect.JRectToRect(spriteJsonSetting.rect);
+                                Vector2 pivot = JVector2.JVector3ToVector3(spriteJsonSetting.pivot);
+                                Vector4 border = JVector4.JVector4ToVector4(spriteJsonSetting.border);
+
+                                texture.filterMode = spriteJsonSetting.filterMode;
+
+                                if (rect.x == -1)
+                                    rect = new Rect(0, 0, texture.width, texture.height);
+                                if (pivot.x == -1)
+                                    pivot = new Vector2(0.5f, 0.5f);
+
+                                if (rect.width < 1)
+                                    rect.width = 1;
+                                if (rect.width > texture.width)
+                                    rect.width = texture.width;
+                                if (rect.height < 1)
+                                    rect.height = 1;
+                                if (rect.height > texture.height)
+                                    rect.height = texture.height;
+
+                                if (rect.x < 0)
+                                    rect.x = 0;
+                                if (rect.x > texture.width - rect.width)
+                                    rect.x = texture.width - rect.width;
+                                if (rect.y < 0)
+                                    rect.y = 0;
+                                if (rect.y > texture.height - rect.height)
+                                    rect.y = texture.height - rect.height;
+
+                                if (spriteJsonSetting.pivot.x < 0)
+                                    spriteJsonSetting.pivot.x = 0;
+                                if (spriteJsonSetting.pivot.y < 0)
+                                    spriteJsonSetting.pivot.y = 0;
+                                if (spriteJsonSetting.pivot.x > 1)
+                                    spriteJsonSetting.pivot.x = 1;
+                                if (spriteJsonSetting.pivot.y > 1)
+                                    spriteJsonSetting.pivot.y = 1;
+
+                                return Sprite.Create(texture, rect, pivot, spriteJsonSetting.pixelsPerUnit, 1, SpriteMeshType.Tight, border);
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                string allPath = path.Replace("\\", "/");
+
+                allPath += ".png";
+
+                if (File.Exists(allPath))
+                {
+                    byte[] bytes = File.ReadAllBytes(allPath);
+
+                    if (bytes.Length > 0)
+                    {
+                        Texture2D texture = new Texture2D(0, 0);
+                        texture.LoadImage(bytes);
+
+                        if (File.Exists(allPath + ".json"))
+                            JsonManager.JsonRead(allPath + ".json", out spriteJsonSetting, false);
+
+                        Rect rect = JRect.JRectToRect(spriteJsonSetting.rect);
+                        Vector2 pivot = JVector2.JVector3ToVector3(spriteJsonSetting.pivot);
+                        Vector4 border = JVector4.JVector4ToVector4(spriteJsonSetting.border);
+
+                        texture.filterMode = spriteJsonSetting.filterMode;
+
+                        if (rect.x == -1)
+                            rect = new Rect(0, 0, texture.width, texture.height);
+                        if (pivot.x == -1)
+                            pivot = new Vector2(0.5f, 0.5f);
+
+                        if (rect.width < 1)
+                            rect.width = 1;
+                        if (rect.width > texture.width)
+                            rect.width = texture.width;
+                        if (rect.height < 1)
+                            rect.height = 1;
+                        if (rect.height > texture.height)
+                            rect.height = texture.height;
+
+                        if (rect.x < 0)
+                            rect.x = 0;
+                        if (rect.x > texture.width - rect.width)
+                            rect.x = texture.width - rect.width;
+                        if (rect.y < 0)
+                            rect.y = 0;
+                        if (rect.y > texture.height - rect.height)
+                            rect.y = texture.height - rect.height;
+
+                        if (spriteJsonSetting.pivot.x < 0)
+                            spriteJsonSetting.pivot.x = 0;
+                        if (spriteJsonSetting.pivot.y < 0)
+                            spriteJsonSetting.pivot.y = 0;
+                        if (spriteJsonSetting.pivot.x > 1)
+                            spriteJsonSetting.pivot.x = 1;
+                        if (spriteJsonSetting.pivot.y > 1)
+                            spriteJsonSetting.pivot.y = 1;
+
+                        return Sprite.Create(texture, rect, pivot, spriteJsonSetting.pixelsPerUnit, 1, SpriteMeshType.Tight, border);
+                    }
+                }
+            }
+
+            return null;
+        }
+
         public static NameSpaceAndPath GetNameSpaceAndPath(string value)
         {
             if (value.Contains(":"))

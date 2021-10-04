@@ -39,7 +39,7 @@ namespace SCKRM.Sound
         public bool isEnded { get; private set; } = false;
         public float time { get; private set; } = 0;
 
-        public void Reload()
+        public void Reload(bool resourcePackPath = true)
         {
             if (audioSource == null)
                 GetComponent<AudioSource>();
@@ -53,7 +53,13 @@ namespace SCKRM.Sound
                 if (clip != null)
                     audioSource.clip = clip;
                 else
-                    audioSource.clip = ResourcesManager.Search<AudioClip>(ResourcePack.BGMPath + path, nameSpace);
+                {
+                    if (resourcePackPath)
+                        audioSource.clip = ResourcesManager.Search<AudioClip>(ResourcePack.BGMPath + path, nameSpace, resourcePackPath);
+                    else
+                        audioSource.clip = ResourcesManager.Search<AudioClip>(path, nameSpace, resourcePackPath);
+                }
+
                 SoundManager.BGMList.Add(this);
             }
             else
@@ -61,7 +67,13 @@ namespace SCKRM.Sound
                 if (clip != null)
                     audioSource.clip = clip;
                 else
-                    audioSource.clip = ResourcesManager.Search<AudioClip>(ResourcePack.SoundPath + path, nameSpace);
+                {
+                    if (resourcePackPath)
+                        audioSource.clip = ResourcesManager.Search<AudioClip>(ResourcePack.SoundPath + path, nameSpace, resourcePackPath);
+                    else
+                        audioSource.clip = ResourcesManager.Search<AudioClip>(path, nameSpace, resourcePackPath);
+                }
+
                 SoundManager.SoundList.Add(this);
             }
 
